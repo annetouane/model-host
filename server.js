@@ -34,14 +34,16 @@ connectDB();
 
 app.use("/input", InputRoute);
 
-// // serve static assets in production
-// if (process.end.NODE_ENV === "production") {
-//   // set static folder
-//   app.use(express.static("client/build"));
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder -> build folder
+  app.use(express.static("client/build"));
+  // load anything appart the API routes
+  app.get("*", (req, res) => {
+    // goes to the client/build folder and loads the index.html
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
