@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://dko:ant1@8624@test-cluster-gspq4.gcp.mongodb.net/profil?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://dko:ant1@8624@test-cluster-gspq4.gcp.mongodb.net/simulimo-prod?retryWrites=true&w=majority",
   "jwtSecret": "ant1",
   "apiSendGrid": "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"
 }

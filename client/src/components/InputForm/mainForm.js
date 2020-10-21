@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Finance from "financejs";
 
-// utilities
+// components
 import checkboxes from "./checkboxes";
 
 // actions
@@ -35,6 +35,7 @@ export const InputKpi = ({ postInputForm }) => {
     augInvest1: 0.01,
     revInvest2: 0,
     augInvest2: 0.01,
+    invCouple: true,
     partFisc: 1,
     sciIs: false,
     lmnpReel: false,
@@ -45,6 +46,8 @@ export const InputKpi = ({ postInputForm }) => {
     nueMicro: false,
     irl: 0.01,
   });
+
+  const [modal, setModal] = useState(false);
 
   // destructure state
   const {
@@ -68,6 +71,7 @@ export const InputKpi = ({ postInputForm }) => {
     augInvest1,
     revInvest2,
     augInvest2,
+    invCouple,
     partFisc,
     irl,
     sciIs,
@@ -95,6 +99,7 @@ export const InputKpi = ({ postInputForm }) => {
       console.log("error");
       // setAlert("Start time can't be superieur to end time", "red");
     }
+    setModal(true);
   };
 
   // side navigation -----------------------------------------------------------------------------------------
@@ -211,6 +216,47 @@ export const InputKpi = ({ postInputForm }) => {
 
   return (
     <div>
+      <div className={modal ? "email-modal" : "modal-none"}>
+        <div className='modal-input'>
+          <h4>
+            Simulimo est une solution gratuite pour modéliser la rentabilité
+            d'investissements locatifs. Actuellement en construction, nous
+            mettrons rapidement en lignes les fonctionnalités suivantes :
+          </h4>
+          <ul>
+            <li>
+              <i className='far fa-hand-point-right fa-2x'></i>
+              <p>
+                La fiscalité sur les revenus d'exploitation (loyers) modélisée
+                selon les différents régimes fiscaux sélectionnés ainsi que tous
+                les paramètres renseignés décrivant votre investissement.
+              </p>
+            </li>
+            <li>
+              <i className='far fa-hand-point-right fa-2x'></i>
+              <p>
+                La fiscalité lors de la revente modélisée selon le régime
+                d'exploitation choisi, de l'année de revente ainsi que tous les
+                paramètres renseignés décrivant votre investissement.
+              </p>
+            </li>
+          </ul>
+          <h4>
+            Restez informé(e) lors de la mise en lignes de ces nouvelles
+            fonctionnalités :
+          </h4>
+          <div className='container-email'>
+            <input type='email' placeholder='Saisir Email' name='email' />
+            <button>Valider</button>
+            <button
+              onClick={() => setModal(false)}
+              style={{ backgroundColor: "#a8a8a8" }}
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      </div>
       <div className='flex-row' ref={headerRef}>
         {/* indicateur */}
         <div className='side-column ml-20 mr-20 mt-50'>
@@ -509,7 +555,7 @@ export const InputKpi = ({ postInputForm }) => {
           >
             <h3 className='form-header mt-20'>
               <i className='fas fa-hand-holding-usd header-i'></i>
-              &nbsp;&nbsp;Revenu d'exploitation
+              &nbsp;&nbsp;Revenu annuel d'exploitation
             </h3>
             <div className='flex-row jc-se mt-10'>
               <div className='slidecontainer form-group'>
@@ -572,7 +618,7 @@ export const InputKpi = ({ postInputForm }) => {
           >
             <h3 className='form-header mt-20'>
               <i className='fas fa-weight-hanging header-i'></i>
-              &nbsp;&nbsp;Charges d'exploitation
+              &nbsp;&nbsp;Charges annuelles d'exploitation
             </h3>
             <div className='flex-row jc-se mt-10'>
               <div className='slidecontainer form-group mr-10'>
@@ -649,7 +695,7 @@ export const InputKpi = ({ postInputForm }) => {
               fiscal
             </h3>
             <div className='form-group mt-10'>
-              <h3>Investisseur N°1 :</h3>
+              <h3>Investisseur N° 1 :</h3>
               <div className='flex-row ai-fc mt-10'>
                 <div className='slidecontainer mr-5'>
                   <div className='flex-row jc-sb'>
@@ -689,7 +735,25 @@ export const InputKpi = ({ postInputForm }) => {
             </div>
 
             <div className='form-group mt-20'>
-              <h3>Investisseur N°2 :</h3>
+              <div className='flex-row jc-sb'>
+                <h3>Investisseur N° 2 :</h3>
+                {parseInt(revInvest2) !== 0 ? (
+                  <div className='flex-row  mt-5'>
+                    <label className='mr-10 bold'>
+                      Investisseurs membres du même foyer fiscal
+                    </label>
+                    <input
+                      type='checkbox'
+                      name='invCouple'
+                      defaultChecked={invCouple}
+                      onChange={onChangeRegime}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+
               <div className='flex-row ai-fc mt-10'>
                 <div className='slidecontainer mr-5'>
                   <div className='flex-row jc-sb'>
@@ -728,8 +792,23 @@ export const InputKpi = ({ postInputForm }) => {
               </div>
             </div>
 
+            {/* {invCouple ? ( */}
             <div className='form-group mt-20'>
               <div className='flex-row ai-fc mt-10'>
+                <div className='flex-column w-35 mr-20'>
+                  <label>Part(s) Fiscale(s)</label>
+                  <select
+                    type='select'
+                    name='partFisc'
+                    onChange={onChange}
+                    className='input-box-2 fs-12'
+                    disabled={!invCouple}
+                  >
+                    {optionsPartFisc.map((optionPartFisc) => (
+                      <option key={optionPartFisc}>{optionPartFisc}</option>
+                    ))}
+                  </select>
+                </div>
                 <p className='fs-12 w-75'>
                   En France, l'impôt sur le revenu est calculé au niveau du
                   foyer fiscal. Les invdividus composant le foyer fiscal sont
@@ -737,24 +816,20 @@ export const InputKpi = ({ postInputForm }) => {
                   notion clé pour le calcul de l’impôt sur le revenu lorsque le
                   foyer fiscal est composé de plusieurs individus.
                 </p>
-                <div className='flex-column w-25 ml-20'>
-                  <label>Part(s) Fiscale(s)</label>
-                  <select
-                    type='select'
-                    name='partFisc'
-                    value={partFisc}
-                    onChange={onChange}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsPartFisc.map((optionPartFisc) => (
-                      <option key={optionPartFisc} value={optionPartFisc}>
-                        {optionPartFisc}
-                      </option>
-                    ))}
-                  </select>
-                </div>
               </div>
+              {!invCouple ? (
+                <p className='fs-12 orange'>
+                  <i class='fas fa-exclamation-circle mr-5'></i>
+                  Les parts fiscales ne seront pas prises en compte si les
+                  investisseurs ne sont pas rattachés au même foyer fiscal.
+                </p>
+              ) : (
+                ""
+              )}
             </div>
+            {/* ) : (
+              ""
+            )} */}
           </section>
 
           {/*****************************************************************************************/
@@ -845,10 +920,16 @@ export const InputKpi = ({ postInputForm }) => {
                 color: netVendeurCheck && "#fff",
               }}
             >
-              Projet
-              <span style={{ display: !netVendeurCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!netVendeurCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Projet
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Projet&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}
             </button>
             <button
               type='button'
@@ -858,13 +939,19 @@ export const InputKpi = ({ postInputForm }) => {
               }}
               style={{
                 backgroundColor: apportCheck && "#016fc9",
-                color: apport === "" ? "#333" : "#fff",
+                color: apportCheck ? "#fff" : "#333",
               }}
             >
-              Financement
-              <span style={{ display: !apportCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!apportCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Financement
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Financement&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}{" "}
             </button>
             <button
               type='button'
@@ -877,10 +964,16 @@ export const InputKpi = ({ postInputForm }) => {
                 color: loyerCheck && "#fff",
               }}
             >
-              Revenu
-              <span style={{ display: !loyerCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!loyerCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Revenu
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Revenu&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}{" "}
             </button>
             <button
               type='button'
@@ -893,10 +986,16 @@ export const InputKpi = ({ postInputForm }) => {
                 color: chargesCheck && "#fff",
               }}
             >
-              Charges
-              <span style={{ display: !chargesCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!chargesCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Charges
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Charges&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}{" "}
             </button>
             <button
               type='button'
@@ -909,10 +1008,16 @@ export const InputKpi = ({ postInputForm }) => {
                 color: foyerCheck && "#fff",
               }}
             >
-              Foyer
-              <span style={{ display: !foyerCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!foyerCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Foyer
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Foyer&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}{" "}
             </button>
             <button
               type='button'
@@ -925,10 +1030,16 @@ export const InputKpi = ({ postInputForm }) => {
                 color: regimeCheck && "#fff",
               }}
             >
-              Régime
-              <span style={{ display: !regimeCheck && "none" }}>
-                &nbsp;&nbsp;<i className='far fa-check-circle'></i>
-              </span>
+              {!regimeCheck ? (
+                <div className='flex-row jc-fc ai-fc'>
+                  <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
+                  Régime
+                </div>
+              ) : (
+                <div className='flex-row jc-fc ai-fc'>
+                  Régime&nbsp;&nbsp;<i className='far fa-check-circle'></i>
+                </div>
+              )}{" "}
             </button>
           </div>
           <button
@@ -955,7 +1066,12 @@ export const InputKpi = ({ postInputForm }) => {
       </div>
       {/* Footer */}
       <div className='footer'>
-        <p>© 2020 ACH. All rights reserved</p>
+        <h4>© 2020 ACH. All rights reserved</h4>
+        <div className='footer-email'>
+          <h4>Être informé(e) des nouvelles fonctionnalités :</h4>
+          <input type='email' placeholder='Saisir Email' name='email' />
+          <button>Valider</button>
+        </div>
       </div>
     </div>
   );
