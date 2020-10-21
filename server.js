@@ -8,6 +8,7 @@ const path = require("path");
 
 // routes
 const InputRoute = require("./routes/InputRoute");
+const EmailRoute = require("./routes/EmailRoute");
 
 // init server
 const app = express();
@@ -33,6 +34,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 connectDB();
 
 app.use("/input", InputRoute);
+app.use("/email", EmailRoute);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

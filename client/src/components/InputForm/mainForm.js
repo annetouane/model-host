@@ -8,9 +8,9 @@ import Finance from "financejs";
 import checkboxes from "./checkboxes";
 
 // actions
-import { postInputForm } from "../../actions/formData";
+import { postInputForm, postEmail } from "../../actions/formData";
 
-export const InputKpi = ({ postInputForm }) => {
+export const InputKpi = ({ postInputForm, postEmail }) => {
   // init form state
   const [formData, setFormData] = useState({
     type: "",
@@ -47,8 +47,6 @@ export const InputKpi = ({ postInputForm }) => {
     irl: 0.01,
   });
 
-  const [modal, setModal] = useState(false);
-
   // destructure state
   const {
     netVendeur,
@@ -72,7 +70,7 @@ export const InputKpi = ({ postInputForm }) => {
     revInvest2,
     augInvest2,
     invCouple,
-    partFisc,
+    // partFisc,
     irl,
     sciIs,
     lmnpReel,
@@ -82,6 +80,19 @@ export const InputKpi = ({ postInputForm }) => {
     nueReel,
     nueMicro,
   } = formData;
+
+  const [userEmail, setEmail] = useState({
+    emailModal: "",
+    emailFooter: "",
+  });
+
+  const { emailModal, emailFooter } = userEmail;
+
+  const onChangeEmail = (e) => {
+    setEmail({ ...userEmail, [e.target.name]: e.target.value });
+  };
+
+  const [modal, setModal] = useState(false);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -100,6 +111,18 @@ export const InputKpi = ({ postInputForm }) => {
       // setAlert("Start time can't be superieur to end time", "red");
     }
     setModal(true);
+  };
+
+  const onSubmitEmail = async (e) => {
+    e.preventDefault();
+    if (userEmail) {
+      postEmail(userEmail);
+    } else {
+      console.log("error");
+      // setAlert("Start time can't be superieur to end time", "red");
+    }
+    setEmail({ emailModal: "", emailFooter: "" });
+    setModal(false);
   };
 
   // side navigation -----------------------------------------------------------------------------------------
@@ -216,6 +239,7 @@ export const InputKpi = ({ postInputForm }) => {
 
   return (
     <div>
+      {/* modal user email */}
       <div className={modal ? "email-modal" : "modal-none"}>
         <div className='modal-input'>
           <h4>
@@ -245,8 +269,14 @@ export const InputKpi = ({ postInputForm }) => {
             Restez informé(e) lors de la mise en lignes de ces nouvelles
             fonctionnalités :
           </h4>
-          <div className='container-email'>
-            <input type='email' placeholder='Saisir Email' name='email' />
+          <form className='container-email' onSubmit={onSubmitEmail}>
+            <input
+              type='email'
+              placeholder='Saisir Email'
+              name='emailModal'
+              value={emailModal}
+              onChange={onChangeEmail}
+            />
             <button>Valider</button>
             <button
               onClick={() => setModal(false)}
@@ -254,11 +284,12 @@ export const InputKpi = ({ postInputForm }) => {
             >
               Annuler
             </button>
-          </div>
+          </form>
         </div>
       </div>
+      {/* main page */}
       <div className='flex-row' ref={headerRef}>
-        {/* indicateur */}
+        {/* indicateur -> droite */}
         <div className='side-column ml-20 mr-20 mt-50'>
           <h3>
             <i className='fas fa-temperature-high header-i'></i>
@@ -343,7 +374,7 @@ export const InputKpi = ({ postInputForm }) => {
             </div>
           </div>
         </div>
-        {/* forms */}
+        {/* forms -> center */}
         <div style={{ width: "100%" }}>
           {/*****************************************************************************************/
           /* Projet */}
@@ -878,8 +909,8 @@ export const InputKpi = ({ postInputForm }) => {
               <div className='slidecontainer form-group flex-row jc-sb ai-fc'>
                 <p className='w-55 fs-12 mr-10'>
                   L'indice de référence des loyers (IRL) calculé par l'INSEE est
-                  le taux applicable pour augmenter le loyer d'un bail d'une
-                  année sur l'autre.
+                  le taux légalement applicable pour augmenter le loyer d'un
+                  bail d'une année sur l'autre.
                 </p>
                 <div className='w-45 ml-10'>
                   <label>
@@ -901,9 +932,7 @@ export const InputKpi = ({ postInputForm }) => {
             </div>
           </section>
         </div>
-
-        {/*****************************************************************************************/
-        /* SideNav */}
+        {/* SideNav + boutton model */}
         <nav className='side-column-nav mr-20 ml-20 mt-50'>
           <h3>
             <i className='fas fa-directions header-i'></i>&nbsp;&nbsp;Navigation
@@ -1069,8 +1098,16 @@ export const InputKpi = ({ postInputForm }) => {
         <h4>© 2020 ACH. All rights reserved</h4>
         <div className='footer-email'>
           <h4>Être informé(e) des nouvelles fonctionnalités :</h4>
-          <input type='email' placeholder='Saisir Email' name='email' />
-          <button>Valider</button>
+          <form onSubmit={onSubmitEmail}>
+            <input
+              type='email'
+              placeholder='Saisir Email'
+              name='emailFooter'
+              value={emailFooter}
+              onChange={onChangeEmail}
+            />
+            <button>Valider</button>
+          </form>
         </div>
       </div>
     </div>
@@ -1080,6 +1117,7 @@ export const InputKpi = ({ postInputForm }) => {
 // declare/define the type of props
 InputKpi.propTypes = {
   postInputForm: PropTypes.func.isRequired,
+  postEmail: PropTypes.func.isRequired,
 };
 
-export default connect(null, { postInputForm })(InputKpi);
+export default connect(null, { postInputForm, postEmail })(InputKpi);

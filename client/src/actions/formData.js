@@ -6,15 +6,26 @@ import { FORM_SUBMIT } from "./types";
 
 export const postInputForm = (formData) => async (dispatch) => {
   try {
-    const res = await axios.post(
-      "https://stark-tundra-51067.herokuapp.com/input",
-      formData
-    );
-    console.log(res.data);
-    dispatch({
-      type: FORM_SUBMIT,
-      payload: res.data,
-    });
+    if (process.env.NODE_ENV === "production") {
+      const res = await axios.post(
+        "https://stark-tundra-51067.herokuapp.com/input",
+        formData
+      );
+      // setAlert({ msg: res.data });
+      console.log("heroku");
+      dispatch({
+        type: FORM_SUBMIT,
+        payload: res.data,
+      });
+    } else {
+      const res = await axios.post("http://localhost:5000/input", formData);
+      // setAlert({ msg: res.data });
+      console.log("local");
+      dispatch({
+        type: FORM_SUBMIT,
+        payload: res.data,
+      });
+    }
   } catch (err) {
     const error = err.response.data.msg;
     if (error) {
@@ -24,17 +35,10 @@ export const postInputForm = (formData) => async (dispatch) => {
   }
 };
 
-export const postEmail = (formData) => async (dispatch) => {
+export const postEmail = (email) => async (dispatch) => {
   try {
-    const res = await axios.post(
-      "https://stark-tundra-51067.herokuapp.com/email",
-      formData
-    );
-    console.log("res", res.data);
-    // dispatch({
-    //   type: EMAIL_SUBMIT,
-    //   payload: res.data,
-    // });
+    const res = await axios.post("http://localhost:5000/email", email);
+    console.log("email", res.data);
   } catch (err) {
     const error = err.response.data.msg;
     if (error) {
