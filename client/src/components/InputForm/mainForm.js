@@ -14,7 +14,7 @@ import Regime from "./Regime";
 import Indicateurs from "./Indicateurs";
 import SideNav from "./SideNav";
 import Footer from "./Footer";
-import ModalEmail from "./ModalEmail";
+// import ModalEmail from "./ModalEmail";
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
@@ -347,13 +347,13 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
       ) : (
         ""
       )}
-      <ModalEmail
+      {/* <ModalEmail
         onSubmitEmail={onSubmitEmail}
         onChangeEmail={onChangeEmail}
         setModal={setModal}
         modal={modal}
         emailFooter={emailModal}
-      />
+      /> */}
 
       {/* main page */}
       <div className='flex-row'>
