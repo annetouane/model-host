@@ -7,7 +7,6 @@ const modalEmail = ({
   modal,
   emailModal,
 }) => {
-  console.log(modal);
   return (
     <section className={modal ? "email-modal" : "modal-none"}>
       <div className='modal-input'>

@@ -4,7 +4,7 @@ import checkboxes from "./checkboxes";
 const Regime = ({ onChange, onChangeRegime, irl }) => {
   return (
     <section id='regime'>
-      <h3 className='form-header mt-20'>
+      <h3 className='form-header'>
         <i className='fas fa-balance-scale header-i'></i>
         &nbsp;&nbsp;Régime fiscal
       </h3>

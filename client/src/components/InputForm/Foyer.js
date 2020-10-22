@@ -22,7 +22,7 @@ const Foyer = ({
 
   return (
     <section id='foyer'>
-      <h3 className='form-header mt-20'>
+      <h3 className='form-header'>
         <i className='fas fa-house-user header-i'></i>&nbsp;&nbsp;Foyer fiscal
       </h3>
       <div className='form-group mt-10'>

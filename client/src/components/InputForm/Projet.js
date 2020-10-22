@@ -16,7 +16,7 @@ const Projet = ({
 
   return (
     <section id='projet'>
-      <h3 className=' form-header mt-20'>
+      <h3 className=' form-header'>
         <i className='fas fa-landmark header-i'></i>
         &nbsp;&nbsp;Description du projet
       </h3>

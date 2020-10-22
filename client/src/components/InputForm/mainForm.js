@@ -1,5 +1,5 @@
 // packages
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Finance from "financejs";
@@ -14,12 +14,52 @@ import Regime from "./Regime";
 import Indicateurs from "./Indicateurs";
 import SideNav from "./SideNav";
 import Footer from "./Footer";
-import modalEmail from "./modalEmail";
+import ModalEmail from "./ModalEmail";
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
 
 export const InputKpi = ({ postInputForm, postEmail }) => {
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+
+  useEffect(() => {
+    // set the windows dimensions on render
+    // prevent function execution more than once per minute
+    const debouncedHandleResize = function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+    // resize triggered whenever the screen size changes
+    window.addEventListener("resize", debouncedHandleResize);
+    return (_) => {
+      // remove event to avoid app freeze and allows f° exec max once per second
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  });
+
+  const [mobileDisplay, setMobileDisplay] = useState({
+    displayProjet: true,
+    displayFinancement: false,
+    displayRevenu: false,
+    displayCharges: false,
+    displayFoyer: false,
+    displayRegime: false,
+  });
+
+  const {
+    displayProjet,
+    displayFinancement,
+    displayRevenu,
+    displayCharges,
+    displayFoyer,
+    displayRegime,
+  } = mobileDisplay;
+
   // init form state
   const [formData, setFormData] = useState({
     type: "",
@@ -56,7 +96,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     irl: 0.01,
   });
 
-  // destructure state
+  // destructure form
   const {
     netVendeur,
     travaux,
@@ -97,11 +137,12 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 
   const { emailModal, emailFooter } = userEmail;
 
+  const [modal, setModal] = useState(false);
+
+  // onChange functions ---------------------------------------------------------------------------------
   const onChangeEmail = (e) => {
     setEmail({ ...userEmail, [e.target.name]: e.target.value });
   };
-
-  const [modal, setModal] = useState(false);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -216,7 +257,97 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 
   return (
     <div>
-      <modalEmail
+      {dimensions.width < 560 ? (
+        <div className='mobile-nav'>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: true,
+                displayFinancement: false,
+                displayRevenu: false,
+                displayCharges: false,
+                displayFoyer: false,
+                displayRegime: false,
+              })
+            }
+          >
+            <i className='fas fa-landmark header-i'></i>
+          </button>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: false,
+                displayFinancement: true,
+                displayRevenu: false,
+                displayCharges: false,
+                displayFoyer: false,
+                displayRegime: false,
+              })
+            }
+          >
+            <i className='fas fa-piggy-bank header-i'></i>
+          </button>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: false,
+                displayFinancement: false,
+                displayRevenu: true,
+                displayCharges: false,
+                displayFoyer: false,
+                displayRegime: false,
+              })
+            }
+          >
+            <i className='fas fa-hand-holding-usd header-i'></i>
+          </button>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: false,
+                displayFinancement: false,
+                displayRevenu: false,
+                displayCharges: true,
+                displayFoyer: false,
+                displayRegime: false,
+              })
+            }
+          >
+            <i className='fas fa-house-user header-i'></i>
+          </button>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: false,
+                displayFinancement: false,
+                displayRevenu: false,
+                displayCharges: false,
+                displayFoyer: true,
+                displayRegime: false,
+              })
+            }
+          >
+            <i className='fas fa-weight-hanging header-i'></i>
+          </button>
+          <button
+            onClick={() =>
+              setMobileDisplay({
+                displayProjet: false,
+                displayFinancement: false,
+                displayRevenu: false,
+                displayCharges: false,
+                displayFoyer: false,
+                displayRegime: true,
+              })
+            }
+          >
+            <i className='fas fa-balance-scale header-i'></i>
+          </button>
+        </div>
+      ) : (
+        ""
+      )}
+      <ModalEmail
         onSubmitEmail={onSubmitEmail}
         onChangeEmail={onChangeEmail}
         setModal={setModal}
@@ -226,84 +357,120 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 
       {/* main page */}
       <div className='flex-row'>
-        <Indicateurs
-          sepSpace={sepSpace}
-          netVendeur={netVendeur}
-          apport={apport}
-          loyer={loyer}
-          coutProjet={coutProjet}
-          emprunt={emprunt}
-          mensualite={mensualite}
-          revAnnuel={revAnnuel}
-          rendementBrut={rendementBrut}
-          rendementNet={rendementNet}
-        />
-
-        <div style={{ width: "100%" }}>
-          <Projet
-            onChange={onChange}
+        {dimensions.width < 560 ? (
+          ""
+        ) : (
+          <Indicateurs
             sepSpace={sepSpace}
             netVendeur={netVendeur}
-            travaux={travaux}
-            ammeublement={ammeublement}
-            notaire={notaire}
-            agence={agence}
-          />
-
-          <Financement
-            onChange={onChange}
-            duree={duree}
             apport={apport}
-            interet={interet}
-            assurance={assurance}
-          />
-
-          <Revenu
-            onChange={onChange}
-            sepSpace={sepSpace}
             loyer={loyer}
-            chargesLoc={chargesLoc}
-            occupation={occupation}
+            coutProjet={coutProjet}
+            emprunt={emprunt}
+            mensualite={mensualite}
+            revAnnuel={revAnnuel}
+            rendementBrut={rendementBrut}
+            rendementNet={rendementNet}
           />
+        )}
 
-          <Charges
-            onChange={onChange}
-            sepSpace={sepSpace}
-            fonciere={fonciere}
-            gestion={gestion}
-            charges={charges}
-            pno={pno}
-          />
+        <div style={{ width: "100%" }}>
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayProjet) ? (
+            <Projet
+              onChange={onChange}
+              sepSpace={sepSpace}
+              netVendeur={netVendeur}
+              travaux={travaux}
+              ammeublement={ammeublement}
+              notaire={notaire}
+              agence={agence}
+            />
+          ) : (
+            ""
+          )}
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayFinancement) ? (
+            <Financement
+              onChange={onChange}
+              duree={duree}
+              apport={apport}
+              interet={interet}
+              assurance={assurance}
+            />
+          ) : (
+            ""
+          )}
 
-          <Foyer
-            onChange={onChange}
-            onChangeRegime={onChangeRegime}
-            sepSpace={sepSpace}
-            revInvest1={revInvest1}
-            augInvest1={augInvest1}
-            revInvest2={revInvest2}
-            augInvest2={augInvest2}
-            invCouple={invCouple}
-          />
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayRevenu) ? (
+            <Revenu
+              onChange={onChange}
+              sepSpace={sepSpace}
+              loyer={loyer}
+              chargesLoc={chargesLoc}
+              occupation={occupation}
+            />
+          ) : (
+            ""
+          )}
 
-          <Regime
-            onChange={onChange}
-            onChangeRegime={onChangeRegime}
-            irl={irl}
-          />
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayCharges) ? (
+            <Charges
+              onChange={onChange}
+              sepSpace={sepSpace}
+              fonciere={fonciere}
+              gestion={gestion}
+              charges={charges}
+              pno={pno}
+            />
+          ) : (
+            ""
+          )}
+
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayFoyer) ? (
+            <Foyer
+              onChange={onChange}
+              onChangeRegime={onChangeRegime}
+              sepSpace={sepSpace}
+              revInvest1={revInvest1}
+              augInvest1={augInvest1}
+              revInvest2={revInvest2}
+              augInvest2={augInvest2}
+              invCouple={invCouple}
+            />
+          ) : (
+            ""
+          )}
+
+          {dimensions.width > 560 ||
+          (dimensions.width < 560 && displayRegime) ? (
+            <Regime
+              onChange={onChange}
+              onChangeRegime={onChangeRegime}
+              irl={irl}
+            />
+          ) : (
+            ""
+          )}
         </div>
-
-        <SideNav
-          onSubmit={onSubmit}
-          scrollTo={scrollTo}
-          netVendeurCheck={netVendeurCheck}
-          apportCheck={apportCheck}
-          loyerCheck={loyerCheck}
-          chargesCheck={chargesCheck}
-          foyerCheck={foyerCheck}
-          regimeCheck={regimeCheck}
-          formCheck={formCheck}
-        />
+        {dimensions.width < 560 ? (
+          ""
+        ) : (
+          <SideNav
+            onSubmit={onSubmit}
+            scrollTo={scrollTo}
+            netVendeurCheck={netVendeurCheck}
+            apportCheck={apportCheck}
+            loyerCheck={loyerCheck}
+            chargesCheck={chargesCheck}
+            foyerCheck={foyerCheck}
+            regimeCheck={regimeCheck}
+            formCheck={formCheck}
+          />
+        )}
       </div>
 
       <Footer

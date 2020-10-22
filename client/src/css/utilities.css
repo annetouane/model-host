@@ -275,6 +275,7 @@ input::-webkit-inner-spin-button {
 
 .form-header {
   color: #007be8;
+  margin-top: 20px;
 }
 
 .header-i {
@@ -530,4 +531,65 @@ input[type="email"] {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+}
+
+.mobile-nav {
+  display: flex;
+  padding: 10px 0;
+  justify-content: center;
+}
+
+.mobile-nav button {
+  border: none;
+  margin: 0 8px;
+}
+
+.mobile-nav button:focus {
+  outline: none;
+}
+
+.mobile-nav i {
+  background: #007be8;
+  opacity: 0.9;
+  padding: 10px;
+  color: #fff;
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 560px) {
+  .landing-nav {
+    display: flex;
+    align-items: center; /* vertically */
+    justify-content: space-between; /* horizontally */
+    height: 70px;
+    width: 100%;
+    padding: 0; /* create space on left and right */
+  }
+  .flex-row {
+    padding: 0 20px;
+  }
+  .form-header {
+    text-align: center;
+    margin-top: 0;
+  }
+  .form-header i {
+    display: none;
+  }
+  .footer {
+    height: 100px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .footer input {
+    margin: 5px 0 10px 0;
+  }
+  .footer-email {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    align-items: center;
+  }
 }

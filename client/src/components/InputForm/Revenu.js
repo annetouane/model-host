@@ -8,7 +8,7 @@ const Revenu = ({ onChange, sepSpace, loyer, chargesLoc, occupation }) => {
 
   return (
     <section id='revenu'>
-      <h3 className='form-header mt-20'>
+      <h3 className='form-header'>
         <i className='fas fa-hand-holding-usd header-i'></i>
         &nbsp;&nbsp;Revenu annuel d'exploitation
       </h3>

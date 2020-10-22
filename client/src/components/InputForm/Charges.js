@@ -3,7 +3,7 @@ import React from "react";
 const Charges = ({ onChange, sepSpace, fonciere, gestion, charges, pno }) => {
   return (
     <section id='charges'>
-      <h3 className='form-header mt-20'>
+      <h3 className='form-header'>
         <i className='fas fa-weight-hanging header-i'></i>
         &nbsp;&nbsp;Charges annuelles d'exploitation
       </h3>

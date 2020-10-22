@@ -3,7 +3,7 @@ import React from "react";
 const Financement = ({ onChange, duree, apport, interet, assurance }) => {
   return (
     <section id='financement'>
-      <h3 className='form-header mt-20'>
+      <h3 className='form-header'>
         <i className='fas fa-piggy-bank header-i'></i>
         &nbsp;&nbsp;Financement du projet
       </h3>
