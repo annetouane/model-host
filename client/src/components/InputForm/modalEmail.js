@@ -1,6 +1,6 @@
 import React from "react";
 
-const modalEmail = ({
+const ModalEmail = ({
   onSubmitEmail,
   onChangeEmail,
   setModal,
@@ -57,4 +57,4 @@ const modalEmail = ({
     </section>
   );
 };
-export default modalEmail;
+export default ModalEmail;
