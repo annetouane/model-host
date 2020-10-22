@@ -35,9 +35,9 @@
   height: 20px;
   cursor: ew-resize;
   background: #fff;
-  box-shadow: -500px 0 0 490px #016fc9, inset 0 0 0 40px #fff;
+  box-shadow: -500px 0 0 490px #007be8, inset 0 0 0 40px #fff;
   border-radius: 50%;
-  border: solid 3px #016fc9;
+  border: solid 3px #007be8;
   transition: box-shadow 0.2s ease-in-out;
   position: relative;
   cursor: pointer;
