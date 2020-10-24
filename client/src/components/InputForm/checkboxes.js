@@ -14,16 +14,16 @@ const checkboxes = [
     key: "checkBox3",
     label: "LMNP au Micro Foncier",
   },
-  {
-    name: "lmpReel",
-    key: "checkBox4",
-    label: "LMP au Réel",
-  },
-  {
-    name: "lmpMicro",
-    key: "checkBox5",
-    label: "LMP au Micro Foncier",
-  },
+  // {
+  //   name: "lmpReel",
+  //   key: "checkBox4",
+  //   label: "LMP au Réel",
+  // },
+  // {
+  //   name: "lmpMicro",
+  //   key: "checkBox5",
+  //   label: "LMP au Micro Foncier",
+  // },
   {
     name: "nueReel",
     key: "checkBox6",

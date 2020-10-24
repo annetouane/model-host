@@ -1,14 +1,24 @@
 import React from "react";
 
-const Charges = ({ onChange, sepSpace, fonciere, gestion, charges, pno }) => {
+const Charges = ({
+  onChange,
+  sepSpace,
+  fonciere,
+  gestion,
+  charges,
+  pno,
+  width,
+}) => {
   return (
     <section id='charges'>
       <h3 className='form-header'>
         <i className='fas fa-weight-hanging header-i'></i>
         &nbsp;&nbsp;Charges annuelles d'exploitation
       </h3>
-      <div className='flex-row jc-se mt-10'>
-        <div className='slidecontainer form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+        >
           <label>Taxe foncière : {sepSpace(fonciere)} €</label>
           <input
             type='range'
@@ -22,7 +32,9 @@ const Charges = ({ onChange, sepSpace, fonciere, gestion, charges, pno }) => {
           />
         </div>
 
-        <div className='slidecontainer form-group ml-10'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+        >
           <label>Gestion locative : {sepSpace(gestion)} €</label>
           <input
             type='range'
@@ -37,8 +49,10 @@ const Charges = ({ onChange, sepSpace, fonciere, gestion, charges, pno }) => {
         </div>
       </div>
 
-      <div className='flex-row jc-se mt-20'>
-        <div className='slidecontainer form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+        >
           <label>Charges courantes : {sepSpace(charges)} €</label>
           <input
             type='range'
@@ -52,7 +66,9 @@ const Charges = ({ onChange, sepSpace, fonciere, gestion, charges, pno }) => {
           />
         </div>
 
-        <div className='slidecontainer form-group ml-10'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+        >
           <label>Assurance PNO : {sepSpace(pno)} €</label>
           <input
             type='range'

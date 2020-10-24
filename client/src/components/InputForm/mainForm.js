@@ -9,12 +9,14 @@ import Projet from "./Projet";
 import Financement from "./Financement";
 import Revenu from "./Revenu";
 import Charges from "./Charges";
-import Foyer from "./Foyer";
+import FoyerDesktop from "./FoyerDesktop";
+import FoyerMobile from "./FoyerMobile";
 import Regime from "./Regime";
 import Indicateurs from "./Indicateurs";
 import SideNav from "./SideNav";
-import Footer from "./Footer";
+import MobileNav from "./MobileNav";
 // import ModalEmail from "./ModalEmail";
+import Footer from "./Footer";
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
@@ -24,6 +26,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     height: window.innerHeight,
     width: window.innerWidth,
   });
+
+  const { width } = dimensions;
 
   useEffect(() => {
     // set the windows dimensions on render
@@ -89,8 +93,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     sciIs: false,
     lmnpReel: false,
     lmnpMicro: false,
-    lmpReel: false,
-    lmpMicro: false,
+    // lmpReel: false,
+    // lmpMicro: false,
     nueReel: false,
     nueMicro: false,
     irl: 0.01,
@@ -124,8 +128,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     sciIs,
     lmnpReel,
     lmnpMicro,
-    lmpReel,
-    lmpMicro,
+    // lmpReel,
+    // lmpMicro,
     nueReel,
     nueMicro,
   } = formData;
@@ -243,8 +247,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     sciIs !== false ||
     lmnpReel !== false ||
     lmnpMicro !== false ||
-    lmpReel !== false ||
-    lmpMicro !== false ||
+    // lmpReel !== false ||
+    // lmpMicro !== false ||
     nueReel !== false ||
     nueMicro !== false;
   const formCheck =
@@ -257,93 +261,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 
   return (
     <div>
-      {dimensions.width < 560 ? (
-        <div className='mobile-nav'>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: true,
-                displayFinancement: false,
-                displayRevenu: false,
-                displayCharges: false,
-                displayFoyer: false,
-                displayRegime: false,
-              })
-            }
-          >
-            <i className='fas fa-landmark header-i'></i>
-          </button>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: false,
-                displayFinancement: true,
-                displayRevenu: false,
-                displayCharges: false,
-                displayFoyer: false,
-                displayRegime: false,
-              })
-            }
-          >
-            <i className='fas fa-piggy-bank header-i'></i>
-          </button>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: false,
-                displayFinancement: false,
-                displayRevenu: true,
-                displayCharges: false,
-                displayFoyer: false,
-                displayRegime: false,
-              })
-            }
-          >
-            <i className='fas fa-hand-holding-usd header-i'></i>
-          </button>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: false,
-                displayFinancement: false,
-                displayRevenu: false,
-                displayCharges: true,
-                displayFoyer: false,
-                displayRegime: false,
-              })
-            }
-          >
-            <i className='fas fa-house-user header-i'></i>
-          </button>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: false,
-                displayFinancement: false,
-                displayRevenu: false,
-                displayCharges: false,
-                displayFoyer: true,
-                displayRegime: false,
-              })
-            }
-          >
-            <i className='fas fa-weight-hanging header-i'></i>
-          </button>
-          <button
-            onClick={() =>
-              setMobileDisplay({
-                displayProjet: false,
-                displayFinancement: false,
-                displayRevenu: false,
-                displayCharges: false,
-                displayFoyer: false,
-                displayRegime: true,
-              })
-            }
-          >
-            <i className='fas fa-balance-scale header-i'></i>
-          </button>
-        </div>
+      {dimensions.width < 760 ? (
+        <MobileNav setMobileDisplay={setMobileDisplay} />
       ) : (
         ""
       )}
@@ -356,8 +275,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
       /> */}
 
       {/* main page */}
-      <div className='flex-row'>
-        {dimensions.width < 560 ? (
+      <div className='form-container'>
+        {dimensions.width < 760 ? (
           ""
         ) : (
           <Indicateurs
@@ -375,8 +294,8 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
         )}
 
         <div style={{ width: "100%" }}>
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayProjet) ? (
+          {dimensions.width > 760 ||
+          (dimensions.width < 760 && displayProjet) ? (
             <Projet
               onChange={onChange}
               sepSpace={sepSpace}
@@ -385,38 +304,41 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
               ammeublement={ammeublement}
               notaire={notaire}
               agence={agence}
+              width={width}
             />
           ) : (
             ""
           )}
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayFinancement) ? (
+          {dimensions.width > 760 ||
+          (dimensions.width < 760 && displayFinancement) ? (
             <Financement
               onChange={onChange}
               duree={duree}
               apport={apport}
               interet={interet}
               assurance={assurance}
+              width={width}
             />
           ) : (
             ""
           )}
 
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayRevenu) ? (
+          {dimensions.width > 760 ||
+          (dimensions.width < 760 && displayRevenu) ? (
             <Revenu
               onChange={onChange}
               sepSpace={sepSpace}
               loyer={loyer}
               chargesLoc={chargesLoc}
               occupation={occupation}
+              width={width}
             />
           ) : (
             ""
           )}
 
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayCharges) ? (
+          {dimensions.width > 760 ||
+          (dimensions.width < 760 && displayCharges) ? (
             <Charges
               onChange={onChange}
               sepSpace={sepSpace}
@@ -424,14 +346,14 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
               gestion={gestion}
               charges={charges}
               pno={pno}
+              width={width}
             />
           ) : (
             ""
           )}
 
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayFoyer) ? (
-            <Foyer
+          {dimensions.width > 760 ? (
+            <FoyerDesktop
               onChange={onChange}
               onChangeRegime={onChangeRegime}
               sepSpace={sepSpace}
@@ -440,23 +362,37 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
               revInvest2={revInvest2}
               augInvest2={augInvest2}
               invCouple={invCouple}
+              width={width}
+            />
+          ) : dimensions.width < 760 && displayFoyer ? (
+            <FoyerMobile
+              onChange={onChange}
+              onChangeRegime={onChangeRegime}
+              sepSpace={sepSpace}
+              revInvest1={revInvest1}
+              augInvest1={augInvest1}
+              revInvest2={revInvest2}
+              augInvest2={augInvest2}
+              invCouple={invCouple}
+              width={width}
             />
           ) : (
             ""
           )}
 
-          {dimensions.width > 560 ||
-          (dimensions.width < 560 && displayRegime) ? (
+          {dimensions.width > 760 ||
+          (dimensions.width < 760 && displayRegime) ? (
             <Regime
               onChange={onChange}
               onChangeRegime={onChangeRegime}
               irl={irl}
+              width={width}
             />
           ) : (
             ""
           )}
         </div>
-        {dimensions.width < 560 ? (
+        {dimensions.width < 760 ? (
           ""
         ) : (
           <SideNav
@@ -472,12 +408,15 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
           />
         )}
       </div>
-
-      <Footer
-        onSubmitEmail={onSubmitEmail}
-        onChangeEmail={onChangeEmail}
-        emailFooter={emailFooter}
-      />
+      {dimensions.width > 760 ? (
+        <Footer
+          onSubmitEmail={onSubmitEmail}
+          onChangeEmail={onChangeEmail}
+          emailFooter={emailFooter}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

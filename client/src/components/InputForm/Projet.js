@@ -8,6 +8,7 @@ const Projet = ({
   ammeublement,
   notaire,
   agence,
+  width,
 }) => {
   const optionsAgence = []; // frais d'agence
   for (let i = 0; i < 11; i++) {
@@ -16,12 +17,14 @@ const Projet = ({
 
   return (
     <section id='projet'>
-      <h3 className=' form-header'>
+      <h3 className='form-header'>
         <i className='fas fa-landmark header-i'></i>
         &nbsp;&nbsp;Description du projet
       </h3>
-      <div className='flex-row jc-se mt-10'>
-        <div className='flex-row jc-sb ai-fc form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mr-5"}
+        >
           <label>Type de bien : </label>
           <select
             type='select'
@@ -39,7 +42,9 @@ const Projet = ({
           </select>
         </div>
 
-        <div className='flex-row jc-sb ai-fc form-group ml-10'>
+        <div
+          className={width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 ml-5"}
+        >
           <label>Code postal : </label>
           <input
             type='number'
@@ -48,12 +53,12 @@ const Projet = ({
             name='codePostal'
             onChange={onChange}
             className='input-box fs-12'
-            placeholder='Saisir Code Postal'
+            placeholder='Saisir code postal'
           />
         </div>
       </div>
 
-      <div className='slidecontainer form-group mt-20'>
+      <div className='form-box-v mt-10'>
         <label>Net vendeur : {sepSpace(netVendeur)} €</label>
         <input
           type='range'
@@ -67,7 +72,7 @@ const Projet = ({
         />
       </div>
 
-      <div className='slidecontainer form-group mt-20'>
+      <div className='form-box-v mt-10'>
         <label>Travaux : {sepSpace(travaux)} €</label>
         <input
           type='range'
@@ -81,7 +86,7 @@ const Projet = ({
         />
       </div>
 
-      <div className='slidecontainer form-group mt-20'>
+      <div className='form-box-v mt-10'>
         <label>Ammeublement : {sepSpace(ammeublement)} €</label>
         <input
           type='range'
@@ -95,37 +100,35 @@ const Projet = ({
         />
       </div>
 
-      <div className='flex-row jc-se ai-fc mt-10 mt-20'>
-        <div className='flex-row jc-sb ai-fc form-group mr-10'>
-          <label>
-            Frais de notaire :
-            <br />
-            {sepSpace(netVendeur * notaire)} €
-          </label>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
+        >
+          <label>Frais de notaire :</label>&nbsp;&nbsp;
           <select
             type='select'
             name='notaire'
             value={notaire}
             onChange={onChange}
-            className='input-box fs-12'
+            className='input-box-2 fs-12'
           >
             <option value='0.075'>Ancien (7.5%)</option>
             <option value='0.03'>Neuf (3%)</option>
           </select>
+          &nbsp;&nbsp;
+          <p>= {sepSpace(netVendeur * notaire)} €</p>
         </div>
 
-        <div className='flex-row jc-sb ai-fc form-group ml-10'>
-          <label>
-            Frais d'agence :
-            <br />
-            {sepSpace(netVendeur * agence)} €
-          </label>
+        <div
+          className={width < 760 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
+        >
+          <label>Frais d'agence :</label>&nbsp;&nbsp;&nbsp;
           <select
             type='select'
             name='agence'
             value={agence}
             onChange={onChange}
-            className='input-box'
+            className='input-box-2 fs-12'
           >
             {optionsAgence.map((option) => (
               <option key={option} value={option / 100}>
@@ -133,6 +136,8 @@ const Projet = ({
               </option>
             ))}
           </select>
+          &nbsp;&nbsp;&nbsp;
+          <p>= {sepSpace(netVendeur * agence)} €</p>
         </div>
       </div>
     </section>

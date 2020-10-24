@@ -1,6 +1,13 @@
 import React from "react";
 
-const Revenu = ({ onChange, sepSpace, loyer, chargesLoc, occupation }) => {
+const Revenu = ({
+  onChange,
+  sepSpace,
+  loyer,
+  chargesLoc,
+  occupation,
+  width,
+}) => {
   const optionsOccupation = []; // options taux occupation
   for (let i = 1; i <= 12; i += 0.5) {
     optionsOccupation.push(i);
@@ -12,8 +19,8 @@ const Revenu = ({ onChange, sepSpace, loyer, chargesLoc, occupation }) => {
         <i className='fas fa-hand-holding-usd header-i'></i>
         &nbsp;&nbsp;Revenu annuel d'exploitation
       </h3>
-      <div className='flex-row jc-se mt-10'>
-        <div className='slidecontainer form-group'>
+      <div className='flex-row jc-se'>
+        <div className='form-box-v mt-10'>
           <label>Loyer mensuel : {sepSpace(loyer)} €</label>
           <input
             type='range'
@@ -28,8 +35,12 @@ const Revenu = ({ onChange, sepSpace, loyer, chargesLoc, occupation }) => {
         </div>
       </div>
 
-      <div className='flex-row jc-se mt-20'>
-        <div className='slidecontainer form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={
+            width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-10"
+          }
+        >
           <label>Charges locataires : {sepSpace(chargesLoc)} €</label>
           <input
             type='range'
@@ -43,7 +54,11 @@ const Revenu = ({ onChange, sepSpace, loyer, chargesLoc, occupation }) => {
           />
         </div>
 
-        <div className='flex-row jc-sb ai-fc form-group ml-10'>
+        <div
+          className={
+            width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-10"
+          }
+        >
           <label>Taux d'occupation : </label>
           <select
             type='select'

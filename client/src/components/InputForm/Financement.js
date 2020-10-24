@@ -1,14 +1,23 @@
 import React from "react";
 
-const Financement = ({ onChange, duree, apport, interet, assurance }) => {
+const Financement = ({
+  onChange,
+  duree,
+  apport,
+  interet,
+  assurance,
+  width,
+}) => {
   return (
     <section id='financement'>
       <h3 className='form-header'>
         <i className='fas fa-piggy-bank header-i'></i>
         &nbsp;&nbsp;Financement du projet
       </h3>
-      <div className='flex-row jc-se mt-10'>
-        <div className='slidecontainer form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+        >
           <label>Durée d'emprunt : {duree} ans</label>
           <input
             type='range'
@@ -21,8 +30,12 @@ const Financement = ({ onChange, duree, apport, interet, assurance }) => {
           />
         </div>
 
-        <div className='flex-row jc-sb ai-fc form-group ml-10'>
-          <label>Apport (€) : </label>
+        <div
+          className={
+            width < 760 ? "form-box-h-2 mt-10" : "form-box-h mt-10 ml-5"
+          }
+        >
+          <label>Apport (€) : </label>&nbsp;
           <input
             type='number'
             placeholder='Saisir Apport'
@@ -34,8 +47,10 @@ const Financement = ({ onChange, duree, apport, interet, assurance }) => {
         </div>
       </div>
 
-      <div className='flex-row jc-se mt-20'>
-        <div className='slidecontainer form-group mr-10'>
+      <div className='form-group'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+        >
           <label>
             Taux d'intérêt :{" "}
             {Math.round((interet * 100 + Number.EPSILON) * 100) / 100} %
@@ -52,7 +67,9 @@ const Financement = ({ onChange, duree, apport, interet, assurance }) => {
           />
         </div>
 
-        <div className='slidecontainer form-group ml-10'>
+        <div
+          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+        >
           <label>
             Taux d'assurance :{" "}
             {Math.round((assurance * 100 + Number.EPSILON) * 100) / 100} %
@@ -65,7 +82,7 @@ const Financement = ({ onChange, duree, apport, interet, assurance }) => {
             min='0'
             max='0.01'
             step='0.0001'
-            className='slider fs-12'
+            className='slider mt-5'
           />
         </div>
       </div>
