@@ -680,7 +680,7 @@ input[type="number"] {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   z-index: 20000;
 }
 
