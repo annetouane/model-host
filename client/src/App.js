@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // components
-import NavBar from "./components/layout/NavBar";
+import NavBar from "./components/Layout/NavBar";
 import MainForm from "./components/inputForm/MainForm";
 
 // stylesheets
