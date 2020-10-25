@@ -6,7 +6,7 @@ import store from "./store";
 
 // components
 import NavBar from "./components/Layout/NavBar";
-import MainForm from "./components/inputForm/MainForm";
+import MainForm from "./components/InputForm/MainForm";
 
 // stylesheets
 import "./css/utilities.css";
