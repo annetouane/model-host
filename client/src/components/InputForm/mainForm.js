@@ -17,7 +17,7 @@ import IndicateursMobile from "./IndicateursMobile";
 import IndicateursButton from "./IndicateursButton";
 import SideNav from "./SideNav";
 import MobileNav from "./MobileNav";
-import ModalEmail from "./ModalEmail";
+import ModalEmail from "./modalEmail";
 import ButtonModelMobile from "./ButtonModelMobile";
 import Footer from "./Footer";
 
