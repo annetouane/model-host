@@ -111,7 +111,7 @@ const FoyerMobile = ({
           plusieurs individus.
         </p>
         <div className='par-fisc'>
-          <label>Part(s) Fiscale(s)</label>
+          <label>Part(s) Fiscale(s) :</label>
           <select
             type='select'
             name='partFisc'

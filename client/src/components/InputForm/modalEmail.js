@@ -12,32 +12,10 @@ const ModalEmail = ({
     <section className={modal ? "email-modal" : "modal-none"}>
       <div className='modal-input'>
         <h4>
-          Simulimo est une solution gratuite pour modéliser la rentabilité
-          d'investissements locatifs. Actuellement en construction, nous
-          mettrons rapidement en lignes les fonctionnalités suivantes :
-        </h4>
-        <ul>
-          <li>
-            <i className='far fa-hand-point-right fa-2x'></i>
-            <p>
-              La fiscalité sur les revenus d'exploitation (loyers) modélisée
-              selon les différents régimes fiscaux sélectionnés (SCI à l'IS,
-              LMNP, location nue) ainsi que tous les paramètres renseignés
-              décrivant votre investissement.
-            </p>
-          </li>
-          <li>
-            <i className='far fa-hand-point-right fa-2x'></i>
-            <p>
-              La fiscalité lors de la revente modélisée selon le régime fiscal
-              choisi, de l'année de revente ainsi que tous les paramètres
-              renseignés décrivant votre investissement.
-            </p>
-          </li>
-        </ul>
-        <h4>
-          Restez informé(e) lors de la mise en lignes de ces nouvelles
-          fonctionnalités :
+          Simulimo est une solution gratuite pour modéliser la rentabilité d'un
+          investissement locatif. Actuellement en construction, nous vous
+          invitons à nous laisser votre adresse e-mail pour être informé(e) des
+          nouvelles fonctionnalités mises en ligne.
         </h4>
         <form className='container-email' onSubmit={onSubmitEmail}>
           <input
@@ -60,6 +38,25 @@ const ModalEmail = ({
             ""
           )}
         </form>
+        <h4>Prochainement, Simulimo permettra de modéliser :</h4>
+        <ul>
+          <li>
+            <i className='far fa-hand-point-right fa-2x'></i>
+            <p>
+              La fiscalité sur les revenus d'exploitation (loyers) selon
+              différents régimes fiscaux (SCI à l'IS, LMNP, location nue) ainsi
+              que tous les paramètres renseignés décrivant votre investissement.
+            </p>
+          </li>
+          <li>
+            <i className='far fa-hand-point-right fa-2x'></i>
+            <p>
+              La fiscalité à la revente selon le régime fiscal choisi, l'année
+              de revente ainsi que tous les paramètres renseignés décrivant
+              votre investissement.
+            </p>
+          </li>
+        </ul>
       </div>
     </section>
   );

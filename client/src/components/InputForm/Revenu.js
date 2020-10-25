@@ -39,7 +39,9 @@ const Revenu = ({
         <div
           className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
-          <label>Charges locataires : {sepSpace(chargesLoc)} €</label>
+          <label>
+            Charges locataires (annuelles) : {sepSpace(chargesLoc)} €
+          </label>
           <input
             type='range'
             name='chargesLoc'
@@ -57,7 +59,7 @@ const Revenu = ({
             width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
           }
         >
-          <label>Taux d'occupation : </label>
+          <label>Taux d'occupation (annuel) : </label>
           <select
             type='select'
             name='occupation'
