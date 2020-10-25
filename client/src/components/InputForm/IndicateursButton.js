@@ -2,16 +2,13 @@ import React from "react";
 
 const IndicateursButton = ({ setClick, click }) => {
   return (
-    <button
-      onClick={() => setClick(!click)}
-      className='indicateurs-mobile-button'
-    >
+    <div onClick={() => setClick(!click)}>
       {click ? (
-        <i class='far fa-times-circle header-i fa-2x indicateurs-mobile-button-on'></i>
+        <i className='far fa-times-circle header-i-2 fa-2x indicateurs-mobile-button-on'></i>
       ) : (
-        <i className='fas fa-temperature-high header-i fa-2x indicateurs-mobile-button-off' />
+        <i className='fas fa-temperature-high header-i-2 fa-2x indicateurs-mobile-button-off' />
       )}
-    </button>
+    </div>
   );
 };
 

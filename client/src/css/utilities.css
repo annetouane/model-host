@@ -557,7 +557,7 @@ input::-webkit-inner-spin-button {
   top: 11px;
   right: 80px;
   color: #fff;
-  padding: 10px;
+  padding: 8.5px;
   background-color: #01c96c;
   z-index: 100000;
   border: 2px solid #fff;
@@ -565,6 +565,12 @@ input::-webkit-inner-spin-button {
 
 .button-model-mobile-on:focus {
   outline: none;
+}
+
+.header-i-2 {
+  background: #007be8;
+  padding: 6px;
+  color: #fff;
 }
 
 .button-model-mobile-off {
