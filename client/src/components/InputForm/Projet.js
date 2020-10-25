@@ -23,7 +23,9 @@ const Projet = ({
       </h3>
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mr-5"}
+          className={
+            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mr-5 mt-10"
+          }
         >
           <label>Type de bien : </label>
           <select
@@ -43,7 +45,9 @@ const Projet = ({
         </div>
 
         <div
-          className={width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 ml-5"}
+          className={
+            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 ml-5 mt-10"
+          }
         >
           <label>Code postal : </label>
           <input

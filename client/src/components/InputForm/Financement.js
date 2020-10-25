@@ -32,7 +32,7 @@ const Financement = ({
 
         <div
           className={
-            width < 760 ? "form-box-h-2 mt-10" : "form-box-h mt-10 ml-5"
+            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
           }
         >
           <label>Apport (€) : </label>&nbsp;

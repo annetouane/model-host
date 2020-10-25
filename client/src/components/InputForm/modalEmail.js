@@ -6,6 +6,7 @@ const ModalEmail = ({
   setModal,
   modal,
   eModal,
+  width,
 }) => {
   return (
     <section className={modal ? "email-modal" : "modal-none"}>
@@ -48,12 +49,16 @@ const ModalEmail = ({
             required
           />
           <button>Valider</button>
-          <button
-            onClick={() => setModal(false)}
-            style={{ backgroundColor: "#a8a8a8" }}
-          >
-            Annuler
-          </button>
+          {width > 760 ? (
+            <button
+              onClick={() => setModal(false)}
+              style={{ backgroundColor: "#a8a8a8" }}
+            >
+              Annuler
+            </button>
+          ) : (
+            ""
+          )}
         </form>
       </div>
     </section>

@@ -287,6 +287,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         setModal={setModal}
         modal={modal}
         emailModal={eModal}
+        width={width}
       />
 
       {/* main page */}
