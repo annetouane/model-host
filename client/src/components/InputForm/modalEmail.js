@@ -2,10 +2,10 @@ import React from "react";
 
 const ModalEmail = ({
   onSubmitEmail,
-  onChangeEmail,
+  onChangeEmailModal,
   setModal,
   modal,
-  emailModal,
+  eModal,
 }) => {
   return (
     <section className={modal ? "email-modal" : "modal-none"}>
@@ -20,16 +20,17 @@ const ModalEmail = ({
             <i className='far fa-hand-point-right fa-2x'></i>
             <p>
               La fiscalité sur les revenus d'exploitation (loyers) modélisée
-              selon les différents régimes fiscaux sélectionnés ainsi que tous
-              les paramètres renseignés décrivant votre investissement.
+              selon les différents régimes fiscaux sélectionnés (SCI à l'IS,
+              LMNP, location nue) ainsi que tous les paramètres renseignés
+              décrivant votre investissement.
             </p>
           </li>
           <li>
             <i className='far fa-hand-point-right fa-2x'></i>
             <p>
-              La fiscalité lors de la revente modélisée selon le régime
-              d'exploitation choisi, de l'année de revente ainsi que tous les
-              paramètres renseignés décrivant votre investissement.
+              La fiscalité lors de la revente modélisée selon le régime fiscal
+              choisi, de l'année de revente ainsi que tous les paramètres
+              renseignés décrivant votre investissement.
             </p>
           </li>
         </ul>
@@ -41,9 +42,10 @@ const ModalEmail = ({
           <input
             type='email'
             placeholder='Saisir Email'
-            name='emailModal'
-            value={emailModal}
-            onChange={onChangeEmail}
+            name='eModal'
+            value={eModal}
+            onChange={onChangeEmailModal}
+            required
           />
           <button>Valider</button>
           <button

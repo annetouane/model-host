@@ -12,16 +12,19 @@ import Charges from "./Charges";
 import FoyerDesktop from "./FoyerDesktop";
 import FoyerMobile from "./FoyerMobile";
 import Regime from "./Regime";
-import Indicateurs from "./Indicateurs";
+import IndicateursDesktop from "./IndicateursDesktop";
+import IndicateursMobile from "./IndicateursMobile";
+import IndicateursButton from "./IndicateursButton";
 import SideNav from "./SideNav";
 import MobileNav from "./MobileNav";
-// import ModalEmail from "./ModalEmail";
+import ModalEmail from "./ModalEmail";
+import ButtonModelMobile from "./ButtonModelMobile";
 import Footer from "./Footer";
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
 
-export const InputKpi = ({ postInputForm, postEmail }) => {
+export const MainForm = ({ postInputForm, postEmail }) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -93,8 +96,6 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     sciIs: false,
     lmnpReel: false,
     lmnpMicro: false,
-    // lmpReel: false,
-    // lmpMicro: false,
     nueReel: false,
     nueMicro: false,
     irl: 0.01,
@@ -123,29 +124,30 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     revInvest2,
     augInvest2,
     invCouple,
-    // partFisc,
     irl,
     sciIs,
     lmnpReel,
     lmnpMicro,
-    // lmpReel,
-    // lmpMicro,
     nueReel,
     nueMicro,
   } = formData;
 
-  const [userEmail, setEmail] = useState({
-    emailModal: "",
-    emailFooter: "",
-  });
-
-  const { emailModal, emailFooter } = userEmail;
-
+  // modal user email
+  const [emailModal, setEmailModal] = useState({ eModal: "" });
+  const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
+  const { eModal } = emailModal;
+  const { eFooter } = emailFooter;
   const [modal, setModal] = useState(false);
 
+  // mobile menu
+  const [click, setClick] = useState(false);
+
   // onChange functions ---------------------------------------------------------------------------------
-  const onChangeEmail = (e) => {
-    setEmail({ ...userEmail, [e.target.name]: e.target.value });
+  const onChangeEmailModal = (e) => {
+    setEmailModal({ eModal: e.target.value });
+  };
+  const onChangeEmailFooter = (e) => {
+    setEmailFooter({ eFooter: e.target.value });
   };
 
   const onChange = (e) => {
@@ -165,17 +167,20 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
       // setAlert("Start time can't be superieur to end time", "red");
     }
     setModal(true);
+    setClick(false);
   };
 
   const onSubmitEmail = async (e) => {
     e.preventDefault();
-    if (userEmail) {
-      postEmail(userEmail);
+    if (emailModal) {
+      postEmail(emailModal);
+    } else if (emailFooter) {
+      postEmail(emailFooter);
     } else {
       console.log("error");
-      // setAlert("Start time can't be superieur to end time", "red");
     }
-    setEmail({ emailModal: "", emailFooter: "" });
+    setEmailModal("");
+    setEmailFooter("");
     setModal(false);
   };
 
@@ -247,8 +252,6 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
     sciIs !== false ||
     lmnpReel !== false ||
     lmnpMicro !== false ||
-    // lmpReel !== false ||
-    // lmpMicro !== false ||
     nueReel !== false ||
     nueMicro !== false;
   const formCheck =
@@ -261,25 +264,37 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 
   return (
     <div>
-      {dimensions.width < 760 ? (
-        <MobileNav setMobileDisplay={setMobileDisplay} />
+      {width < 760 ? (
+        <MobileNav
+          setMobileDisplay={setMobileDisplay}
+          setClick={setClick}
+          setModal={setModal}
+          mobileDisplay={mobileDisplay}
+          netVendeurCheck={netVendeurCheck}
+          apportCheck={apportCheck}
+          loyerCheck={loyerCheck}
+          chargesCheck={chargesCheck}
+          foyerCheck={foyerCheck}
+          regimeCheck={regimeCheck}
+        />
       ) : (
         ""
       )}
-      {/* <ModalEmail
+
+      <ModalEmail
         onSubmitEmail={onSubmitEmail}
-        onChangeEmail={onChangeEmail}
+        onChangeEmailModal={onChangeEmailModal}
         setModal={setModal}
         modal={modal}
-        emailFooter={emailModal}
-      /> */}
+        emailModal={eModal}
+      />
 
       {/* main page */}
       <div className='form-container'>
-        {dimensions.width < 760 ? (
+        {width < 760 ? (
           ""
         ) : (
-          <Indicateurs
+          <IndicateursDesktop
             sepSpace={sepSpace}
             netVendeur={netVendeur}
             apport={apport}
@@ -293,9 +308,38 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
           />
         )}
 
+        {width < 760 ? (
+          <ButtonModelMobile onSubmit={onSubmit} formCheck={formCheck} />
+        ) : (
+          ""
+        )}
+
+        {width < 760 ? (
+          <IndicateursButton setClick={setClick} click={click} />
+        ) : (
+          ""
+        )}
+
+        {width < 760 && click ? (
+          <IndicateursMobile
+            setClick={setClick}
+            sepSpace={sepSpace}
+            netVendeur={netVendeur}
+            apport={apport}
+            loyer={loyer}
+            coutProjet={coutProjet}
+            emprunt={emprunt}
+            mensualite={mensualite}
+            revAnnuel={revAnnuel}
+            rendementBrut={rendementBrut}
+            rendementNet={rendementNet}
+          />
+        ) : (
+          ""
+        )}
+
         <div style={{ width: "100%" }}>
-          {dimensions.width > 760 ||
-          (dimensions.width < 760 && displayProjet) ? (
+          {width > 760 || (width < 760 && displayProjet) ? (
             <Projet
               onChange={onChange}
               sepSpace={sepSpace}
@@ -309,8 +353,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
           ) : (
             ""
           )}
-          {dimensions.width > 760 ||
-          (dimensions.width < 760 && displayFinancement) ? (
+          {width > 760 || (width < 760 && displayFinancement) ? (
             <Financement
               onChange={onChange}
               duree={duree}
@@ -323,8 +366,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {dimensions.width > 760 ||
-          (dimensions.width < 760 && displayRevenu) ? (
+          {width > 760 || (width < 760 && displayRevenu) ? (
             <Revenu
               onChange={onChange}
               sepSpace={sepSpace}
@@ -337,8 +379,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {dimensions.width > 760 ||
-          (dimensions.width < 760 && displayCharges) ? (
+          {width > 760 || (width < 760 && displayCharges) ? (
             <Charges
               onChange={onChange}
               sepSpace={sepSpace}
@@ -352,7 +393,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {dimensions.width > 760 ? (
+          {width > 760 ? (
             <FoyerDesktop
               onChange={onChange}
               onChangeRegime={onChangeRegime}
@@ -364,7 +405,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
               invCouple={invCouple}
               width={width}
             />
-          ) : dimensions.width < 760 && displayFoyer ? (
+          ) : width < 760 && displayFoyer ? (
             <FoyerMobile
               onChange={onChange}
               onChangeRegime={onChangeRegime}
@@ -380,11 +421,15 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {dimensions.width > 760 ||
-          (dimensions.width < 760 && displayRegime) ? (
+          {width > 760 || (width < 760 && displayRegime) ? (
             <Regime
               onChange={onChange}
               onChangeRegime={onChangeRegime}
+              sciIs={sciIs}
+              lmnpReel={lmnpReel}
+              lmnpMicro={lmnpMicro}
+              nueReel={nueReel}
+              nueMicro={nueMicro}
               irl={irl}
               width={width}
             />
@@ -392,7 +437,7 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
             ""
           )}
         </div>
-        {dimensions.width < 760 ? (
+        {width < 760 ? (
           ""
         ) : (
           <SideNav
@@ -408,11 +453,11 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
           />
         )}
       </div>
-      {dimensions.width > 760 ? (
+      {width > 760 ? (
         <Footer
           onSubmitEmail={onSubmitEmail}
-          onChangeEmail={onChangeEmail}
-          emailFooter={emailFooter}
+          onChangeEmailFooter={onChangeEmailFooter}
+          emailFooter={eFooter}
         />
       ) : (
         ""
@@ -422,9 +467,9 @@ export const InputKpi = ({ postInputForm, postEmail }) => {
 };
 
 // declare/define the type of props
-InputKpi.propTypes = {
+MainForm.propTypes = {
   postInputForm: PropTypes.func.isRequired,
   postEmail: PropTypes.func.isRequired,
 };
 
-export default connect(null, { postInputForm, postEmail })(InputKpi);
+export default connect(null, { postInputForm, postEmail })(MainForm);

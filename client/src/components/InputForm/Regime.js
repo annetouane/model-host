@@ -1,7 +1,16 @@
 import React from "react";
-import checkboxes from "./checkboxes";
 
-const Regime = ({ onChange, onChangeRegime, irl, width }) => {
+const Regime = ({
+  onChange,
+  onChangeRegime,
+  sciIs,
+  lmnpReel,
+  lmnpMicro,
+  nueReel,
+  nueMicro,
+  irl,
+  width,
+}) => {
   return (
     <section id='regime'>
       <h3 className='form-header'>
@@ -12,25 +21,27 @@ const Regime = ({ onChange, onChangeRegime, irl, width }) => {
         <div className='regime-responsive'>
           <div className='regime-responsive-items'>
             <h6 className={width < 760 ? "mt-10" : ""}>
-              Société civile immobilière (SCI)
+              Société civile immobilière (SCI) :
             </h6>
             <div>
               <input
                 className='mr-5'
                 type='checkbox'
                 name='sciIs'
+                checked={sciIs}
                 onChange={onChangeRegime}
               />
               <label>Impôt sur les sociétés</label>
             </div>
             <h6 className='mt-10'>
-              Location meublée non-professionnelle (LMNP)
+              Location meublée non-professionnelle (LMNP) :
             </h6>
             <div>
               <input
                 className='mr-5'
                 type='checkbox'
                 name='lmnpReel'
+                checked={lmnpReel}
                 onChange={onChangeRegime}
               />
               <label className='mr-20'>Régime réel</label>
@@ -38,16 +49,18 @@ const Regime = ({ onChange, onChangeRegime, irl, width }) => {
                 className='mr-5'
                 type='checkbox'
                 name='lmnpMicro'
+                checked={lmnpMicro}
                 onChange={onChangeRegime}
               />
               <label>Micro-foncier</label>
             </div>
-            <h6 className='mt-10'>Location nue</h6>
+            <h6 className='mt-10'>Location nue :</h6>
             <div>
               <input
                 className='mr-5'
                 type='checkbox'
                 name='nueReel'
+                checked={nueReel}
                 onChange={onChangeRegime}
               />
               <label className='mr-20'>Régime réel</label>
@@ -55,15 +68,16 @@ const Regime = ({ onChange, onChangeRegime, irl, width }) => {
                 className='mr-5'
                 type='checkbox'
                 name='nueMicro'
+                checked={nueMicro}
                 onChange={onChangeRegime}
               />
               <label>Micro-foncier</label>
             </div>
           </div>
           <label>
-            Le régime fiscal est déterminé par le mode de détention (en direct
-            ou via une société) et d'exploitation (location vide ou meublée) du
-            bien, le revenu généré par le bien et les revenus de l’investisseurs
+            Le régime fiscal est déterminé par le mode de détention du bien (en
+            direct ou via une société), son mode d'exploitation (location vide
+            ou meublée), le revenu qu'il génère, les revenus de l’investisseurs
             ou encore la composition de son foyer fiscal. Certains régimes
             fiscaux dépendent du seul choix de l’investisseur, d’autre lui sont
             imposés par la situation de son foyer fiscal.
@@ -76,9 +90,10 @@ const Regime = ({ onChange, onChangeRegime, irl, width }) => {
 
       <div className='form-box-h-3 mt-10'>
         <p className='p-irl'>
-          L'indice de référence des loyers (IRL) calculé par l'INSEE est le taux
-          légalement applicable pour augmenter le loyer d'un bail d'une année
-          sur l'autre.
+          L'indice de référence des loyers (IRL) est le taux légalement
+          applicable pour augmenter le loyer d'un bail d'une année sur l'autre.
+          Il est calculé par l'INSEE à partir du taux d'inflation constaté d'une
+          année sur l'autre.
         </p>
         <div className='irl'>
           <label>

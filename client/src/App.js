@@ -6,7 +6,7 @@ import store from "./store";
 
 // components
 import NavBar from "../src/components/Layout/NavBar";
-import mainForm from "./components/InputForm/mainForm";
+import MainForm from "./components/InputForm/MainForm";
 
 // stylesheets
 import "./css/utilities.css";
@@ -19,7 +19,7 @@ const App = () => {
         <Router>
           <NavBar />
           <Switch>
-            <Route exact path='/' component={mainForm} />
+            <Route exact path='/' component={MainForm} />
           </Switch>
         </Router>
       </Fragment>

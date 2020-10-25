@@ -4,8 +4,7 @@ export const NavBar = () => {
   return (
     <nav className='landing-nav'>
       <div className='flex-row ai-fc'>
-        <i className='fas fa-landmark fa-2x'></i>
-        <h1 className='ml-20 bold'>SIMULIMO </h1>
+        <h1 className='bold'>SIMULIMO </h1>
       </div>
 
       {/* <div>

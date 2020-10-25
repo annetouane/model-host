@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = ({ onSubmitEmail, onChangeEmail, emailFooter }) => {
+const Footer = ({ onSubmitEmail, onChangeEmailFooter, eFooter }) => {
   return (
     <section className='footer'>
       <h4>© 2020 ACH. All rights reserved</h4>
@@ -10,9 +10,9 @@ const Footer = ({ onSubmitEmail, onChangeEmail, emailFooter }) => {
           <input
             type='email'
             placeholder='Saisir Email'
-            name='emailFooter'
-            value={emailFooter}
-            onChange={onChangeEmail}
+            name='eFooter'
+            value={eFooter}
+            onChange={onChangeEmailFooter}
           />
           <button>Valider</button>
         </form>
