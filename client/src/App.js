@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // components
-import NavBar from "../src/components/Layout/NavBar";
-import MainForm from "./components/InputForm/MainForm";
+import NavBar from "./components/layout/NavBar";
+import MainForm from "./components/inputForm/MainForm";
 
 // stylesheets
 import "./css/utilities.css";
