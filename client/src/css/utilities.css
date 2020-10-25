@@ -673,13 +673,14 @@ input[type="number"] {
   align-items: center;
   visibility: visible;
   opacity: 1;
+  overflow: scroll;
   transition: opacity 2s linear;
   filter: blur(0);
   transform: scale(1);
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 140px);
   z-index: 20000;
 }
 
@@ -696,7 +697,6 @@ input[type="number"] {
   box-shadow: 0.5px 0.5px #030303;
   text-align: justify;
   font-size: 14px;
-  overflow: scroll;
 }
 
 .modal-input li {
