@@ -7,6 +7,7 @@ const Revenu = ({
   chargesLoc,
   occupation,
   width,
+  showModal,
 }) => {
   const optionsOccupation = []; // options taux occupation
   for (let i = 1; i <= 12; i += 0.5) {
@@ -22,16 +23,23 @@ const Revenu = ({
       <div className='flex-row jc-se'>
         <div className='form-box-v mt-10'>
           <label>Loyer mensuel : {sepSpace(loyer)} €</label>
-          <input
-            type='range'
-            name='loyer'
-            value={loyer}
-            onChange={onChange}
-            min='0'
-            max='10000'
-            step='20'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='loyer'
+              value={loyer}
+              onChange={onChange}
+              min='0'
+              max='10000'
+              step='20'
+              className='slider mt-5'
+            />
+            <i
+              id='info-loyer'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
       </div>
 
@@ -42,16 +50,23 @@ const Revenu = ({
           <label>
             Charges locataires (annuelles) : {sepSpace(chargesLoc)} €
           </label>
-          <input
-            type='range'
-            name='chargesLoc'
-            value={chargesLoc}
-            onChange={onChange}
-            min='0'
-            max='10000'
-            step='20'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='chargesLoc'
+              value={chargesLoc}
+              onChange={onChange}
+              min='0'
+              max='10000'
+              step='20'
+              className='slider mt-5'
+            />
+            <i
+              id='info-locataire'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
 
         <div
@@ -59,13 +74,13 @@ const Revenu = ({
             width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
           }
         >
-          <label>Taux d'occupation (annuel) : </label>
+          <label>Taux annuel d'occupation : </label>
           <select
             type='select'
             name='occupation'
             value={occupation}
             onChange={onChange}
-            className='input-box fs-12'
+            className='input-box-2 fs-12'
           >
             {optionsOccupation.map((option) => (
               <option key={option} value={option}>
@@ -73,6 +88,11 @@ const Revenu = ({
               </option>
             ))}
           </select>
+          <i
+            id='info-occupation'
+            onClick={showModal}
+            class='fas fa-question-circle'
+          ></i>
         </div>
       </div>
     </section>

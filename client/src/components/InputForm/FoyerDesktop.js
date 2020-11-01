@@ -3,13 +3,13 @@ import React from "react";
 const FoyerDesktop = ({
   onChange,
   onChangeRegime,
+  showModal,
   sepSpace,
   revInvest1,
   augInvest1,
   revInvest2,
   augInvest2,
   invCouple,
-  width,
 }) => {
   const optionsAugmentation = [];
   for (let i = 0; i < 21; i++) {
@@ -27,7 +27,14 @@ const FoyerDesktop = ({
         <i className='fas fa-house-user header-i'></i>&nbsp;&nbsp;Foyer fiscal
       </h3>
       <div className='form-box-v mt-10'>
-        <h4>Investisseur N° 1 :</h4>
+        <div className='info-button'>
+          <h4>Investisseur N° 1 :</h4>
+          <i
+            id='info-investisseur'
+            onClick={showModal}
+            class='fas fa-question-circle mb-10'
+          ></i>
+        </div>
         <div className='invest-rev'>
           <label>Revenu net avant impôts : {sepSpace(revInvest1)} €</label>
           <label>Augmentation annuelle moyenne :</label>
@@ -118,12 +125,27 @@ const FoyerDesktop = ({
         <p className='p-par-fisc'>
           En France, l'impôt sur le revenu est calculé au niveau du foyer
           fiscal. Les invdividus composant le foyer fiscal sont appelées parts
-          fiscales. Le nombre de parts fiscales est une notion clé pour le
-          calcul de l’impôt sur le revenu lorsque le foyer fiscal est composé de
-          plusieurs individus.
+          fiscales ou parts de quotien familial. Le nombre de parts est une
+          notion clé pour le calcul de l’impôt sur le revenu lorsque le foyer
+          fiscal est composé de plusieurs individus. Plus d'informations sur
+          <a
+            style={{ color: "#007be8", fontWeight: "bold" }}
+            href='https://www.service-public.fr/particuliers/vosdroits/F2705'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            &nbsp;service-public.fr
+          </a>
         </p>
         <div className='par-fisc'>
-          <label>Part(s) Fiscale(s) :</label>
+          <div className='info-button'>
+            <label>Part(s) Fiscale(s) :</label>
+            <i
+              id='info-partfisc'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
           <select
             type='select'
             name='partFisc'

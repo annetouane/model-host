@@ -3,6 +3,7 @@ import React from "react";
 const Regime = ({
   onChange,
   onChangeRegime,
+  showModal,
   sciIs,
   lmnpReel,
   lmnpMicro,
@@ -80,12 +81,30 @@ const Regime = ({
             ou meublée), le revenu qu'il génère, les revenus de l’investisseurs
             ou encore la composition de son foyer fiscal. Certains régimes
             fiscaux dépendent du seul choix de l’investisseur, d’autre lui sont
-            imposés par la situation de son foyer fiscal.
+            imposés par la situation de son foyer fiscal. Visitez{" "}
+            <a
+              style={{ color: "#007be8", fontWeight: "bold" }}
+              href='https://www.pap.fr/bailleur/choisir-investissement/la-fiscalite-immobiliere/a1247'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              cette page
+            </a>{" "}
+            du site{" "}
+            <a
+              style={{ color: "#007be8", fontWeight: "bold" }}
+              href='https://www.pap.fr'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              pap.fr
+            </a>{" "}
+            pour plus d'informations sur la fiscalité immobilière.
           </label>
         </div>
-        <small className='mt-10'>
+        {/* <small className='mt-10'>
           Une modélisation sera calculée pour chaque régime fiscal sélectionné
-        </small>
+        </small> */}
       </div>
 
       <div className='form-box-h-3 mt-10'>
@@ -100,16 +119,23 @@ const Regime = ({
             Indice de référence des loyers :{" "}
             {Math.round((irl * 100 + Number.EPSILON) * 100) / 100} %
           </label>
-          <input
-            type='range'
-            name='irl'
-            value={irl}
-            onChange={onChange}
-            min='0'
-            max='0.03'
-            step='0.001'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='irl'
+              value={irl}
+              onChange={onChange}
+              min='0'
+              max='0.03'
+              step='0.001'
+              className='slider mt-5'
+            />
+            <i
+              id='info-irl'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ import React from "react";
 
 const Projet = ({
   onChange,
+  showModal,
   sepSpace,
   netVendeur,
   travaux,
@@ -24,7 +25,7 @@ const Projet = ({
       <div className='form-group'>
         <div
           className={
-            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mr-5 mt-10"
+            width < 760 ? "form-box-h-1 mt-10" : "form-box-h-1 mr-5 mt-10"
           }
         >
           <label>Type de bien : </label>
@@ -46,7 +47,7 @@ const Projet = ({
 
         <div
           className={
-            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 ml-5 mt-10"
+            width < 760 ? "form-box-h-1 mt-10" : "form-box-h-1 ml-5 mt-10"
           }
         >
           <label>Code postal : </label>
@@ -64,84 +65,119 @@ const Projet = ({
 
       <div className='form-box-v mt-10'>
         <label>Net vendeur : {sepSpace(netVendeur)} €</label>
-        <input
-          type='range'
-          name='netVendeur'
-          value={netVendeur}
-          onChange={onChange}
-          min='0'
-          max='1000000'
-          step='500'
-          className='slider mt-5'
-        />
+        <div className='info-button'>
+          <input
+            type='range'
+            name='netVendeur'
+            value={netVendeur}
+            onChange={onChange}
+            min='0'
+            max='1000000'
+            step='500'
+            className='slider mt-5'
+          />
+          <i
+            id='info-net-vendeur'
+            onClick={showModal}
+            class='fas fa-question-circle'
+          ></i>
+        </div>
       </div>
 
       <div className='form-box-v mt-10'>
         <label>Travaux : {sepSpace(travaux)} €</label>
-        <input
-          type='range'
-          name='travaux'
-          value={travaux}
-          onChange={onChange}
-          min='0'
-          max='300000'
-          step='200'
-          className='slider mt-5'
-        />
+        <div className='info-button'>
+          <input
+            type='range'
+            name='travaux'
+            value={travaux}
+            onChange={onChange}
+            min='0'
+            max='300000'
+            step='200'
+            className='slider mt-5'
+          />
+          <i
+            id='info-travaux'
+            onClick={showModal}
+            class='fas fa-question-circle'
+          ></i>
+        </div>
       </div>
 
       <div className='form-box-v mt-10'>
         <label>Ammeublement : {sepSpace(ammeublement)} €</label>
-        <input
-          type='range'
-          name='ammeublement'
-          value={ammeublement}
-          onChange={onChange}
-          min='0'
-          max='100000'
-          step='100'
-          className='slider mt-5'
-        />
+        <div className='info-button'>
+          <input
+            type='range'
+            name='ammeublement'
+            value={ammeublement}
+            onChange={onChange}
+            min='0'
+            max='100000'
+            step='100'
+            className='slider mt-5'
+          />
+          <i
+            id='info-ammeublement'
+            onClick={showModal}
+            class='fas fa-question-circle'
+          ></i>
+        </div>
       </div>
 
       <div className='form-group'>
         <div
           className={width < 760 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
         >
-          <label>Frais de notaire :</label>&nbsp;&nbsp;
-          <select
-            type='select'
-            name='notaire'
-            value={notaire}
-            onChange={onChange}
-            className='input-box-2 fs-12'
-          >
-            <option value='0.075'>Ancien (7.5%)</option>
-            <option value='0.03'>Neuf (3%)</option>
-          </select>
-          &nbsp;&nbsp;
-          <p>= {sepSpace(netVendeur * notaire)} €</p>
+          <div className='flex-row jc-fs ai-fc f-wrap'>
+            <label>Frais de notaire :</label>&nbsp;&nbsp;
+            <select
+              type='select'
+              name='notaire'
+              value={notaire}
+              onChange={onChange}
+              className='input-box-2 fs-12'
+            >
+              <option value='0.075'>7.5% (Ancien)</option>
+              <option value='0.03'>3% (Neuf)</option>
+            </select>
+            &nbsp;&nbsp;
+            <p>= {sepSpace(netVendeur * notaire)} €</p>
+          </div>
+          <i
+            id='info-notaire'
+            onClick={showModal}
+            class='fas fa-question-circle fa-lg'
+          ></i>
         </div>
 
         <div
           className={width < 760 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
         >
-          <label>Frais d'agence :</label>&nbsp;&nbsp;&nbsp;
-          <select
-            type='select'
-            name='agence'
-            value={agence}
-            onChange={onChange}
-            className='input-box-2 fs-12'
-          >
-            {optionsAgence.map((option) => (
-              <option key={option} value={option / 100}>
-                {option}%
-              </option>
-            ))}
-          </select>
-          &nbsp;&nbsp;&nbsp;
-          <p>= {sepSpace(netVendeur * agence)} €</p>
+          <div className='flex-row jc-fs ai-fc f-wrap'>
+            <label>Frais d'agence :</label>&nbsp;&nbsp;&nbsp;
+            <select
+              type='select'
+              name='agence'
+              value={agence}
+              onChange={onChange}
+              className='input-box-2 fs-12'
+            >
+              {optionsAgence.map((option) => (
+                <option key={option} value={option / 100}>
+                  {option}%
+                </option>
+              ))}
+            </select>
+            &nbsp;&nbsp;&nbsp;
+            <p>= {sepSpace(netVendeur * agence)} €</p>
+          </div>
+          <i
+            id='info-agence'
+            onClick={showModal}
+            class='fas fa-question-circle fa-lg'
+          ></i>
         </div>
       </div>
     </section>

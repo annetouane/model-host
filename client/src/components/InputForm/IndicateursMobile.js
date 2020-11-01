@@ -1,17 +1,18 @@
 import React from "react";
 
 const IndicateursMobile = ({
-  setClick,
   sepSpace,
-  netVendeur,
-  apport,
-  loyer,
+  netVendeurCheck,
+  apportCheck,
+  loyerCheck,
+  chargesCheck,
   coutProjet,
   emprunt,
   mensualite,
   revAnnuel,
   rendementBrut,
   rendementNet,
+  cashFlowAnnuel,
 }) => {
   return (
     <section id='indicateurs' className='indicateurs-mobile'>
@@ -22,53 +23,55 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <h4>Coût du projet :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0
-            ? "-"
-            : sepSpace(coutProjet).toString() + " €"}
+          {netVendeurCheck ? sepSpace(coutProjet).toString() + " €" : "-"}
         </h4>
       </div>
       <div className='flex-column mb-10'>
         <h4>Emprunt :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0 || apport === ""
-            ? "-"
-            : sepSpace(emprunt).toString() + " €"}
+          {netVendeurCheck && apportCheck
+            ? sepSpace(emprunt).toString() + " €"
+            : "-"}
         </h4>
       </div>
       <div className='flex-column mb-10'>
         <h4>Mensualité :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0 || apport === ""
-            ? "-"
-            : sepSpace(mensualite).toString() + " €"}
+          {netVendeurCheck && apportCheck
+            ? sepSpace(mensualite).toString() + " €"
+            : "-"}
         </h4>
       </div>
       <div className='flex-column mb-10'>
         <h4>Revenu annuel :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0 || apport === "" || parseInt(loyer) === 0
-            ? "-"
-            : sepSpace(revAnnuel).toString() + " €"}
+          {netVendeurCheck && apportCheck && loyerCheck
+            ? sepSpace(revAnnuel).toString() + " €"
+            : "-"}
         </h4>
       </div>
       <div className='flex-column mb-10'>
-        <h4>Rendement brut :</h4>
+        <h4>Rendement annuel brut :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0 || apport === "" || parseInt(loyer) === 0
-            ? "-"
-            : rendementBrut.toString() + " %"}
+          {netVendeurCheck && apportCheck && loyerCheck
+            ? rendementBrut.toString() + " %"
+            : "-"}
         </h4>
       </div>
       <div className='flex-column mb-10'>
-        <h4>Rendement net :</h4>
+        <h4>Rendement annuel net :</h4>
         <h4 className='bold color-blue'>
-          {parseInt(netVendeur) === 0 || apport === "" || parseInt(loyer) === 0
-            ? //   parseInt(charges) !== 0 ||
-              // parseInt(gestion) !== 0 ||
-              // parseInt(fonciere) !== 0 ||
-              // parseInt(pno) !== 0
-              "-"
-            : rendementNet.toString() + " %"}
+          {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
+            ? rendementNet.toString() + " %"
+            : "-"}
+        </h4>
+      </div>
+      <div className='flex-column mb-10'>
+        <h4>Cash-flow avant impôt :</h4>
+        <h4 className='bold color-blue'>
+          {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
+            ? sepSpace(cashFlowAnnuel).toString() + " €"
+            : "-"}
         </h4>
       </div>
     </section>

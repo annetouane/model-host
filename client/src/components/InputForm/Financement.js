@@ -7,6 +7,7 @@ const Financement = ({
   interet,
   assurance,
   width,
+  showModal,
 }) => {
   return (
     <section id='financement'>
@@ -19,15 +20,22 @@ const Financement = ({
           className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>Durée d'emprunt : {duree} ans</label>
-          <input
-            type='range'
-            name='duree'
-            value={duree}
-            onChange={onChange}
-            min='0'
-            max='30'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='duree'
+              value={duree}
+              onChange={onChange}
+              min='0'
+              max='30'
+              className='slider mt-5'
+            />
+            <i
+              id='info-duree'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
 
         <div
@@ -44,6 +52,11 @@ const Financement = ({
             onChange={onChange}
             className='input-box fs-12'
           />
+          <i
+            id='info-apport'
+            onClick={showModal}
+            class='fas fa-question-circle '
+          ></i>
         </div>
       </div>
 
@@ -55,16 +68,23 @@ const Financement = ({
             Taux d'intérêt :{" "}
             {Math.round((interet * 100 + Number.EPSILON) * 100) / 100} %
           </label>
-          <input
-            type='range'
-            name='interet'
-            value={interet}
-            onChange={onChange}
-            min='0'
-            max='0.04'
-            step='0.001'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='interet'
+              value={interet}
+              onChange={onChange}
+              min='0'
+              max='0.04'
+              step='0.001'
+              className='slider mt-5'
+            />
+            <i
+              id='info-interet'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
 
         <div
@@ -74,16 +94,23 @@ const Financement = ({
             Taux d'assurance :{" "}
             {Math.round((assurance * 100 + Number.EPSILON) * 100) / 100} %
           </label>
-          <input
-            type='range'
-            name='assurance'
-            value={assurance}
-            onChange={onChange}
-            min='0'
-            max='0.01'
-            step='0.0001'
-            className='slider mt-5'
-          />
+          <div className='info-button'>
+            <input
+              type='range'
+              name='assurance'
+              value={assurance}
+              onChange={onChange}
+              min='0'
+              max='0.01'
+              step='0.0001'
+              className='slider mt-5'
+            />
+            <i
+              id='info-assurance'
+              onClick={showModal}
+              class='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
       </div>
     </section>

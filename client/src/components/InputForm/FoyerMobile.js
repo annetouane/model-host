@@ -3,13 +3,13 @@ import React from "react";
 const FoyerMobile = ({
   onChange,
   onChangeRegime,
+  showModal,
   sepSpace,
   revInvest1,
   augInvest1,
   revInvest2,
   augInvest2,
   invCouple,
-  width,
 }) => {
   const optionsAugmentation = [];
   for (let i = 0; i < 21; i++) {
@@ -27,7 +27,14 @@ const FoyerMobile = ({
         <i className='fas fa-house-user header-i'></i>&nbsp;&nbsp;Foyer fiscal
       </h3>
       <div className='form-box-v mt-10'>
-        <h4>Investisseur N° 1 :</h4>
+        <div className='info-button'>
+          <h4>Investisseur N° 1 :</h4>
+          <i
+            id='info-investisseur'
+            onClick={showModal}
+            class='fas fa-question-circle mb-10'
+          ></i>
+        </div>
         <label>Revenu net avant impôts : {sepSpace(revInvest1)} €</label>
         <input
           type='range'

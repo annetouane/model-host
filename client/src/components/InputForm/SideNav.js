@@ -149,7 +149,8 @@ const Indicateurs = ({
           cursor: !formCheck && "not-allowed",
         }}
       >
-        Modélisation Fiscale &nbsp;&nbsp;
+        Modélisation <br />
+        Fiscale &nbsp;
         <span
           style={{
             display: !formCheck && "none",

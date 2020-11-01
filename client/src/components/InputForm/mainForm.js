@@ -20,16 +20,15 @@ import MobileNav from "./MobileNav";
 import ModalEmail from "./modalEmail";
 import ButtonModelMobile from "./ButtonModelMobile";
 import Footer from "./Footer";
+import InfoModal from "./InfoModal";
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
 
 export const MainForm = ({ postInputForm, postEmail }) => {
   const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
     width: window.innerWidth,
   });
-
   const { width } = dimensions;
 
   useEffect(() => {
@@ -238,7 +237,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
-  // display / hide blocks
+  // display / hide
   const netVendeurCheck = parseInt(netVendeur) !== 0;
   const apportCheck = apport !== "";
   const loyerCheck = parseInt(loyer) !== 0;
@@ -262,8 +261,29 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     foyerCheck &&
     regimeCheck;
 
+  // information modal
+  const [displayInfoModal, setDisplayInfoModal] = useState(false);
+  const [contentInfoModal, setContentInfoModal] = useState({ idContent: null });
+  const { idContent } = contentInfoModal;
+
+  const showModal = (e) => {
+    setDisplayInfoModal(true);
+    setContentInfoModal({ idContent: e.target.id });
+    console.log(e.target.id);
+  };
+
   return (
     <div>
+      {/* <InfoModal /> */}
+      {displayInfoModal ? (
+        <InfoModal
+          idContent={idContent}
+          setDisplayInfoModal={setDisplayInfoModal}
+        />
+      ) : (
+        ""
+      )}
+
       {width < 760 ? (
         <MobileNav
           setMobileDisplay={setMobileDisplay}
@@ -297,15 +317,18 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         ) : (
           <IndicateursDesktop
             sepSpace={sepSpace}
-            netVendeur={netVendeur}
-            apport={apport}
-            loyer={loyer}
+            showModal={showModal}
+            netVendeurCheck={netVendeurCheck}
+            apportCheck={apportCheck}
+            loyerCheck={loyerCheck}
+            chargesCheck={chargesCheck}
             coutProjet={coutProjet}
             emprunt={emprunt}
             mensualite={mensualite}
             revAnnuel={revAnnuel}
             rendementBrut={rendementBrut}
             rendementNet={rendementNet}
+            cashFlowAnnuel={cashFlowAnnuel}
           />
         )}
 
@@ -334,6 +357,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             revAnnuel={revAnnuel}
             rendementBrut={rendementBrut}
             rendementNet={rendementNet}
+            cashFlowAnnuel={cashFlowAnnuel}
           />
         ) : (
           ""
@@ -343,6 +367,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           {width > 760 || (width < 760 && displayProjet) ? (
             <Projet
               onChange={onChange}
+              showModal={showModal}
               sepSpace={sepSpace}
               netVendeur={netVendeur}
               travaux={travaux}
@@ -350,6 +375,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               notaire={notaire}
               agence={agence}
               width={width}
+              idContent={idContent}
             />
           ) : (
             ""
@@ -357,6 +383,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           {width > 760 || (width < 760 && displayFinancement) ? (
             <Financement
               onChange={onChange}
+              showModal={showModal}
               duree={duree}
               apport={apport}
               interet={interet}
@@ -370,6 +397,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           {width > 760 || (width < 760 && displayRevenu) ? (
             <Revenu
               onChange={onChange}
+              showModal={showModal}
               sepSpace={sepSpace}
               loyer={loyer}
               chargesLoc={chargesLoc}
@@ -383,6 +411,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           {width > 760 || (width < 760 && displayCharges) ? (
             <Charges
               onChange={onChange}
+              showModal={showModal}
               sepSpace={sepSpace}
               fonciere={fonciere}
               gestion={gestion}
@@ -398,6 +427,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             <FoyerDesktop
               onChange={onChange}
               onChangeRegime={onChangeRegime}
+              showModal={showModal}
               sepSpace={sepSpace}
               revInvest1={revInvest1}
               augInvest1={augInvest1}
@@ -410,13 +440,13 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             <FoyerMobile
               onChange={onChange}
               onChangeRegime={onChangeRegime}
+              showModal={showModal}
               sepSpace={sepSpace}
               revInvest1={revInvest1}
               augInvest1={augInvest1}
               revInvest2={revInvest2}
               augInvest2={augInvest2}
               invCouple={invCouple}
-              width={width}
             />
           ) : (
             ""
@@ -426,6 +456,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             <Regime
               onChange={onChange}
               onChangeRegime={onChangeRegime}
+              showModal={showModal}
               sciIs={sciIs}
               lmnpReel={lmnpReel}
               lmnpMicro={lmnpMicro}
@@ -444,6 +475,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           <SideNav
             onSubmit={onSubmit}
             scrollTo={scrollTo}
+            showModal={showModal}
             netVendeurCheck={netVendeurCheck}
             apportCheck={apportCheck}
             loyerCheck={loyerCheck}
