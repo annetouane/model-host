@@ -27,7 +27,7 @@ const ModalEmail = ({
             required
           />
           <button>Valider</button>
-          {width > 760 ? (
+          {width > 770 ? (
             <button
               onClick={() => setModal(false)}
               style={{ backgroundColor: "#a8a8a8" }}

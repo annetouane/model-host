@@ -25,7 +25,7 @@ const Projet = ({
       <div className='form-group'>
         <div
           className={
-            width < 760 ? "form-box-h-1 mt-10" : "form-box-h-1 mr-5 mt-10"
+            width < 770 ? "form-box-h-1 mt-10" : "form-box-h-1 mr-5 mt-10"
           }
         >
           <label>Type de bien : </label>
@@ -47,7 +47,7 @@ const Projet = ({
 
         <div
           className={
-            width < 760 ? "form-box-h-1 mt-10" : "form-box-h-1 ml-5 mt-10"
+            width < 770 ? "form-box-h-1 mt-10" : "form-box-h-1 ml-5 mt-10"
           }
         >
           <label>Code postal : </label>
@@ -128,7 +128,7 @@ const Projet = ({
 
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
+          className={width < 770 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
         >
           <div className='flex-row jc-fs ai-fc f-wrap'>
             <label>Frais de notaire :</label>&nbsp;&nbsp;
@@ -153,7 +153,7 @@ const Projet = ({
         </div>
 
         <div
-          className={width < 760 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
+          className={width < 770 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
         >
           <div className='flex-row jc-fs ai-fc f-wrap'>
             <label>Frais d'agence :</label>&nbsp;&nbsp;&nbsp;

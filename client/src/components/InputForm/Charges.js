@@ -18,7 +18,7 @@ const Charges = ({
       </h3>
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>Taxe foncière : {sepSpace(fonciere)} €</label>
           <div className='info-button'>
@@ -41,7 +41,7 @@ const Charges = ({
         </div>
 
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
           <label>Gestion locative : {sepSpace(gestion)} €</label>
           <div className='info-button'>
@@ -66,7 +66,7 @@ const Charges = ({
 
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>Charges courantes : {sepSpace(charges)} €</label>
           <div className='info-button'>
@@ -89,7 +89,7 @@ const Charges = ({
         </div>
 
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
           <label>Assurance PNO : {sepSpace(pno)} €</label>
           <div className='info-button'>

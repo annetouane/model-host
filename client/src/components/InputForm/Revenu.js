@@ -45,7 +45,7 @@ const Revenu = ({
 
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>
             Charges locataires (annuelles) : {sepSpace(chargesLoc)} €
@@ -71,7 +71,7 @@ const Revenu = ({
 
         <div
           className={
-            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
+            width < 770 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
           }
         >
           <label>Taux annuel d'occupation : </label>

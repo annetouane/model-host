@@ -21,7 +21,7 @@ const Regime = ({
       <div className='form-box-v mt-10'>
         <div className='regime-responsive'>
           <div className='regime-responsive-items'>
-            <h6 className={width < 760 ? "mt-10" : ""}>
+            <h6 className={width < 770 ? "mt-10" : ""}>
               Société civile immobilière (SCI) :
             </h6>
             <div>

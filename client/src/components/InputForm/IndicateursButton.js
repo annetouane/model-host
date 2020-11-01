@@ -1,8 +1,12 @@
 import React from "react";
 
-const IndicateursButton = ({ setClick, click }) => {
+const IndicateursButton = ({ setClick, click, setDisplayInfoModal }) => {
+  const volver = () => {
+    setClick(!click);
+    setDisplayInfoModal(false);
+  };
   return (
-    <div onClick={() => setClick(!click)}>
+    <div onClick={() => volver()}>
       {click ? (
         <i className='far fa-times-circle header-i-2 fa-2x indicateurs-mobile-button-on'></i>
       ) : (

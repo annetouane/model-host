@@ -916,7 +916,7 @@ input[type="email"] {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: calc(100vh - 120px);
-  z-index: 20000;
+  z-index: 20000000;
 }
 
 .info-modal-header {
@@ -951,7 +951,7 @@ input[type="email"] {
   padding: 20px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 770px) {
   .landing-nav {
     display: flex;
     align-items: center; /* vertically */
@@ -1064,6 +1064,9 @@ input[type="email"] {
     border-radius: 0;
     margin-top: 0;
     z-index: 100000000;
+  }
+  .info-modal {
+    height: calc(100vh - 140px);
   }
   .info-modal-content {
     width: 90%;

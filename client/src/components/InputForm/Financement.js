@@ -17,7 +17,7 @@ const Financement = ({
       </h3>
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>Durée d'emprunt : {duree} ans</label>
           <div className='info-button'>
@@ -40,7 +40,7 @@ const Financement = ({
 
         <div
           className={
-            width < 760 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
+            width < 770 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
           }
         >
           <label>Apport (€) : </label>&nbsp;
@@ -62,7 +62,7 @@ const Financement = ({
 
       <div className='form-group'>
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>
             Taux d'intérêt :{" "}
@@ -88,7 +88,7 @@ const Financement = ({
         </div>
 
         <div
-          className={width < 760 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
           <label>
             Taux d'assurance :{" "}

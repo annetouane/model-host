@@ -284,11 +284,12 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         ""
       )}
 
-      {width < 760 ? (
+      {width < 770 ? (
         <MobileNav
           setMobileDisplay={setMobileDisplay}
           setClick={setClick}
           setModal={setModal}
+          setDisplayInfoModal={setDisplayInfoModal}
           mobileDisplay={mobileDisplay}
           netVendeurCheck={netVendeurCheck}
           apportCheck={apportCheck}
@@ -312,7 +313,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
 
       {/* main page */}
       <div className='form-container'>
-        {width < 760 ? (
+        {width < 770 ? (
           ""
         ) : (
           <IndicateursDesktop
@@ -332,21 +333,26 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           />
         )}
 
-        {width < 760 ? (
+        {width < 770 ? (
           <ButtonModelMobile onSubmit={onSubmit} formCheck={formCheck} />
         ) : (
           ""
         )}
 
-        {width < 760 ? (
-          <IndicateursButton setClick={setClick} click={click} />
+        {width < 770 ? (
+          <IndicateursButton
+            setClick={setClick}
+            click={click}
+            setDisplayInfoModal={setDisplayInfoModal}
+          />
         ) : (
           ""
         )}
 
-        {width < 760 && click ? (
+        {width < 770 && click ? (
           <IndicateursMobile
             setClick={setClick}
+            showModal={showModal}
             sepSpace={sepSpace}
             netVendeur={netVendeur}
             apport={apport}
@@ -364,7 +370,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         )}
 
         <div style={{ width: "100%" }}>
-          {width > 760 || (width < 760 && displayProjet) ? (
+          {width > 770 || (width < 770 && displayProjet) ? (
             <Projet
               onChange={onChange}
               showModal={showModal}
@@ -380,7 +386,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           ) : (
             ""
           )}
-          {width > 760 || (width < 760 && displayFinancement) ? (
+          {width > 770 || (width < 770 && displayFinancement) ? (
             <Financement
               onChange={onChange}
               showModal={showModal}
@@ -394,7 +400,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {width > 760 || (width < 760 && displayRevenu) ? (
+          {width > 770 || (width < 770 && displayRevenu) ? (
             <Revenu
               onChange={onChange}
               showModal={showModal}
@@ -408,7 +414,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {width > 760 || (width < 760 && displayCharges) ? (
+          {width > 770 || (width < 770 && displayCharges) ? (
             <Charges
               onChange={onChange}
               showModal={showModal}
@@ -423,7 +429,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {width > 760 ? (
+          {width > 770 ? (
             <FoyerDesktop
               onChange={onChange}
               onChangeRegime={onChangeRegime}
@@ -436,7 +442,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               invCouple={invCouple}
               width={width}
             />
-          ) : width < 760 && displayFoyer ? (
+          ) : width < 770 && displayFoyer ? (
             <FoyerMobile
               onChange={onChange}
               onChangeRegime={onChangeRegime}
@@ -452,7 +458,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             ""
           )}
 
-          {width > 760 || (width < 760 && displayRegime) ? (
+          {width > 770 || (width < 770 && displayRegime) ? (
             <Regime
               onChange={onChange}
               onChangeRegime={onChangeRegime}
@@ -469,7 +475,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             ""
           )}
         </div>
-        {width < 760 ? (
+        {width < 770 ? (
           ""
         ) : (
           <SideNav
@@ -486,7 +492,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           />
         )}
       </div>
-      {width > 760 ? (
+      {width > 770 ? (
         <Footer
           onSubmitEmail={onSubmitEmail}
           onChangeEmailFooter={onChangeEmailFooter}

@@ -5,6 +5,7 @@ const MobileNav = ({
   setClick,
   setModal,
   mobileDisplay,
+  setDisplayInfoModal,
   netVendeurCheck,
   apportCheck,
   loyerCheck,
@@ -24,6 +25,7 @@ const MobileNav = ({
   const volver = () => {
     setClick(false);
     setModal(false);
+    setDisplayInfoModal(false);
   };
 
   return (
