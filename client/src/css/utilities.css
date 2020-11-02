@@ -937,18 +937,28 @@ input[type="email"] {
   border-radius: 50%;
 }
 
-.info-modal-content {
+.info-modal-container {
   margin: auto;
   background-color: #fff;
   width: 500px;
   border-radius: 10px;
-  /* box-shadow: 0.5px 0.5px #030303; */
+  box-shadow: 0.5px 0.5px #030303;
   text-align: justify;
   font-size: 14px;
 }
 
+.info-modal-content {
+  padding: 5px 20px;
+}
+
 .info-modal-content p {
-  padding: 20px;
+  margin-top: 7.5px;
+  margin-bottom: 7.5px;
+}
+
+.info-modal-content a {
+  color: #007be8;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 770px) {
@@ -972,7 +982,8 @@ input[type="email"] {
   }
   .form-header {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 15px;
+    margin-bottom: 5px;
   }
   .form-header i {
     display: none;
@@ -1068,10 +1079,10 @@ input[type="email"] {
   .info-modal {
     height: calc(100vh - 140px);
   }
-  .info-modal-content {
+  .info-modal-container {
     width: 90%;
   }
-  .info-modal-content-p {
+  .info-modal-content {
     overflow: scroll;
     max-height: 60vh;
   }

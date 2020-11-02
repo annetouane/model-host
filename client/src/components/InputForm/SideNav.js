@@ -17,126 +17,236 @@ const Indicateurs = ({
         <i className='fas fa-directions header-i'></i>&nbsp;&nbsp;Navigation
       </h3>
       <div className='side-column-box-nav flex-column mt-10 flex-column jc-se ai-fc'>
-        <button
-          type='button'
-          className='nav-link side-nav-text radius-top border-bottom'
-          onClick={(e) => scrollTo(e, "#projet")}
+        {/* projet */}
+        <div
+          className='flex-row jc-sb ai-fc border-bottom'
           style={{
             backgroundColor: netVendeurCheck && "#016fc9",
             color: netVendeurCheck && "#fff",
+            width: "100%",
+            height: "100%",
+            borderRadius: "10px 10px 0 0",
           }}
         >
-          {!netVendeurCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Projet
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Projet&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}
-        </button>
-        <button
-          type='button'
-          className='nav-link side-nav-text border-bottom'
-          onClick={(e) => scrollTo(e, "#financement")}
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !netVendeurCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#projet")}
+            style={{
+              backgroundColor: netVendeurCheck && "transparent",
+              color: netVendeurCheck && "#fff",
+            }}
+          >
+            Projet
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: netVendeurCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
+        {/* financement */}
+        <div
+          className='flex-row jc-sb ai-fc border-bottom'
           style={{
             backgroundColor: apportCheck && "#016fc9",
-            color: apportCheck ? "#fff" : "#333",
+            color: apportCheck && "#fff",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {!apportCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Financement
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Financement&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}{" "}
-        </button>
-        <button
-          type='button'
-          className='nav-link side-nav-text border-bottom'
-          onClick={(e) => scrollTo(e, "#revenu")}
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !apportCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#financement")}
+            style={{
+              backgroundColor: apportCheck && "transparent",
+              color: apportCheck && "#fff",
+            }}
+          >
+            Financement
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: apportCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
+        {/* revenu */}
+        <div
+          className='flex-row jc-sb ai-fc border-bottom'
           style={{
             backgroundColor: loyerCheck && "#016fc9",
             color: loyerCheck && "#fff",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {!loyerCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Revenu
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Revenu&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}{" "}
-        </button>
-        <button
-          type='button'
-          className='nav-link side-nav-text border-bottom'
-          onClick={(e) => scrollTo(e, "#charges")}
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !loyerCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#revenu")}
+            style={{
+              backgroundColor: loyerCheck && "transparent",
+              color: loyerCheck && "#fff",
+            }}
+          >
+            Revenu
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: loyerCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
+        {/* charges */}
+        <div
+          className='flex-row jc-sb ai-fc border-bottom'
           style={{
             backgroundColor: chargesCheck && "#016fc9",
             color: chargesCheck && "#fff",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {!chargesCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Charges
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Charges&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}{" "}
-        </button>
-        <button
-          type='button'
-          className='nav-link side-nav-text border-bottom'
-          onClick={(e) => scrollTo(e, "#foyer")}
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !chargesCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#charges")}
+            style={{
+              backgroundColor: chargesCheck && "transparent",
+              color: chargesCheck && "#fff",
+            }}
+          >
+            Charges
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: chargesCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
+        {/* foyer */}
+        <div
+          className='flex-row jc-sb ai-fc border-bottom'
           style={{
             backgroundColor: foyerCheck && "#016fc9",
             color: foyerCheck && "#fff",
+            width: "100%",
+            height: "100%",
           }}
         >
-          {!foyerCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Foyer
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Foyer&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}{" "}
-        </button>
-        <button
-          type='button'
-          className='nav-link side-nav-text radius-bottom'
-          onClick={(e) => scrollTo(e, "#regime")}
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !foyerCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#foyer")}
+            style={{
+              backgroundColor: foyerCheck && "transparent",
+              color: foyerCheck && "#fff",
+            }}
+          >
+            Foyer
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: foyerCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
+        {/* régime */}
+        <div
+          className='flex-row jc-sb ai-fc'
           style={{
             backgroundColor: regimeCheck && "#016fc9",
             color: regimeCheck && "#fff",
+            width: "100%",
+            height: "100%",
+            borderRadius: "0 0 10px 10px",
           }}
         >
-          {!regimeCheck ? (
-            <div className='flex-row jc-fc ai-fc'>
-              <i className='far fa-times-circle'>&nbsp;&nbsp;</i>
-              Régime
-            </div>
-          ) : (
-            <div className='flex-row jc-fc ai-fc'>
-              Régime&nbsp;&nbsp;<i className='far fa-check-circle'></i>
-            </div>
-          )}{" "}
-        </button>
+          <i
+            className='far fa-check-circle'
+            style={{
+              backgroundColor: !regimeCheck ? "#fff" : "#016fc9",
+              color: "#fff",
+              paddingLeft: "20px",
+            }}
+          ></i>
+          <button
+            type='button'
+            className='nav-link side-nav-text'
+            onClick={(e) => scrollTo(e, "#regime")}
+            style={{
+              backgroundColor: regimeCheck && "transparent",
+              color: regimeCheck && "#fff",
+            }}
+          >
+            Régime
+          </button>
+          <i
+            className='far fa-times-circle'
+            style={{
+              backgroundColor: "transparent",
+              color: regimeCheck ? "#016fc9" : "#333",
+              paddingRight: "20px",
+            }}
+          ></i>
+        </div>
       </div>
       <button
         type='submit'
