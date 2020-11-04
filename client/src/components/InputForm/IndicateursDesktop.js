@@ -16,7 +16,7 @@ const Indicateurs = ({
   cashFlowAnnuel,
 }) => {
   return (
-    <section id='indicateurs' className='side-column ml-20 mr-20 mt-50'>
+    <section id='indicateurs' className='side-column ml-20 mt-50'>
       <h3>
         <i className='fas fa-temperature-high header-i'></i>
         &nbsp;&nbsp;Indicateurs

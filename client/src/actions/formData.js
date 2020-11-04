@@ -36,9 +36,20 @@ export const postInputForm = (formData) => async (dispatch) => {
 };
 
 export const postEmail = (email) => async (dispatch) => {
+  console.log("mail", email)
   try {
-    const res = await axios.post("http://localhost:5000/email", email);
-    console.log("email", res.data);
+    if (process.env.NODE_ENV === "production") {
+      const res = await axios.post(
+        "https://stark-tundra-51067.herokuapp.com/email",
+        { email: email }
+      );
+      // setAlert({ msg: res.data });
+      console.log("heroku");
+    } else {
+      const res = await axios.post("http://localhost:5000/email", { email: email });
+      // setAlert({ msg: res.data });
+      console.log("local");
+    }
   } catch (err) {
     const error = err.response.data.msg;
     if (error) {

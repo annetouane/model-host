@@ -40,6 +40,7 @@ router.post("/", async (req, res) => {
       augInvest1: req.body.augInvest1,
       revInvest2: req.body.revInvest2,
       augInvest2: req.body.augInvest2,
+      invCouple: req.body.invCouple,
       partFisc: req.body.partFisc,
       sciIs: req.body.sciIs,
       lmnpReel: req.body.lmnpReel,
@@ -54,6 +55,7 @@ router.post("/", async (req, res) => {
     newInputs = InputForm(inputs);
     const response = await newInputs.save();
     res.json(response);
+    // handle unique combination error
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

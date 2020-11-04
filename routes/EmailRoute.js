@@ -18,9 +18,10 @@ router.post("/", async (req, res) => {
     console.log(req.body);
 
     let userEmail = {
-      emailModal: req.body.emailModal,
-      emailFooter: req.body.emailFooter,
+      email: req.body.email,
     };
+
+    console.log(userEmail);
 
     newEmail = UserEmail(userEmail);
     const response = await newEmail.save();

@@ -113,12 +113,18 @@ const FoyerMobile = ({
         <p className='p-par-fisc'>
           En France, l'impôt sur le revenu est calculé au niveau du foyer
           fiscal. Les invdividus composant le foyer fiscal sont appelées parts
-          fiscales. Le nombre de parts fiscales est une notion clé pour le
-          calcul de l’impôt sur le revenu lorsque le foyer fiscal est composé de
-          plusieurs individus.
+          fiscales. Le site{" "}
+          <a
+            href='https://www.toutsurmesfinances.com/impots/parts-fiscales-du-foyer-comment-connaitre-et-calculer-leur-nombre.html'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            toutsurmesfinances.com
+          </a>{" "}
+          explique comment calculer le nombre de parts fiscales de votre foyer
         </p>
-        <div className='par-fisc'>
-          <label>Part(s) Fiscale(s) :</label>
+        <div className='info-button'>
+          <label className='fs-12'>Part(s) Fiscale(s) :</label>
           <select
             type='select'
             name='partFisc'
@@ -130,6 +136,12 @@ const FoyerMobile = ({
               <option key={optionPartFisc}>{optionPartFisc}</option>
             ))}
           </select>
+          <i
+            id='info-partfisc'
+            onClick={showModal}
+            className='fas fa-question-circle'
+            style={{ marginBottom: "5px" }}
+          ></i>
         </div>
 
         {!invCouple ? (

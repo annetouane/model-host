@@ -15,6 +15,8 @@ const IndicateursMobile = ({
   rendementNet,
   cashFlowAnnuel,
 }) => {
+  console.log(coutProjet)
+  console.log(netVendeurCheck)
   return (
     <section id='indicateurs' className='indicateurs-mobile'>
       <h3>

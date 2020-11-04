@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
 // create schema
 const UserEmailSchema = Schema({
-  emailModal: {
-    type: String,
-  },
-  emailFooter: {
+  email: {
     type: String,
   },
   date: {

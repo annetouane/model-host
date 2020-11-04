@@ -393,8 +393,8 @@ img {
   outline: none;
   border: 1px solid #cacaca;
   box-shadow: 0.5px 0.5px #c8c9ca;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background-color: #fff;
 }
 
@@ -432,6 +432,11 @@ img {
 .p-par-fisc {
   width: 70%;
   font-size: 12px;
+}
+
+.p-par-fisc a {
+  font-weight: bold;
+  color: #007be8;
 }
 
 .regime-responsive {
@@ -494,7 +499,7 @@ input::-webkit-inner-spin-button {
   position: -webkit-sticky;
   position: sticky;
   top: 80px;
-  padding: 10px 15px;
+  padding: 10px 0;
 }
 
 .side-column h3 {
@@ -519,7 +524,7 @@ input::-webkit-inner-spin-button {
 }
 
 .kpi-item h4 {
-  font-size: 2.5vh;
+  font-size: 2.2vh;
 }
 
 /* side navbar */
@@ -529,7 +534,7 @@ input::-webkit-inner-spin-button {
   position: -webkit-sticky;
   position: sticky;
   top: 80px;
-  padding: 10px 15px;
+  padding: 10px 0;
 }
 
 .side-column-nav h3 {
@@ -571,7 +576,7 @@ input::-webkit-inner-spin-button {
   font-weight: 550;
   line-height: 1.5;
   color: #333;
-  font-size: 2.5vh;
+  font-size: 2.2vh;
 }
 
 /* boutton modélisation */
@@ -713,6 +718,10 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.footer-email button:focus {
+  outline: none;
+}
+
 .email-modal {
   display: flex;
   flex-direction: column;
@@ -805,8 +814,14 @@ input[type="email"] {
   top: 70px;
   left: 0;
   background-color: #fff;
-  padding: 30px;
-  overflow: scroll;
+  padding: 15px 30px 30px 30px;
+  overflow: auto;
+}
+
+@media screen and (min-width: 770px) and (max-width: 1000px) {
+  .indicateurs-mobile {
+    height: calc(100vh - 120px);
+  }
 }
 
 .indicateurs-mobile h3 {
@@ -942,13 +957,14 @@ input[type="email"] {
   background-color: #fff;
   width: 500px;
   border-radius: 10px;
-  box-shadow: 0.5px 0.5px #030303;
   text-align: justify;
   font-size: 14px;
 }
 
 .info-modal-content {
   padding: 5px 20px;
+  max-height: 400px;
+  overflow: auto;
 }
 
 .info-modal-content p {
@@ -1061,7 +1077,7 @@ input[type="email"] {
   }
   .modal-info,
   .email-modal {
-    overflow: scroll;
+    overflow: auto;
   }
   .modal-input {
     position: fixed;
@@ -1083,7 +1099,7 @@ input[type="email"] {
     width: 90%;
   }
   .info-modal-content {
-    overflow: scroll;
+    overflow: auto;
     max-height: 60vh;
   }
 }

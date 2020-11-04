@@ -16,7 +16,7 @@ const modalInfo = [
     id: "info-ammeublement",
     titre: "Ammeublement",
     texte:
-      "<p>Dépenses engagées pour équiper le bien dans le cadre d’une location meublée. Une liste de meubles et d’équipements est prévue par la loi afin de pouvoir louer en meublé. Les dépenses d’ameublement peuvent être passées en charges (si inférieur à 500 €) ou en amortissements (sur une durée de 7 ans) ce qui permet également de réduire le revenu imposable. Retrouvez cette liste sur site <a href='https://www.pap.fr/locataire/vide-meuble-colocation/liste-des-meubles-obligatoires-pour-une-location-meublee/a18106' target='_blank'>pap.fr</a></p>",
+      "<p>Dépenses engagées pour équiper le bien dans le cadre d’une location meublée. Une liste de meubles et d’équipements est prévue par la loi afin de pouvoir louer en meublé. Les dépenses d’ameublement peuvent être passées en charges (si inférieur à 500 €) ou en amortissements (sur une durée de 7 ans) ce qui permet également de réduire le revenu imposable. Retrouvez cette liste sur site <a href='https://www.pap.fr/locataire/vide-meuble-colocation/liste-des-meubles-obligatoires-pour-une-location-meublee/a18106' target='_blank' rel='noopener noreferrer'>pap.fr</a></p>",
   },
   {
     id: "info-notaire",
@@ -64,7 +64,7 @@ const modalInfo = [
     id: "info-locataire",
     titre: "Charges locataires",
     texte:
-      "<p>Charges payées annuellement par le propriétaire pour les services de gardiennage, nettoyage ou/et autres. Ces charges sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Attention, lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de 23 000 € charges locataires comprises. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire</p>",
+      "<p>Charges payées annuellement par le propriétaire pour les services de gardiennage, nettoyage ou/et autres. Ces charges sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Attention, lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de 23 000 € charges locataires comprises. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire</p>",
   },
   {
     id: "info-occupation",
@@ -76,13 +76,13 @@ const modalInfo = [
     id: "info-fonciere",
     titre: "Taxe foncière",
     texte:
-      "<p>Taxe annuelle s’appliquant à tout détenteur de bien immobilier en France. La taxe foncière est une charge déductible permettant de réduire le revenu imposable.</p>",
+      "<p>Taxe annuelle s’appliquant à tout propriétaire d'un bien immobilier en France. Elle n'est pas récupérable sur le locataire mais c'est une charge déductible permettant de réduire le revenu imposable.</p>",
   },
   {
     id: "info-gestion",
     titre: "Gestion locative",
     texte:
-      "<p>Frais de gestion du bien par une agence immobilière. Ces frais sont généralement compris entre 5% et 10% des loyers annuels. L’investisseur peut également choisir de gérer son bien lui-même afin d’économiser les frais de gestion locative. Les frais de gestion locative sont des charges déductibles permettant de réduire le revenu imposable.</p>",
+      "<p>Frais de gestion du bien par une agence immobilière. Les frais de gestion locative ne peuvent être récupérés sur les locataires mais ils représentent des charges déductibles permettant de réduire le revenu imposable. Ces frais sont généralement compris entre 5% et 10% des loyers annuels. L’investisseur peut également choisir de gérer son bien lui-même pour augmenter le rendement de l'investissement.</p>",
   },
   {
     id: "info-charges",
@@ -92,27 +92,27 @@ const modalInfo = [
   },
   {
     id: "info-pno",
-    titre: "Assurrance PNO",
+    titre: "Assurrances PNO & GLI",
     texte:
-      "<p>Assurance propriétaire non-occupant. Elle sert à assurer le bien en cas de sinistre. L’assurance PNO est une charge déductible permettant de réduire le revenu imposable.</p>",
+      "<p>Assurance propriétaire non-occupant & garantie loyers impayés. Ces deux types d'assurances peuvent être prises indépendemment l'une de l'autre. Elles sont considérées commes des charges déductibles permettant de réduire le revenu imposable.</p><p>Assurance PNO (propriétaire non-occupant) : assurance permettant d'assurer le bien en cas de sinistre. Le détenteur d’un bien immobilier mis en location n’est, en principe, pas obligé de l’assurer, sauf dans le cadre d’une copropriété.</p><p>GLI (assurance loyés impatés) : assurance qui protège le propriétaire contre les impayés et les dégradations et qui prend en charge l'éventuelle action en justice à engager contre le locataire. Un nouveau dispositif de sécurisation des loyers impayés existe depuis le 20 janvier 2016 : VISALE (Visa pour le Logement et l'Emploi). Financé et géré par Action Logement (l'ex « 1% logement), Visale permet aux propriétaires qui choisissent comme locataire un salarié précaire ou un jeune de 30 ans au plus d'être remboursé des impayés de loyers. Visale est 100 % gratuit.</p>",
   },
   {
     id: "info-investisseur",
     titre: "Revenu(s) du foyer fiscal",
     texte:
-      "<p>Lorsqu’un bien immobilier est détenu en direct (à la différence d’une détention via une société) les revenus fonciers viennent s’ajouter aux revenus d’activité(s) salariée(s) du/des investisseur(s). La somme des revenus sera taxée selon le barème de l’impôt sur le revenu. La modélisation fiscale doit prendre en compte les revenus d’activité(s) salariée(s) du/des investisseur(s) afin de déterminer la rentabilité de l’investissement. Il faut donc renseigner le salaire de chaque investisseur avant impôt sur le revenu. Sur la fiche de paie, la ligne à prendre en compte est : « Net à payer avant impôt sur le revenu ». Si l’investissement est réalisé avec le conjoint, il est essentiel d’indiquer les revenus de chacun des investisseurs ainsi que le nombre de parts fiscales pour permettre la prise en compte le quotient familial dans le calcul de l’impôt sur les revenus locatifs. Enfin, l’augmentation annuelle des revenus d’activité du/des investisseur(s) est un facteur déterminant l’évolution de la pression fiscale sur les revenus locatifs. Si les revenus d’activité augmentent rapidement au cours de la durée de détention du bien, les revenus fonciers seront imposés dans une tranche marginale supérieure. Ceci peut rendre déficitaire un investissement après plusieurs années de cash-flow positif, forçant le(s) investisseur à couvrir les pertes.</p>",
+      "<p>Lorsqu’un bien immobilier est détenu en direct (à la différence d’une détention via une société) les revenus fonciers viennent s’ajouter aux revenus d’activité(s) salariée(s) du/des investisseur(s). La somme des revenus sera taxée selon le barème de l’impôt sur le revenu.</p><p>La modélisation fiscale doit prendre en compte les autres revenus (d’activité salariée, locatifs ...) du/des investisseur(s) pour déterminer la rentabilité de l’investissement. Il faut donc renseigner à minima le salaire de chaque investisseur avant impôt sur le revenu. Sur la fiche de paie, la ligne à prendre en compte est : « Net à payer avant impôt sur le revenu ».</p><p>Si l’investissement est réalisé avec le conjoint, il est essentiel d’indiquer les revenus de chacun des investisseurs ainsi que le nombre de parts fiscales pour permettre la prise en compte le quotient familial dans le calcul de l’impôt sur les revenus locatifs. </p><p>Enfin, l’augmentation annuelle des revenus d’activité du/des investisseur(s) est un facteur déterminant l’évolution de la pression fiscale sur les revenus locatifs. Si les revenus d’activité augmentent rapidement au cours de la durée de détention du bien, les revenus fonciers seront imposés dans une tranche marginale supérieure. Ceci peut rendre un investissement déficitaire après plusieurs années de cash-flow positif.</p>",
   },
   {
     id: "info-partfisc",
     titre: "Parts Fiscales",
     texte:
-      "<p>En France, l'impôt sur le revenu est calculé au niveau du foyer fiscal. Les invdividus composant le foyer fiscal sont appelées parts fiscales. Le nombre de parts fiscales est une notion clé pour le calcul de l’impôt sur le revenu lorsque le foyer fiscal est composé de plusieurs individus. Pour calculer le nombre de parts fiscales, il faut prendre en compte les personnes représentantes du foyer ainsi que les personnes à charge (enfants, personnes âgées ou invalides...) qui donnent droit à un certain nombre de part selon un barème prévu par la loi (exemple : les 2 premiers enfants donnent droit à 0.5 part chacun et le 3ième à une part supplémentaire). Un mécanisme de plafonnement limite la réduction d'impôt liée à l'application du quotient familial. La réduction d'impôt est limitée à 1 567 € pour chaque demi-part supplémentaire (784 € pour chaque quart de part supplémentaire). Le site toutsurmesfinances.com explique en détail ces mécanisme : https://www.toutsurmesfinances.com/impots/parts-fiscales-du-foyer-comment-connaitre-et-calculer-leur-nombre.html.</p>",
+      "<p>En France, l'impôt sur le revenu est calculé au niveau du foyer fiscal. Les invdividus composant le foyer fiscal sont appelées parts fiscales ou parts de quotien familial. Le nombre de parts fiscales est une notion clé pour le calcul de l’impôt sur le revenu car permet de bénéficier d'une réduction d'impôts.</p><p>Pour calculer le nombre de parts fiscales, il faut prendre en compte les représentants du foyer (généralement les parents qui octroient une part fiscal chacun) ainsi que les personnes à charge (enfants, personnes âgées ou invalides...) qui donnent droit à un certain nombre de parts supplémentaires selon un barème prévu par la loi (exemple : les 2 premiers enfants donnent droit à 0.5 part chacun et le 3ième enfant à 1 part supplémentaire).</p></p> Le site <a href='http://impotsurlerevenu.org/fonctionnement-de-l-impot/54-calcul-de-l-impot.php' target='_blank' rel='noopener noreferrer'>impotsurlerevenu.org</a> explique en détails la prise en compte des parts fiscales dans le calcul de l'impôt sur le revenu.</p>",
   },
   {
     id: "info-irl",
     titre: "Indice de référence des loyers",
     texte:
-      "<p>L'inflation mesure l'évolution du niveau moyen des prix des biens et services consommés par les ménages. L'IRL correspond à la moyenne de l'inflation sur les quatre derniers trimestres glissants. L’inflation servant de base de calcul à l’IRL, leur attribuer la même valeur est une approche acceptable pour représenter ce paramètre dans une modélisation. Ils doivent être nécessairement pris en compte afin d’effectuer une modélisation du revenu et des charges d'exploitation d'un bien immobilier sur plusieurs années.</p>",
+      "<p>L'inflation mesure l'évolution du prix des biens et services consommés par les ménages. L'IRL correspond à une moyenne de l'inflation sur les quatre derniers trimestres glissants. L’inflation servant de base de calcul à l’IRL, leur attribuer la même valeur est une approche acceptable pour représenter ce paramètre dans une modélisation. Ils doivent être nécessairement pris en compte afin d’effectuer une modélisation du revenu et des charges d'exploitation d'un bien immobilier sur plusieurs années.</p>",
   },
   // indicateurs
   {
@@ -137,13 +137,13 @@ const modalInfo = [
     id: "info-revenu",
     titre: "Revenu annuel",
     texte:
-      "<p>Chiffre d’affaire annuel généré par l’activité de location. Il est calculé en multipliant le loyer mensuel par le taux d’occupation. Il n’inclut pas les charges locataires car elles sont payés par ces derniers. De ce fait, elles ne font ni augmenter le chiffre d’affaire, ni le revenu imposable et elles ne sont pas déductibles du revenu imposable.</p>",
+      "<p>Chiffre d’affaire annuel généré par l’activité de location.</p><p>Formule : loyer mensuel * taux d’occupation.</p><p>Le taux d'occupation représente le nombre de mois au cours d'une année durant lesquels le bien sera loué. Le revenu annuel n’inclut pas les charges locataires car elles sont payés par ces derniers. De ce fait, elles ne font ni augmenter le chiffre d’affaire, ni le revenu imposable. Il est d'ailleurs interdit de réduire le revenu imposable avec les charges locataires.</p>",
   },
   {
     id: "info-rentabrute",
     titre: "Rendement brut",
     texte:
-      "<p>Indicateur exprimant le revenu annuel en pourcentage du coût du projet. <br>Formule : revenu annuel (hors charges locataires) / coût du projet * 100.</p> <p>Cet indicateur ne prend en compte ni les charges financières, ni les charges d’exploitation, ni l’impôt sur le revenu ou les cotisations sociales dus au titre de l'activité locative. Ce premier indicateur permet d’évaluer de manière approximative l’attractivité d’un investissement locatif.</p>",
+      "<p>Indicateur exprimant le revenu annuel en pourcentage du coût du projet.</p><p>Formule : revenu annuel / coût du projet * 100</p> <p>Cet indicateur ne prend en compte ni les charges financières, ni les charges d’exploitation, ni l’impôt sur le revenu ou les cotisations sociales dus au titre de l'activité locative. Ce premier indicateur permet d’évaluer de manière approximative l’attractivité d’un investissement locatif.</p>",
   },
   {
     id: "info-rentanet",

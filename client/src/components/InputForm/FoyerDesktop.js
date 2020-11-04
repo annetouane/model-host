@@ -32,7 +32,7 @@ const FoyerDesktop = ({
           <i
             id='info-investisseur'
             onClick={showModal}
-            class='fas fa-question-circle mb-10'
+            className='fas fa-question-circle mb-10'
           ></i>
         </div>
         <div className='invest-rev'>
@@ -47,7 +47,7 @@ const FoyerDesktop = ({
             onChange={onChange}
             min='0'
             max='100000'
-            className='slider mt-5'
+            className='slider'
           />
           <div className='w-15 ml-10'>
             <select
@@ -99,7 +99,7 @@ const FoyerDesktop = ({
             onChange={onChange}
             min='0'
             max='100000'
-            className='slider mt-5'
+            className='slider'
           />
 
           <div className='w-15 ml-10'>
@@ -143,7 +143,8 @@ const FoyerDesktop = ({
             <i
               id='info-partfisc'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
+              style={{ marginBottom: "5px" }}
             ></i>
           </div>
           <select

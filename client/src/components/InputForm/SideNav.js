@@ -12,7 +12,7 @@ const Indicateurs = ({
   formCheck,
 }) => {
   return (
-    <nav className='side-column-nav mr-20 ml-20 mt-50'>
+    <nav className='side-column-nav mr-20 mt-50'>
       <h3>
         <i className='fas fa-directions header-i'></i>&nbsp;&nbsp;Navigation
       </h3>

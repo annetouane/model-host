@@ -24,7 +24,6 @@ const ModalEmail = ({
             name='eModal'
             value={eModal}
             onChange={onChangeEmailModal}
-            required
           />
           <button>Valider</button>
           {width > 770 ? (

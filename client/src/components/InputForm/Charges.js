@@ -91,7 +91,7 @@ const Charges = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
-          <label>Assurance PNO : {sepSpace(pno)} €</label>
+          <label>Assurances PNO & GLI : {sepSpace(pno)} €</label>
           <div className='info-button'>
             <input
               type='range'

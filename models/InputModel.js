@@ -73,6 +73,9 @@ const InputFormSchema = Schema({
   augInvest2: {
     type: Number,
   },
+  invCouple: {
+    type: Boolean,
+  },
   partFisc: {
     type: Number,
   },
@@ -105,5 +108,41 @@ const InputFormSchema = Schema({
     default: Date.now,
   },
 });
+
+InputFormSchema.index({ type: 1,
+  codePostal: 1,
+  netVendeur: 1,
+  travaux: 1,
+  ammeublement: 1,
+  notaire: 1,
+  agence: 1,
+  duree: 1,
+  apport: 1,
+  interet: 1,
+  assurance: 1,
+  loyer: 1,
+  chargesLoc: 1,
+  occupation: 1,
+  fonciere: 1,
+  gestion: 1,
+  chargesLoc: 1,
+  pno: 1,
+  revInvest1: 1,
+  augInvest1: 1,
+  revInvest2: 1,
+  augInvest2: 1,
+  invCouple: 1,
+  partFisc: 1,
+  sciIs: 1,
+  lmnpReel: 1,
+  lmnpMicro: 1,
+  lmpReel: 1,
+  lmpMicro: 1,
+  nueReel: 1,
+  nueMicro: 1,
+  irl: 1,
+    }, 
+  { unique: true } 
+  );
 
 module.exports = InputForm = mongoose.model("inputform", InputFormSchema);

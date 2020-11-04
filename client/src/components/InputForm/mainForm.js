@@ -133,9 +133,11 @@ export const MainForm = ({ postInputForm, postEmail }) => {
 
   // modal user email
   const [emailModal, setEmailModal] = useState({ eModal: "" });
-  const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
   const { eModal } = emailModal;
+
+  const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
   const { eFooter } = emailFooter;
+
   const [modal, setModal] = useState(false);
 
   // mobile menu
@@ -171,15 +173,16 @@ export const MainForm = ({ postInputForm, postEmail }) => {
 
   const onSubmitEmail = async (e) => {
     e.preventDefault();
-    if (emailModal) {
-      postEmail(emailModal);
-    } else if (emailFooter) {
-      postEmail(emailFooter);
+    if (eModal) {
+      postEmail(eModal);
+    } else if (eFooter) {
+      postEmail(eFooter);
+      setClickFooter(true)
     } else {
-      console.log("error");
+      console.log("nada");
     }
-    setEmailModal("");
-    setEmailFooter("");
+    setEmailModal({ eModal: "" });
+    setEmailFooter({ eFooter: "" });
     setModal(false);
   };
 
@@ -272,8 +275,11 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     console.log(e.target.id);
   };
 
+  // clic footer
+  const [clickFooter, setClickFooter] = useState(false);
+
   return (
-    <div>
+    <div >
       {/* <InfoModal /> */}
       {displayInfoModal ? (
         <InfoModal
@@ -307,13 +313,13 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         onChangeEmailModal={onChangeEmailModal}
         setModal={setModal}
         modal={modal}
-        emailModal={eModal}
+        eModal={eModal}
         width={width}
       />
 
       {/* main page */}
       <div className='form-container'>
-        {width < 770 ? (
+        {width < 1000 ? (
           ""
         ) : (
           <IndicateursDesktop
@@ -339,7 +345,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           ""
         )}
 
-        {width < 770 ? (
+        {width < 1000 ? (
           <IndicateursButton
             setClick={setClick}
             click={click}
@@ -349,11 +355,15 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           ""
         )}
 
-        {width < 770 && click ? (
+        {width < 1000 && click ? (
           <IndicateursMobile
             setClick={setClick}
             showModal={showModal}
             sepSpace={sepSpace}
+            netVendeurCheck={netVendeurCheck}
+            apportCheck={apportCheck}
+            loyerCheck={loyerCheck}
+            chargesCheck={chargesCheck}
             netVendeur={netVendeur}
             apport={apport}
             loyer={loyer}
@@ -369,7 +379,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
           ""
         )}
 
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", margin: "0 20px" }}>
           {width > 770 || (width < 770 && displayProjet) ? (
             <Projet
               onChange={onChange}
@@ -496,7 +506,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         <Footer
           onSubmitEmail={onSubmitEmail}
           onChangeEmailFooter={onChangeEmailFooter}
-          emailFooter={eFooter}
+          clickFooter={clickFooter}
+          eFooter={eFooter}
         />
       ) : (
         ""
