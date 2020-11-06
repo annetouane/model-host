@@ -109,7 +109,8 @@ const InputFormSchema = Schema({
   },
 });
 
-InputFormSchema.index({ type: 1,
+InputFormSchema.index({ 
+  type: 1,
   codePostal: 1,
   netVendeur: 1,
   travaux: 1,
