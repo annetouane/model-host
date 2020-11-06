@@ -3,6 +3,8 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
+import Helmet from "react-helmet";
+import favicon from "./img/favicon.ico";
 
 // components
 import NavBar from "./components/Layout/NavBar";
@@ -17,6 +19,10 @@ const App = () => {
     <Provider store={store}>
       <Fragment>
         <Router>
+        <Helmet>
+          <title>Simulimo</title>
+          <link rel="icon" type="image/png" href={favicon} sizes="256x256" />
+        </Helmet>
           <NavBar />
           <Switch>
             <Route exact path='/' component={MainForm} />
