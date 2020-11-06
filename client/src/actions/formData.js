@@ -8,7 +8,7 @@ export const postInputForm = (formData) => async (dispatch) => {
   try {
     if (process.env.NODE_ENV === "production") {
       const res = await axios.post(
-        "https://stark-tundra-51067.herokuapp.com/input",
+        "https://simulimo.herokuapp.com/input",
         formData
       );
       // setAlert({ msg: res.data });
@@ -40,7 +40,7 @@ export const postEmail = (email) => async (dispatch) => {
   try {
     if (process.env.NODE_ENV === "production") {
       const res = await axios.post(
-        "https://stark-tundra-51067.herokuapp.com/email",
+        "https://simulimo.herokuapp.com/email",
         { email: email }
       );
       // setAlert({ msg: res.data });
