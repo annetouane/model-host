@@ -81,30 +81,18 @@ const Regime = ({
             ou meublée), le revenu qu'il génère, les revenus de l’investisseurs
             ou encore la composition de son foyer fiscal. Certains régimes
             fiscaux dépendent du seul choix de l’investisseur, d’autre lui sont
-            imposés par la situation de son foyer fiscal. Visitez{" "}
+            imposés par la situation de son foyer fiscal. Visitez le site&nbsp;
             <a
               style={{ color: "#007be8", fontWeight: "bold" }}
               href='https://www.pap.fr/bailleur/choisir-investissement/la-fiscalite-immobiliere/a1247'
               target='_blank'
               rel='noopener noreferrer'
             >
-              cette page
-            </a>{" "}
-            du site{" "}
-            <a
-              style={{ color: "#007be8", fontWeight: "bold" }}
-              href='https://www.pap.fr'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
               pap.fr
             </a>{" "}
-            pour plus d'informations sur la fiscalité immobilière.
+              pour plus d'informations sur la fiscalité immobilière.
           </label>
         </div>
-        {/* <small className='mt-10'>
-          Une modélisation sera calculée pour chaque régime fiscal sélectionné
-        </small> */}
       </div>
 
       <div className='form-box-h-3 mt-10'>
