@@ -21,7 +21,7 @@ const App = () => {
         <Router>
         <Helmet>
           <title>Simulimo</title>
-          <link rel="icon" type="image/png" href={favicon} sizes="256x256" />
+          <link rel="icon" type="image/png" href={favicon} sizes="256x256" style={{ borderRadius: "100px" }}/>
         </Helmet>
           <NavBar />
           <Switch>
