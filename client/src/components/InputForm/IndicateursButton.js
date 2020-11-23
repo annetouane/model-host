@@ -1,17 +1,10 @@
 import React from "react";
 
-const IndicateursButton = ({ setClick, click, setDisplayInfoModal }) => {
-  const volver = () => {
-    setClick(!click);
-    setDisplayInfoModal(false);
-  };
+const IndicateursButton = ({ setClick }) => {
+
   return (
-    <div onClick={() => volver()}>
-      {click ? (
-        <i className='far fa-times-circle header-i-2 fa-2x indicateurs-mobile-button-on'></i>
-      ) : (
-        <i className='fas fa-temperature-high header-i-2 fa-2x indicateurs-mobile-button-off' />
-      )}
+    <div onClick={() => setClick(false)}>
+        <i className='far fa-times-circle header-i-2 fa-2x indicateurs-mobile-button'></i>
     </div>
   );
 };

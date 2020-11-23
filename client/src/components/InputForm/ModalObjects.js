@@ -4,31 +4,31 @@ const modalInfo = [
     id: "info-net-vendeur",
     titre: "Net Vendeur",
     texte:
-      "<p>Prix payé au vendeur du bien lors de l’acquisition. Les frais de notaire et d’agence ne doivent pas être inclus dans le net vendeur. <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable de ce dernier liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur du bien pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l’entreprise.</p>",
+      "<p>Prix payé au vendeur du bien lors de l’acquisition. Les frais de notaire et d’agence ne doivent pas être inclus dans le net vendeur. <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable de ce dernier liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur du bien pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l’entreprise.</p> <p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour le bien.</b> Le montant amortissable correspondra à 90% du prix du bien (les 10% restant correspondent au terrain qui n'est pas amortissable)</p>",
   },
   {
     id: "info-travaux",
     titre: "Travaux",
     texte:
-      "<p>Travaux préliminaires à la mise en exploitation du bien (rénovation, agrandissement, ou encore changement d'usage). <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable des travaux liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur des travaux pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l’entreprise.</p>",
+      "<p>Travaux préliminaires à la mise en exploitation du bien (rénovation, agrandissement, ou encore changement d'usage). <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable des travaux liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur des travaux pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l'investisseur.</p><p><b>Simulimo applique une durée d'amortissement par défaut de 10 ans pour les travaux</b></p>",
   },
   {
     id: "info-ammeublement",
     titre: "Ammeublement",
     texte:
-      "<p>Dépenses engagées pour équiper le bien dans le cadre d’une location meublée. Une liste de meubles et d’équipements est prévue par la loi afin de pouvoir louer en meublé. Les dépenses d’ameublement peuvent être passées en charges (si inférieur à 500 €) ou en amortissements (sur une durée de 7 ans) ce qui permet également de réduire le revenu imposable. Retrouvez cette liste sur site <a href='https://www.pap.fr/locataire/vide-meuble-colocation/liste-des-meubles-obligatoires-pour-une-location-meublee/a18106' target='_blank' rel='noopener noreferrer'>pap.fr</a></p>",
+      "<p>Dépenses engagées pour équiper le bien dans le cadre d’une location meublée. Une liste de meubles et d’équipements est prévue par la loi afin de pouvoir louer en meublé. Les dépenses d’ameublement peuvent être passées en charges (si inférieur à 500 €) ou en amortissements (sur une durée de 7 ans) ce qui permet également de réduire le revenu imposable. Retrouvez cette liste sur site <a href='https://www.pap.fr/locataire/vide-meuble-colocation/liste-des-meubles-obligatoires-pour-une-location-meublee/a18106' target='_blank' rel='noopener noreferrer'>pap.fr</a></p><p><b>Simulimo applique une durée d'amortissement par défaut de 7 ans pour l'ammeublement</b></p>",
   },
   {
     id: "info-notaire",
     titre: "Frais de notaire",
     texte:
-      "<p>Lors d’une transaction immobilière, le notaire établit les actes et les authentifie (compromis de vente et acte de vente), rédige les contrats et accompagne ses clients tout au long de la procédure de vente immobilière. Lorsque le bien est neuf (première vente depuis la construction) les frais de notaires représentent environ 3% du net vendeur. Lorsqu’on achète un bien ancien, ces frais s’élèvent à environ 7,5% du net vendeur.</p> <p>Les taxes sur la transaction immobilière sont inclues dans les frais de notaire qui se charge de les reverser à l’Etat. En fonction du régime fiscal d’exploitation du bien, les frais de notaire sont amortissables et permettent donc de réduire le revenu imposable. Retrouver toutes les informations sur les frais de notaire sur le site <a href='https://www.pap.fr/acheteur/frais-notaire/les-frais-de-notaire/a1307' target='_blank'>pap.fr </a></p>",
+      "<p>Lors d’une transaction immobilière, le notaire établit les actes et les authentifie (compromis de vente et acte de vente), rédige les contrats et accompagne ses clients tout au long de la procédure de vente immobilière. Lorsque le bien est neuf (première vente depuis la construction) les frais de notaire représentent environ 3% du net vendeur. Lorsqu’on achète un bien ancien, ces frais s’élèvent à environ 7,5% du net vendeur.</p> <p>Les taxes sur la transaction immobilière sont inclues dans les frais de notaire qui se charge de les reverser à l’Etat. En fonction du régime fiscal d’exploitation du bien, les frais de notaire sont amortissables et permettent donc de réduire le revenu imposable. Retrouver toutes les informations sur les frais de notaire sur le site <a href='https://www.pap.fr/acheteur/frais-notaire/les-frais-de-notaire/a1307' target='_blank' rel='noopener noreferrer'>pap.fr </a></p><p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour les frais d'acquisition</b></p>",
   },
   {
     id: "info-agence",
     titre: "Frais d'agence",
     texte:
-      "<p>Certaines acquisitions se font par le biais d’agences immobilières mandatées par un acquéreur pour rechercher un bien et jouer le rôle d’intermédiaire dans la transaction. Cette rémunération de l’agence est généralement à la charge de l’acquéreur mais peut également être à la charge du vendeur (ex : zone géographique avec peu d’acheteur et beaucoup de biens à vendre). En fonction du régime fiscal d’exploitation du bien, les frais d’agence seront considérés comme des charges déductibles du revenu imposable. En fonction du régime fiscal d’exploitation du bien, les frais d'agence sont amortissables et permettent donc de réduire le revenu imposable.</p>",
+      "<p>Certaines acquisitions se font par le biais d’agences immobilières mandatées par un acquéreur pour rechercher un bien et jouer le rôle d’intermédiaire dans la transaction. Cette rémunération de l’agence est généralement à la charge de l’acquéreur mais peut également être à la charge du vendeur (ex : zone géographique avec peu d’acheteur et beaucoup de biens à vendre). En fonction du régime fiscal d’exploitation du bien, les frais d’agence seront considérés comme des charges déductibles du revenu imposable. En fonction du régime fiscal d’exploitation du bien, les frais d'agence sont amortissables et permettent donc de réduire le revenu imposable.</p>><p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour les frais d'acquisition</b></p>",
   },
   {
     id: "info-duree",
@@ -40,7 +40,7 @@ const modalInfo = [
     id: "info-apport",
     titre: "Apport",
     texte:
-      "<p>La somme d’argent apportée en cash par l’investisseur afin de financer une partie du projet. Le reste du projet est financé par la banque. En général, la banque exige que l’investisseur apporte au minimum une somme égale aux frais de notaires. En tant qu’investisseur, l’objectif est de faire financer la plus grande partie du projet par la banque.</p>",
+      "<p>La somme d’argent apportée en cash par l’investisseur afin de financer une partie du projet. Le reste du projet est financé par la banque. En général, la banque exige que l’investisseur apporte au minimum une somme égale aux notaire. En tant qu’investisseur, l’objectif est de faire financer la plus grande partie du projet par la banque.</p>",
   },
   {
     id: "info-interet",
@@ -48,11 +48,36 @@ const modalInfo = [
     texte:
       "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p>",
   },
+  
   {
     id: "info-assurance",
     titre: "Taux d'assurance",
     texte:
       "<p>Les frais d’assurance sont l’un des modes de rémunération de la banque. L'emprunteur verse chaque année une somme égale au taux d'assurance multiplier par le capital initialement emprunté. Il ne varie pas durant toute la durée de l’emprunt et les versements sont inclus dans la mensualité. Le taux d’assurance est déterminé par le profil de l’emprunteur (âge, fumeur ou non, statut professionnel …). Les frais d’assurance sont des charges déductibles permettant de réduire le revenu imposable.</p>",
+  },
+  {
+    id: "info-interet",
+    titre: "Taux d'intérêt",
+    texte:
+      "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p>",
+  },
+  
+  {
+    id: "info-assurance",
+    titre: "Taux d'assurance",
+    texte:
+      "<p>Les frais d’assurance sont l’un des modes de rémunération de la banque. L'emprunteur verse chaque année une somme égale au taux d'assurance multiplier par le capital initialement emprunté. Il ne varie pas durant toute la durée de l’emprunt et les versements sont inclus dans la mensualité. Le taux d’assurance est déterminé par le profil de l’emprunteur (âge, fumeur ou non, statut professionnel …). Les frais d’assurance sont des charges déductibles permettant de réduire le revenu imposable.</p>",
+  },
+  {
+    id: "info-frais-bancaires",
+    titre: "Frais bancaires",
+    texte: "<p>Pour l'étude du dossier supportant la demande de crédit, toutes les banques exigent une rémunération sous forme de frais de dossier. Ces frais représente généralement 1% à 1,5% du capital emprunté. La banque demande leur règlement à la finalisation du prêt, souvent au moment du déblocage de fonds. Il est tout à fait possible de négocier les frais de dossier avec la banque pour faire baisser le coût du financement</p>"
+  },
+  
+  {
+    id: "info-frais-courtier",
+    titre: "Frais de courtier",
+    texte: "<p>Le prix payé au courtier rémunère son accompagnement sur toute la durée d'obtention du crédit, la qualité de sa négociation avec la banque qui permet de faire des économies souvent très significatives tout en gagnant du temps.</p> <p>Les frais de courtier ne sont, à priori, pas des charges qui peuvent être utilisées pour réduire le revenu imposable, plus de détails sur le site : <a href='https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/'>corrigetonimpot.fr</a></p>"
   },
   {
     id: "info-loyer",
@@ -64,19 +89,19 @@ const modalInfo = [
     id: "info-locataire",
     titre: "Charges locataires",
     texte:
-      "<p>Charges payées annuellement par le propriétaire pour les services de gardiennage, nettoyage ou/et autres. Ces charges sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Attention, lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de 23 000 € charges locataires comprises. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire</p>",
+      "<p>Charges payées annuellement par le propriétaire pour les services de gardiennage, nettoyage ou/et autres. Ces charges sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Il est cependant nécessaire de les évaluer car lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de <b>23 000 € charges locataires comprises.</b> Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire. De plus, le site </p>",
   },
   {
     id: "info-occupation",
     titre: "Taux d'occupation",
     texte:
-      "<p>Estimation du nombre de mois durant lesquels le bien sera occupé à l’année. Dans les zones où la demande locative est forte, les périodes de vacances locatives seront faibles et vice versa. De plus, prévoir que la fréquence de rotation des locataires est plus élevée en location meublée qu’en location nue. Ceci peut entrainer des périodes de vacances locatives supplémentaires si le bien est loué en meublé.</p>",
+      "<p>Estimation du nombre de mois durant lesquels le bien sera occupé à l’année. Dans les zones où la demande locative est forte, les périodes de vacances locatives seront faibles et vice versa. De plus, prévoir que la fréquence de rotation des locataires est plus élevée en location meublée qu’en location nue. Ceci peut entrainer des périodes de vacances locatives supplémentaires si le bien est loué en meublé.</p><p>Le site <a href='https://www.locservice.fr/tensiometre/' target='_blank' rel='noopener noreferrer'>locservice.fr</a> met à disposition un outil permettant d'estimer la tension locative dans une ville pour différents types de logement</p>",
   },
   {
     id: "info-fonciere",
     titre: "Taxe foncière",
     texte:
-      "<p>Taxe annuelle s’appliquant à tout propriétaire d'un bien immobilier en France. Elle n'est pas récupérable sur le locataire mais c'est une charge déductible permettant de réduire le revenu imposable.</p>",
+      "<p>Taxe annuelle s’appliquant à tout propriétaire d'un bien immobilier en France. Elle n'est pas récupérable sur le locataire mais c'est une charge déductible permettant de réduire le revenu imposable.</p> <p>La valeur de la taxe foncière est à demander à au vendeur du bien étudié. Le montant de la taxe foncière dépend de paramètres fixés par chaque ville, plus d'infos sur le site <a href='https://www.tacotax.fr/guides/impots-locaux/taxe-fonciere/methode-de-calcul?utm_source=google&utm_medium=cpl&utm_campaign=DSA&gclid=CjwKCAiA17P9BRB2EiwAMvwNyG7cv892qIcSVWfsvLjRi7UF5sU0G7f_uvYgrlVBnaf1Fd3PV_gfeRoCt3gQAvD_BwE' target='_blank' rel='noopener noreferrer'>tacotax.fr</a></p>",
   },
   {
     id: "info-gestion",
@@ -88,7 +113,7 @@ const modalInfo = [
     id: "info-charges",
     titre: "Charges courantes",
     texte:
-      "<p>Provisions pour charges d’entretien et de rénovation du bien. Le montant de ces charges pourra varier chaque année. Il est recommandé de mettre de côté une somme fixe chaque année pour ne pas être à cours de liquidités le moment venu. Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable.</p>",
+      "<p>Charges qui incombent au propriétaire bailleur. Ces frais peuvent être très variables d’un investissement à un autre et également d’une année à une autre pour un même bien. Il est recommandé de mettre de côté une somme fixe chaque année pour ne pas être à cours de liquidités au moment venu de réparer la toiture. Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable.</p><p>Il ne faut pas inclure les charges locataires dans les charges courantes car elles sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Le site <a href='https://www.immobilier-danger.com/Charges-non-imputables-au-959.html' target='_blank' rel='noopener noreferrer'>immobilier.danger.com</a> recense toutes les charges non-récupérables sur le locataire.</p>",
   },
   {
     id: "info-pno",
@@ -143,19 +168,20 @@ const modalInfo = [
     id: "info-rentabrute",
     titre: "Rendement brut",
     texte:
-      "<p>Indicateur exprimant le revenu annuel en pourcentage du coût du projet.</p><p>Formule : revenu annuel / coût du projet * 100</p> <p>Cet indicateur ne prend en compte ni les charges financières, ni les charges d’exploitation, ni l’impôt sur le revenu ou les cotisations sociales dus au titre de l'activité locative. Ce premier indicateur permet d’évaluer de manière approximative l’attractivité d’un investissement locatif.</p>",
+      "<p>Indicateur exprimant le revenu annuel en pourcentage du coût du projet.</p><p>Formule : revenu annuel / coût du projet * 100</p> <p> <p>Ce premier indicateur permet d’évaluer de manière approximative l’attractivité d’un investissement locatif. Il ne prend en compte ni les charges financières, ni les charges d’exploitation, ni l’impôt sur le revenu ou les cotisations sociales dus au titre de l'activité locative.</p>",
   },
   {
-    id: "info-rentanet",
-    titre: "Rendement net",
+    id: "info-noi",
+    titre: "Résultat opérationnel",
     texte:
-      "<p>Indicateur exprimant la création de richesse annuelle moyenne (cash-flow avant impôts et actif remboursé) en pourcentage du coût du projet.</p> <p>Formule : (cash-flow avant impôt + valeur du bien) / cout du projet * 100. <ul><li>- Cash-flow avant impôts : revenu annuel - charges annuelles (financières et d'exploitation)</li><li>- Valeur du bien : (vendeur + travaux) / nombre année d’emprunt</li></ul></p> <p>Cet indicateur ne prend en compte ni l’imposition liée au régime fiscal d’exploitation du bien, ni la situation personnelle du/des investisseur(s), ni le taux d’inflation annuel. Ces paramètres permettent de calculer le rendement net d'impôt qui pourra être amené à varier d'une année sur l'autre. C’est pour cela qu’il est nécessaire d’effectuer une modélisation au pas annuel du rendement net d'impôt et ce, durant toute la durée de l’emprunt, ou du moins, la durée de détention prévue par l’investisseur.</p> ",
+      "<p>Cet indicateur mesure la capacité d'un actif immobilier à générer du revenu indépendamment des conditions de financement du projet. C'est bien la rentabilité de l'actif immobilier qui est évaluer grâce à cet indicateur. <p>Formule : revenu annuel - charges d'exploitation</p>  <p>Il permet aux investisseurs d'évaluer la valeur d'un bien et de comparer la rentabilité de différents actifs. C'est aussi un indicateur regardé par les banques pour évaluer la capacité de l'investissement à rembourser le prêt.</p>",
   },
+  // "<p>Cet indicateur permet de mesurer le revenu potentiel généré par l'actif immobilier. </p> <p>Formule : (cash-flow avant impôt + valeur du bien) / cout du projet * 100. <ul><li>- Cash-flow avant impôts : revenu annuel - charges annuelles (financières et d'exploitation)</li><li>- Valeur du bien : (vendeur + travaux) / nombre année d’emprunt</li></ul></p> <p>Cet indicateur ne prend en compte ni l’imposition liée au régime fiscal d’exploitation du bien, ni la situation personnelle du/des investisseur(s), ni le taux d’inflation annuel. Ces paramètres permettent de calculer le rendement net d'impôt qui pourra être amené à varier d'une année sur l'autre. C’est pour cela qu’il est nécessaire d’effectuer une modélisation au pas annuel du rendement net d'impôt et ce, durant toute la durée de l’emprunt, ou du moins, la durée de détention prévue par l’investisseur.</p> ",
   {
-    id: "info-cashflow",
-    titre: "Cash-flow brut",
+    id: "info-treso-av-impot",
+    titre: "Trésorerie avant impôt",
     texte:
-      "<p>Cash-flow annuel avant impôt généré par le bien. <p>Formule : revenu annuel - charges annuelles (financières et d'exploitation)</p><p>Il est important de comprendre qu’un cash-flow brut positif ne garantit pas un cash-flow net d’impôt positif. En effet, le revenu imposable sera composé du revenu annuel – (charges déductibles + amortissements). Si le montant de l’impôt à payer est supérieur au cash-flow généré durant l’année, le cash-flow net sera négatif et l’investisseur devra payer de sa poche la différence.</p>",
+      "<p>C'est la trésorerie restante après le paiement des charges d'exploitation (charges courantes, frais de gestion...), des charges financières (intérêts, assurance) et le remboursement de la dette (capital emprunté). C'est également la trésorerie restante pour payer l'impôt sur le revenu généré par l'investissement<p>Formule : revenu annuel - charges annuelles (financières et d'exploitation) - capital remboursé</p><p>Il est important de prévoir le cas où une trésorerie positive avant impôt devient négative après impôt car l’investisseur devra payer de sa poche la part des impôts non-couverte par les revenus générés par l'actif. Si la trésorerie est négative avant impôt, l'investisseur devra aussi couvrir ces pertes en plus de l'impôt sur le revenu généré par le bien</p>",
   },
 ];
 

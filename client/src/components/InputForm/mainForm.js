@@ -14,13 +14,15 @@ import FoyerMobile from "./FoyerMobile";
 import Regime from "./Regime";
 import IndicateursDesktop from "./IndicateursDesktop";
 import IndicateursMobile from "./IndicateursMobile";
-import IndicateursButton from "./IndicateursButton";
 import SideNav from "./SideNav";
 import MobileNav from "./MobileNav";
 import ModalEmail from "./modalEmail";
-import ButtonModelMobile from "./ButtonModelMobile";
 import Footer from "./Footer";
 import InfoModal from "./InfoModal";
+import MobileNavButton from "./MobileNavButton";
+import MobileTitle from "./MobileTitle"
+import ButtonModelMobile from "./ButtonModelMobile";
+// import Modelisation from "../dashboards/Modelisation"
 
 // actions
 import { postInputForm, postEmail } from "../../actions/formData";
@@ -48,28 +50,10 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     };
   });
 
-  const [mobileDisplay, setMobileDisplay] = useState({
-    displayProjet: true,
-    displayFinancement: false,
-    displayRevenu: false,
-    displayCharges: false,
-    displayFoyer: false,
-    displayRegime: false,
-  });
-
-  const {
-    displayProjet,
-    displayFinancement,
-    displayRevenu,
-    displayCharges,
-    displayFoyer,
-    displayRegime,
-  } = mobileDisplay;
+  const [mobileDisplayTab, setMobileDisplayTab] = useState(0)
 
   // init form state
   const [formData, setFormData] = useState({
-    type: "",
-    codePostal: "",
     netVendeur: 0,
     travaux: 0,
     ammeublement: 0,
@@ -79,6 +63,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     apport: "",
     interet: 0.012,
     assurance: 0.001,
+    fraisBancaires: 0,
+    fraisCourtier: 0,
     loyer: 0,
     chargesLoc: 0,
     occupation: 11,
@@ -90,7 +76,6 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     augInvest1: 0.01,
     revInvest2: 0,
     augInvest2: 0.01,
-    invCouple: true,
     partFisc: 1,
     sciIs: false,
     lmnpReel: false,
@@ -111,6 +96,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     apport,
     interet,
     assurance,
+    fraisBancaires,
+    fraisCourtier,
     loyer,
     chargesLoc,
     occupation,
@@ -122,7 +109,6 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     augInvest1,
     revInvest2,
     augInvest2,
-    invCouple,
     irl,
     sciIs,
     lmnpReel,
@@ -201,9 +187,11 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     parseInt(travaux) +
     parseInt(ammeublement) +
     parseInt(netVendeur) * notaire +
-    parseInt(netVendeur) * agence;
+    parseInt(netVendeur) * agence +
+    parseInt(fraisBancaires) +
+    parseInt(fraisCourtier);
 
-  const emprunt = parseInt(coutProjet) - parseInt(apport);
+  const emprunt = parseInt(apport) > parseInt(coutProjet) ? 0 : parseInt(coutProjet) - parseInt(apport);
 
   const mensualite =
     finance.AM(emprunt, interet * 100, parseInt(duree) * 12, 1) +
@@ -217,22 +205,20 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         100
     ) / 100;
 
+  const netOperatingIncome =
+  revAnnuel -
+    (parseInt(fonciere) +
+    parseInt(charges) +
+    parseInt(gestion * revAnnuel) +
+    parseInt(pno));
+
   const cashFlowAnnuel =
     revAnnuel -
     (mensualite * 12 +
       parseInt(fonciere) +
       parseInt(charges) +
-      parseInt(gestion) +
+      parseInt(gestion * revAnnuel) +
       parseInt(pno));
-
-  const valeurFinale = parseInt(netVendeur) + parseInt(travaux);
-
-  const rendementNet =
-    Math.round(
-      (((cashFlowAnnuel + valeurFinale / duree) / coutProjet) * 100 +
-        Number.EPSILON) *
-        100
-    ) / 100;
 
   const sepSpace = (value) => {
     return Math.round(value)
@@ -272,14 +258,34 @@ export const MainForm = ({ postInputForm, postEmail }) => {
   const showModal = (e) => {
     setDisplayInfoModal(true);
     setContentInfoModal({ idContent: e.target.id });
-    console.log(e.target.id);
   };
 
   // clic footer
   const [clickFooter, setClickFooter] = useState(false);
 
+  // show - hide mobile nav
+  const [toggleMobileNav, setToggleMobileNav] = useState(false);
+
+  // add border on scroll
+  const [scrollTop, setScrollTop] = useState(true);
+
+  useEffect(() => {
+    window.onscroll = function() {
+      if(window.pageYOffset !== 0) {
+        setScrollTop(false)
+      }
+      if(window.pageYOffset === 0) {
+        setScrollTop(true)
+      }
+    };
+  });
+
   return (
     <div >
+
+      {/* model modal */}
+      {/* <Modelisation /> */}
+
       {/* <InfoModal /> */}
       {displayInfoModal ? (
         <InfoModal
@@ -290,13 +296,30 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         ""
       )}
 
+      
+      {width < 770 ?
+        <MobileTitle 
+          mobileDisplayTab={mobileDisplayTab}
+          scrollTop={scrollTop}
+        />
+      : ""} 
+
+      {width < 770 && !modal ?
+        <MobileNavButton 
+          setToggleMobileNav={setToggleMobileNav}
+          toggleMobileNav={toggleMobileNav}
+          netVendeurCheck={netVendeurCheck}
+          /> : ""}
+     
+
       {width < 770 ? (
         <MobileNav
-          setMobileDisplay={setMobileDisplay}
+          setMobileDisplayTab={setMobileDisplayTab}
           setClick={setClick}
           setModal={setModal}
           setDisplayInfoModal={setDisplayInfoModal}
-          mobileDisplay={mobileDisplay}
+          setToggleMobileNav={setToggleMobileNav}
+          toggleMobileNav={toggleMobileNav}
           netVendeurCheck={netVendeurCheck}
           apportCheck={apportCheck}
           loyerCheck={loyerCheck}
@@ -317,6 +340,13 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         width={width}
       />
 
+      {width < 770 ?
+        <ButtonModelMobile 
+          onSubmit={onSubmit}
+          formCheck={formCheck}
+          modal={modal}
+        /> : ""}
+
       {/* main page */}
       <div className='form-container'>
         {width < 1000 ? (
@@ -334,25 +364,9 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             mensualite={mensualite}
             revAnnuel={revAnnuel}
             rendementBrut={rendementBrut}
-            rendementNet={rendementNet}
+            netOperatingIncome={netOperatingIncome}
             cashFlowAnnuel={cashFlowAnnuel}
           />
-        )}
-
-        {width < 770 ? (
-          <ButtonModelMobile onSubmit={onSubmit} formCheck={formCheck} />
-        ) : (
-          ""
-        )}
-
-        {width < 1000 ? (
-          <IndicateursButton
-            setClick={setClick}
-            click={click}
-            setDisplayInfoModal={setDisplayInfoModal}
-          />
-        ) : (
-          ""
         )}
 
         {width < 1000 && click ? (
@@ -372,68 +386,86 @@ export const MainForm = ({ postInputForm, postEmail }) => {
             mensualite={mensualite}
             revAnnuel={revAnnuel}
             rendementBrut={rendementBrut}
-            rendementNet={rendementNet}
+            netOperatingIncome={netOperatingIncome}
             cashFlowAnnuel={cashFlowAnnuel}
+            formCheck={formCheck}
           />
         ) : (
           ""
         )}
 
-        <div style={{ width: "100%", margin: "0 20px" }}>
-          {width > 770 || (width < 770 && displayProjet) ? (
+        <div style={{ width: "100%", margin: width < 770 ? "0" : "0 20px" }}>
+          {width > 770 || (width < 770 && mobileDisplayTab === 0) ? (
             <Projet
               onChange={onChange}
               showModal={showModal}
               sepSpace={sepSpace}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
               netVendeur={netVendeur}
               travaux={travaux}
               ammeublement={ammeublement}
               notaire={notaire}
               agence={agence}
               width={width}
-              idContent={idContent}
+              formCheck={formCheck}
             />
           ) : (
             ""
           )}
-          {width > 770 || (width < 770 && displayFinancement) ? (
+          {width > 770 || (width < 770 && mobileDisplayTab === 1) ? (
             <Financement
               onChange={onChange}
               showModal={showModal}
+              sepSpace={sepSpace}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
               duree={duree}
               apport={apport}
               interet={interet}
               assurance={assurance}
+              coutProjet={coutProjet}
+              emprunt={emprunt}
+              fraisBancaires={fraisBancaires}
+              fraisCourtier={fraisCourtier}
               width={width}
+              formCheck={formCheck}
             />
           ) : (
             ""
           )}
 
-          {width > 770 || (width < 770 && displayRevenu) ? (
+          {width > 770 || (width < 770 && mobileDisplayTab === 2) ? (
             <Revenu
               onChange={onChange}
               showModal={showModal}
               sepSpace={sepSpace}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
               loyer={loyer}
               chargesLoc={chargesLoc}
               occupation={occupation}
               width={width}
+              formCheck={formCheck}
             />
           ) : (
             ""
           )}
 
-          {width > 770 || (width < 770 && displayCharges) ? (
+          {width > 770 || (width < 770 && mobileDisplayTab === 3) ? (
             <Charges
               onChange={onChange}
               showModal={showModal}
               sepSpace={sepSpace}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
+              revAnnuel={revAnnuel}
               fonciere={fonciere}
               gestion={gestion}
               charges={charges}
               pno={pno}
               width={width}
+              formCheck={formCheck}
             />
           ) : (
             ""
@@ -449,30 +481,34 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               augInvest1={augInvest1}
               revInvest2={revInvest2}
               augInvest2={augInvest2}
-              invCouple={invCouple}
               width={width}
             />
-          ) : width < 770 && displayFoyer ? (
+          ) : width < 770 && mobileDisplayTab === 4 ? (
             <FoyerMobile
               onChange={onChange}
               onChangeRegime={onChangeRegime}
               showModal={showModal}
               sepSpace={sepSpace}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
               revInvest1={revInvest1}
               augInvest1={augInvest1}
               revInvest2={revInvest2}
               augInvest2={augInvest2}
-              invCouple={invCouple}
+              width={width}
+              formCheck={formCheck}
             />
           ) : (
             ""
           )}
 
-          {width > 770 || (width < 770 && displayRegime) ? (
+          {width > 770 || (width < 770 && mobileDisplayTab === 5) ? (
             <Regime
               onChange={onChange}
               onChangeRegime={onChangeRegime}
               showModal={showModal}
+              setMobileDisplayTab={setMobileDisplayTab}
+              mobileDisplayTab={mobileDisplayTab}
               sciIs={sciIs}
               lmnpReel={lmnpReel}
               lmnpMicro={lmnpMicro}
@@ -480,18 +516,20 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               nueMicro={nueMicro}
               irl={irl}
               width={width}
+              formCheck={formCheck}
             />
           ) : (
             ""
           )}
         </div>
+
         {width < 770 ? (
           ""
         ) : (
           <SideNav
             onSubmit={onSubmit}
-            scrollTo={scrollTo}
             showModal={showModal}
+            scrollTo={scrollTo}
             netVendeurCheck={netVendeurCheck}
             apportCheck={apportCheck}
             loyerCheck={loyerCheck}

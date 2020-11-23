@@ -12,7 +12,7 @@ const Indicateurs = ({
   mensualite,
   revAnnuel,
   rendementBrut,
-  rendementNet,
+  netOperatingIncome,
   cashFlowAnnuel,
 }) => {
   return (
@@ -28,7 +28,7 @@ const Indicateurs = ({
             <i
               id='info-projet'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
           <h4 className='bold color-blue'>
@@ -41,7 +41,7 @@ const Indicateurs = ({
             <i
               id='info-emprunt'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
           <h4 className='bold color-blue'>
@@ -56,7 +56,7 @@ const Indicateurs = ({
             <i
               id='info-mensualite'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>{" "}
           <h4 className='bold color-blue'>
@@ -71,7 +71,7 @@ const Indicateurs = ({
             <i
               id='info-revenu'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>{" "}
           <h4 className='bold color-blue'>
@@ -86,7 +86,7 @@ const Indicateurs = ({
             <i
               id='info-rentabrute'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>{" "}
           <h4 className='bold color-blue'>
@@ -97,26 +97,26 @@ const Indicateurs = ({
         </div>
         <div className='kpi-item'>
           <div className='info-button'>
-            <h4>Rendement annuel net</h4>
+            <h4>Résultat opérationnel</h4>
             <i
-              id='info-rentanet'
+              id='info-noi'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
-              ? rendementNet.toString() + " %"
+              ? sepSpace(netOperatingIncome).toString() + " €"
               : "-"}
           </h4>
         </div>
         <div className='kpi-item'>
           <div className='info-button'>
-            <h4>Cash-flow avant impôt</h4>
+            <h4>Trésorerie avant impôt</h4>
             <i
-              id='info-cashflow'
+              id='info-treso-av-impot'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>{" "}
           <h4 className='bold color-blue'>

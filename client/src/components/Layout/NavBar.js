@@ -2,7 +2,7 @@ import React from "react";
 
 export const NavBar = () => {
   return (
-    <nav className='landing-nav'>
+    <nav className='landing-nav' >
       <div className='flex-row ai-fc'>
         <h1 className='bold'>SIMULIMO </h1>
       </div>

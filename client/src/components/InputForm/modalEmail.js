@@ -11,6 +11,14 @@ const ModalEmail = ({
   return (
     <section className={modal ? "email-modal" : "modal-none"}>
       <div className='modal-input'>
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <h3>
+            Avant d'aller plus loin
+          </h3>
+          <div onClick={() => setModal(false)}>
+            <i className='fa fa-arrow-right fa-2x indicateurs-mobile-button'></i>
+          </div>
+        </div>
         <h4>
           Simulimo est une solution gratuite pour modéliser la rentabilité d'un
           investissement locatif. Actuellement en construction, nous vous
@@ -20,7 +28,7 @@ const ModalEmail = ({
         <form className='container-email' onSubmit={onSubmitEmail}>
           <input
             type='email'
-            placeholder='Saisir Email'
+            placeholder='xyz@email.com'
             name='eModal'
             value={eModal}
             onChange={onChangeEmailModal}

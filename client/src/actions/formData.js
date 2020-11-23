@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // action type
-import { FORM_SUBMIT } from "./types";
+import { MODEL_DATA } from "./types";
 
 export const postInputForm = (formData) => async (dispatch) => {
   try {
@@ -14,15 +14,16 @@ export const postInputForm = (formData) => async (dispatch) => {
       // setAlert({ msg: res.data });
       console.log("heroku");
       dispatch({
-        type: FORM_SUBMIT,
+        type: MODEL_DATA,
         payload: res.data,
       });
     } else {
       const res = await axios.post("http://localhost:5000/input", formData);
+      console.log(res.data)
       // setAlert({ msg: res.data });
       console.log("local");
       dispatch({
-        type: FORM_SUBMIT,
+        type: MODEL_DATA,
         payload: res.data,
       });
     }
@@ -39,14 +40,14 @@ export const postEmail = (email) => async (dispatch) => {
   console.log("mail", email)
   try {
     if (process.env.NODE_ENV === "production") {
-      const res = await axios.post(
+      await axios.post(
         "https://simulimo.herokuapp.com/email",
         { email: email }
       );
       // setAlert({ msg: res.data });
       console.log("heroku");
     } else {
-      const res = await axios.post("http://localhost:5000/email", { email: email });
+      await axios.post("http://localhost:5000/email", { email: email });
       // setAlert({ msg: res.data });
       console.log("local");
     }

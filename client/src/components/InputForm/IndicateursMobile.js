@@ -3,6 +3,7 @@ import React from "react";
 const IndicateursMobile = ({
   showModal,
   sepSpace,
+  setClick,
   netVendeurCheck,
   apportCheck,
   loyerCheck,
@@ -12,17 +13,21 @@ const IndicateursMobile = ({
   mensualite,
   revAnnuel,
   rendementBrut,
-  rendementNet,
+  netOperatingIncome,
   cashFlowAnnuel,
+  formCheck,
 }) => {
-  console.log(coutProjet)
-  console.log(netVendeurCheck)
   return (
     <section id='indicateurs' className='indicateurs-mobile'>
-      <h3>
-        <i className='fas fa-temperature-high header-i'></i>
-        &nbsp;&nbsp;Indicateurs
-      </h3>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <h3>
+          <i className='fas fa-temperature-high header-i'></i>
+          &nbsp;&nbsp;Indicateurs
+        </h3>
+        <div onClick={() => setClick(false)}>
+          <i className='fa fa-arrow-right fa-2x indicateurs-mobile-button'></i>
+        </div>
+      </div>
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Coût du projet</h4>
@@ -98,24 +103,24 @@ const IndicateursMobile = ({
       </div>
       <div className='flex-column mb-10'>
         <div className='info-button'>
-          <h4>Rendement annuel net</h4>
+          <h4>Résultat opérationnel</h4>
           <i
-            id='info-rentanet'
+            id='info-noi'
             onClick={showModal}
             class='fas fa-question-circle fa-lg'
           ></i>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
-            ? rendementNet.toString() + " %"
+            ? sepSpace(netOperatingIncome).toString() + " €"
             : "-"}
         </h4>
       </div>
-      <div className='flex-column mb-10'>
+      <div className='flex-column mb-10' style={{ marginBottom: formCheck ? "60px" : "0" }}>
         <div className='info-button'>
-          <h4>Cash-flow avant impôt</h4>
+          <h4>Trésorerie avant impôt</h4>
           <i
-            id='info-cashflow'
+            id='info-treso-av-impot'
             onClick={showModal}
             class='fas fa-question-circle fa-lg'
           ></i>

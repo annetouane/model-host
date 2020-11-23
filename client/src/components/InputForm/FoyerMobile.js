@@ -1,15 +1,18 @@
 import React from "react";
+import MobilePagination from "./MobilePagination";
 
 const FoyerMobile = ({
   onChange,
-  onChangeRegime,
   showModal,
   sepSpace,
+  setMobileDisplayTab,
+  mobileDisplayTab,
   revInvest1,
   augInvest1,
   revInvest2,
   augInvest2,
-  invCouple,
+  width,
+  formCheck,
 }) => {
   const optionsAugmentation = [];
   for (let i = 0; i < 21; i++) {
@@ -22,10 +25,7 @@ const FoyerMobile = ({
   }
 
   return (
-    <section id='foyer'>
-      <h3 className='form-header'>
-        <i className='fas fa-house-user header-i'></i>&nbsp;&nbsp;Foyer fiscal
-      </h3>
+    <section id='foyer' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
       <div className='form-box-v mt-10'>
         <div className='info-button'>
           <h4>Investisseur N° 1 :</h4>
@@ -91,24 +91,16 @@ const FoyerMobile = ({
             ))}
           </select>
         </div>
-        {parseInt(revInvest2) !== 0 ? (
-          <div className='flex-row  mt-5'>
-            <label className='mr-10 bold'>
-              Investisseurs membres du même foyer fiscal
-            </label>
-            <input
-              type='checkbox'
-              name='invCouple'
-              defaultChecked={invCouple}
-              onChange={onChangeRegime}
-            />
-          </div>
+        {revInvest2 !== 0 ? (
+          <p className='fs-12 orange'>
+            <i class='fas fa-exclamation-circle mr-5'></i>
+            Dans sa version actuelle, Simulimo permet uniquement de modéliser un investissement avec un seul investisseur ou deux investisseurs rattachés au même foyer fiscal.
+          </p>
         ) : (
           ""
         )}
       </div>
 
-      {/* {invCouple ? ( */}
       <div className='form-box-h-3 mt-10'>
         <p className='p-par-fisc'>
           En France, l'impôt sur le revenu est calculé au niveau du foyer
@@ -130,7 +122,6 @@ const FoyerMobile = ({
             name='partFisc'
             onChange={onChange}
             className='input-box-3 fs-12'
-            disabled={!invCouple}
           >
             {optionsPartFisc.map((optionPartFisc) => (
               <option key={optionPartFisc}>{optionPartFisc}</option>
@@ -143,17 +134,11 @@ const FoyerMobile = ({
             style={{ marginBottom: "5px" }}
           ></i>
         </div>
-
-        {!invCouple ? (
-          <p className='fs-12 orange'>
-            <i class='fas fa-exclamation-circle mr-5'></i>
-            Les parts fiscales ne seront pas prises en compte si les
-            investisseurs ne sont pas rattachés au même foyer fiscal.
-          </p>
-        ) : (
-          ""
-        )}
       </div>
+      <MobilePagination
+          setMobileDisplayTab={setMobileDisplayTab}
+          mobileDisplayTab={mobileDisplayTab}
+      />
     </section>
   );
 };

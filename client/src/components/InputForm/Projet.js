@@ -1,72 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import MobilePagination from "./MobilePagination";
+import ReactTooltip from 'react-tooltip';
 
 const Projet = ({
   onChange,
   showModal,
   sepSpace,
+  setMobileDisplayTab,
+  mobileDisplayTab,
   netVendeur,
   travaux,
   ammeublement,
   notaire,
   agence,
   width,
+  formCheck,
 }) => {
   const optionsAgence = []; // frais d'agence
   for (let i = 0; i < 11; i++) {
     optionsAgence.push(i);
   }
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+
+  setTimeout(() => setIsButtonDisabled(true), 30000);
+  
   return (
-    <section id='projet'>
+    <section id='projet' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
+      {width > 770 ?
       <h3 className='form-header'>
         <i className='fas fa-landmark header-i'></i>
         &nbsp;&nbsp;Description du projet
-      </h3>
-      <div className='form-group'>
-        <div
-          className={
-            width < 770 ? "form-box-h-1 mt-10" : "form-box-h-1 mr-5 mt-10"
-          }
-        >
-          <label>Type de bien : </label>
-          <select
-            type='select'
-            name='type'
-            onChange={onChange}
-            className='input-box fs-12'
-            defaultValue='Selection...'
-          >
-            <option>Selection...</option>
-            <option value='appartement'>Appartement</option>
-            <option value='immeuble'>Immeuble</option>
-            <option value='maison'>Maison</option>
-            <option value='parking'>Parking</option>
-            <option value='commerce'>Local Commercial</option>
-          </select>
-        </div>
-
-        <div
-          className={
-            width < 770 ? "form-box-h-1 mt-10" : "form-box-h-1 ml-5 mt-10"
-          }
-        >
-          <label>Code postal : </label>
-          <input
-            type='number'
-            max='99999'
-            min='1'
-            name='codePostal'
-            onChange={onChange}
-            className='input-box fs-12'
-            placeholder='Saisir code postal'
-          />
-        </div>
-      </div>
-
+      </h3> : ""}
+      {/* "#01c96c 007be8" */}
+      {width > 770 && !isButtonDisabled ? 
+        <ReactTooltip
+          delayHide={200} 
+          backgroundColor="#fff"
+          multiline={true}
+          border={true}
+          borderColor="#cacaca"
+          textColor="#333"
+          className="transparent"
+          place="left"
+        /> 
+        : ""}
+      
       <div className='form-box-v mt-10'>
         <label>Net vendeur : {sepSpace(netVendeur)} €</label>
         <div className='info-button'>
           <input
+            data-tip="Utiliser les flèches du <br/> clavier pour  ajuster la <br/>valeur des jauges"
             type='range'
             name='netVendeur'
             value={netVendeur}
@@ -79,7 +63,7 @@ const Projet = ({
           <i
             id='info-net-vendeur'
             onClick={showModal}
-            class='fas fa-question-circle'
+            className='fas fa-question-circle'
           ></i>
         </div>
       </div>
@@ -100,7 +84,7 @@ const Projet = ({
           <i
             id='info-travaux'
             onClick={showModal}
-            class='fas fa-question-circle'
+            className='fas fa-question-circle'
           ></i>
         </div>
       </div>
@@ -121,7 +105,7 @@ const Projet = ({
           <i
             id='info-ammeublement'
             onClick={showModal}
-            class='fas fa-question-circle'
+            className='fas fa-question-circle'
           ></i>
         </div>
       </div>
@@ -130,8 +114,9 @@ const Projet = ({
         <div
           className={width < 770 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
         >
-          <div className='flex-row jc-fs ai-fc f-wrap'>
-            <label>Frais de notaire :</label>&nbsp;&nbsp;
+          <div className='horizontal-input'>
+            <label>Frais de notaire :</label>
+            <p>{sepSpace(netVendeur * notaire)} €</p>
             <select
               type='select'
               name='notaire'
@@ -140,23 +125,22 @@ const Projet = ({
               className='input-box-2 fs-12'
             >
               <option value='0.075'>7.5% (Ancien)</option>
-              <option value='0.03'>3% (Neuf)</option>
+              <option value='0.03'>3%   (Neuf)</option>
             </select>
-            &nbsp;&nbsp;
-            <p>= {sepSpace(netVendeur * notaire)} €</p>
           </div>
           <i
             id='info-notaire'
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
+            className='fas fa-question-circle fa-lg'
           ></i>
         </div>
 
         <div
           className={width < 770 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
         >
-          <div className='flex-row jc-fs ai-fc f-wrap'>
-            <label>Frais d'agence :</label>&nbsp;&nbsp;&nbsp;
+          <div className='horizontal-input'>
+            <label style={{ marginRight: "5px" }}>Frais d'agence :</label>
+            <p>{sepSpace(netVendeur * agence)} €</p>
             <select
               type='select'
               name='agence'
@@ -170,16 +154,19 @@ const Projet = ({
                 </option>
               ))}
             </select>
-            &nbsp;&nbsp;&nbsp;
-            <p>= {sepSpace(netVendeur * agence)} €</p>
           </div>
           <i
             id='info-agence'
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
+            className='fas fa-question-circle fa-lg'
           ></i>
         </div>
       </div>
+      {width < 700 ?
+      <MobilePagination
+          setMobileDisplayTab={setMobileDisplayTab}
+          mobileDisplayTab={mobileDisplayTab}
+      /> : ""}
     </section>
   );
 };

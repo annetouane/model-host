@@ -10,7 +10,7 @@ const Footer = ({ onSubmitEmail, onChangeEmailFooter, eFooter, clickFooter }) =>
         <form onSubmit={onSubmitEmail}>
           <input
             type='email'
-            placeholder='Saisir Email'
+            placeholder='xyz@email.com'
             name='eFooter'
             value={eFooter}
             onChange={onChangeEmailFooter}

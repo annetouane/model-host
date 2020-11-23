@@ -1,9 +1,12 @@
 import React from "react";
+import MobilePagination from "./MobilePagination";
 
 const Regime = ({
   onChange,
   onChangeRegime,
   showModal,
+  setMobileDisplayTab,
+  mobileDisplayTab,
   sciIs,
   lmnpReel,
   lmnpMicro,
@@ -11,13 +14,15 @@ const Regime = ({
   nueMicro,
   irl,
   width,
+  formCheck,
 }) => {
   return (
-    <section id='regime'>
+    <section id='regime' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
+      {width > 770 ?
       <h3 className='form-header'>
         <i className='fas fa-balance-scale header-i'></i>
         &nbsp;&nbsp;Régime fiscal
-      </h3>
+      </h3> : ""}
       <div className='form-box-v mt-10'>
         <div className='regime-responsive'>
           <div className='regime-responsive-items'>
@@ -126,6 +131,11 @@ const Regime = ({
           </div>
         </div>
       </div>
+      {width < 700 ?
+      <MobilePagination
+          setMobileDisplayTab={setMobileDisplayTab}
+          mobileDisplayTab={mobileDisplayTab}
+      /> : ""}
     </section>
   );
 };

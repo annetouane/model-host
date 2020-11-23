@@ -1,4 +1,4 @@
-import { FORM_SUBMIT } from "../actions/types";
+import { MODEL_DATA } from "../actions/types";
 
 const initialState = [];
 
@@ -6,7 +6,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case FORM_SUBMIT:
+    case MODEL_DATA:
       return [...state, payload];
 
     default:

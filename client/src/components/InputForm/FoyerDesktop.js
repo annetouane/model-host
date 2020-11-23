@@ -2,14 +2,12 @@ import React from "react";
 
 const FoyerDesktop = ({
   onChange,
-  onChangeRegime,
   showModal,
   sepSpace,
   revInvest1,
   augInvest1,
   revInvest2,
   augInvest2,
-  invCouple,
 }) => {
   const optionsAugmentation = [];
   for (let i = 0; i < 21; i++) {
@@ -70,21 +68,6 @@ const FoyerDesktop = ({
       <div className='form-box-v mt-10'>
         <div className='invest-rev'>
           <h4>Investisseur N° 2 :</h4>
-          {parseInt(revInvest2) !== 0 ? (
-            <div className='flex-row  mt-5'>
-              <label className='mr-10 bold'>
-                Investisseurs membres du même foyer fiscal
-              </label>
-              <input
-                type='checkbox'
-                name='invCouple'
-                defaultChecked={invCouple}
-                onChange={onChangeRegime}
-              />
-            </div>
-          ) : (
-            ""
-          )}
         </div>
 
         <div className='invest-rev'>
@@ -118,6 +101,14 @@ const FoyerDesktop = ({
             </select>
           </div>
         </div>
+        {revInvest2 !== 0 ? (
+          <p className='fs-12 orange'>
+            <i class='fas fa-exclamation-circle mr-5'></i>
+            Dans sa version actuelle, Simulimo permet uniquement de modéliser un investissement avec un seul investisseur ou deux investisseurs rattachés au même foyer fiscal.
+          </p>
+        ) : (
+          ""
+        )}
       </div>
 
       {/* {invCouple ? ( */}
@@ -152,23 +143,12 @@ const FoyerDesktop = ({
             name='partFisc'
             onChange={onChange}
             className='input-box-3 fs-12'
-            disabled={!invCouple}
           >
             {optionsPartFisc.map((optionPartFisc) => (
               <option key={optionPartFisc}>{optionPartFisc}</option>
             ))}
-          </select>
+          </select> 
         </div>
-
-        {!invCouple ? (
-          <p className='fs-12 orange'>
-            <i class='fas fa-exclamation-circle mr-5'></i>
-            Les parts fiscales ne seront pas prises en compte si les
-            investisseurs ne sont pas rattachés au même foyer fiscal.
-          </p>
-        ) : (
-          ""
-        )}
       </div>
     </section>
   );

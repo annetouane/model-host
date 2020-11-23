@@ -1,13 +1,17 @@
 import React from "react";
+import MobilePagination from "./MobilePagination";
 
 const Revenu = ({
   onChange,
   sepSpace,
+  setMobileDisplayTab,
+  mobileDisplayTab,
   loyer,
   chargesLoc,
   occupation,
   width,
   showModal,
+  formCheck,
 }) => {
   const optionsOccupation = []; // options taux occupation
   for (let i = 1; i <= 12; i += 0.5) {
@@ -15,14 +19,15 @@ const Revenu = ({
   }
 
   return (
-    <section id='revenu'>
+    <section id='revenu' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
+      {width > 770 ?
       <h3 className='form-header'>
         <i className='fas fa-hand-holding-usd header-i'></i>
         &nbsp;&nbsp;Revenu annuel d'exploitation
-      </h3>
+      </h3> : ""}
       <div className='flex-row jc-se'>
         <div className='form-box-v mt-10'>
-          <label>Loyer mensuel : {sepSpace(loyer)} €</label>
+          <label>Loyer mensuel <small>(hors charges)</small> : {sepSpace(loyer)} €</label>
           <div className='info-button'>
             <input
               type='range'
@@ -48,7 +53,7 @@ const Revenu = ({
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
           <label>
-            Charges locataires (annuelles) : {sepSpace(chargesLoc)} €
+            Charges locataires <small>(annuelle)</small> : {sepSpace(chargesLoc)} €
           </label>
           <div className='info-button'>
             <input
@@ -71,10 +76,10 @@ const Revenu = ({
 
         <div
           className={
-            width < 770 ? "form-box-h-2 mt-10" : "form-box-h-2 mt-10 ml-5"
+            width < 770 ? "form-box-h-4 mt-10" : "form-box-h-4 mt-10 ml-5"
           }
         >
-          <label>Taux annuel d'occupation : </label>
+          <label>Occupation annuelle : </label>
           <select
             type='select'
             name='occupation'
@@ -95,6 +100,11 @@ const Revenu = ({
           ></i>
         </div>
       </div>
+      {width < 700 ?
+      <MobilePagination
+          setMobileDisplayTab={setMobileDisplayTab}
+          mobileDisplayTab={mobileDisplayTab}
+      /> : ""}
     </section>
   );
 };
