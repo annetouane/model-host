@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MobilePagination from "./MobilePagination";
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 import NumberFormat from 'react-number-format';
 
 const Projet = ({
@@ -24,9 +24,9 @@ const Projet = ({
     optionsAgence.push(i);
   }
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+  // const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
-  setTimeout(() => setIsButtonDisabled(true), 20000);
+  // setTimeout(() => setIsButtonDisabled(true), 20000);
   
   return (
     <section id='projet' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
@@ -35,7 +35,7 @@ const Projet = ({
         <i className='fas fa-landmark header-i'></i>
         &nbsp;&nbsp;Description du projet
       </h3> : ""}
-      {width > 770 && !isButtonDisabled ? 
+      {/* {width > 770 && !isButtonDisabled ? 
         <ReactTooltip
           delayHide={200} 
           backgroundColor="#fff"
@@ -46,11 +46,19 @@ const Projet = ({
           className="transparent"
           place="left"
         /> 
-        : ""}
+        : ""} */}
       
       <div className='form-box-v mt-10'>
         <div className='type-alt-slider'>
-          <label>Net vendeur <small>(hors frais d'agence)</small> : </label>
+          <label>Net vendeur&nbsp;
+            <small style={{ marginLeft: 0 }}>
+              (<i 
+                style={{ marginLeft: 0, cursor: "auto" }} 
+                className="fas fa-exclamation-circle">
+              </i> hors frais d'agence)
+            </small> :
+          </label>
+          <small></small> : 
           <div className="flex-row ai-fs">
             <NumberFormat
               id="projet-edit"
@@ -66,15 +74,17 @@ const Projet = ({
                 return floatValue >= 0 &&  floatValue <= 1000000;
               }}
             />
-            <small onClick={() => focusMethod("projet-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("projet-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
 
         <div className='info-button'>
           <input
-            data-tip="La valeur des jauges est modifiable soit<br>avec la souris, soit à l'aide des flèches<br>du clavier ou en éditant directement<br>la valeur à droite de chaque jauge"
+            // data-tip="La valeur des jauges est modifiable soit<br>avec la souris, soit à l'aide des flèches<br>du clavier ou en éditant directement<br>la valeur à droite de chaque jauge"
             type='range'
             name='netVendeur'
             value={netVendeur}
@@ -111,9 +121,11 @@ const Projet = ({
                   return floatValue >= 0 &&  floatValue <= 300000;
                 }}
               />
-              <small onClick={() => focusMethod("travaux-edit")} style={{ fontSize: "13px" }}>
-                <i class="far fa-edit"></i>
-              </small>
+              <i 
+                onClick={() => focusMethod("travaux-edit")} 
+                style={{ fontSize: "14px" }} 
+                className="far fa-edit"
+              ></i>
             </div>
           </div>
 
@@ -154,9 +166,11 @@ const Projet = ({
                   return floatValue >= 0 &&  floatValue <= 100000;
                 }}
               />
-              <small onClick={() => focusMethod("ammeublement-edit")} style={{ fontSize: "13px" }}>
-                <i class="far fa-edit"></i>
-              </small>
+              <i 
+                onClick={() => focusMethod("ammeublement-edit")} 
+                style={{ fontSize: "14px" }} 
+                className="far fa-edit"
+              ></i>
             </div>
           </div>
 

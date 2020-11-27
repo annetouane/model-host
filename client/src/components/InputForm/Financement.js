@@ -158,11 +158,13 @@ const Financement = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("frais-bancaire-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+              <i 
+                onClick={() => focusMethod("frais-bancaire-edit")} 
+                style={{ fontSize: "14px" }} 
+                className="far fa-edit"
+              ></i>
+            </div>
           </div>
-        </div>
 
           <div className='info-button'>
             <input
@@ -208,11 +210,13 @@ const Financement = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("frais-courtier-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+              <i 
+                onClick={() => focusMethod("frais-courtier-edit")} 
+                style={{ fontSize: "14px" }} 
+                className="far fa-edit"
+              ></i>
+            </div>
           </div>
-        </div>
 
           <div className='info-button'>
             <input

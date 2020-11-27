@@ -30,7 +30,15 @@ const Revenu = ({
       <div className='flex-row jc-se'>
         <div className='form-box-v mt-10'>
         <div className='type-alt-slider'>
-          <label>Loyer mensuel <small>(charges comprises)</small> :</label>
+          <label>Loyer mensuel&nbsp;
+          <small style={{ marginLeft: 0 }}>
+            (<i 
+              style={{ marginLeft: 0, cursor: "auto" }} 
+              className="fas fa-exclamation-circle">
+            </i>charges comprises)
+          </small> :</label>
+
+
           <div className="flex-row ai-fs">
             <NumberFormat
               id="loyer-edit"
@@ -46,11 +54,13 @@ const Revenu = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("loyer-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+              <i 
+                onClick={() => focusMethod("loyer-edit")} 
+                style={{ fontSize: "14px" }} 
+                className="far fa-edit"
+              ></i>
+            </div>
           </div>
-        </div> 
 
           <div className='info-button'>
             <input
@@ -93,9 +103,11 @@ const Revenu = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("chargesLoc-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("chargesLoc-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
 

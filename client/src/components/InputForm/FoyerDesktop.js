@@ -52,9 +52,11 @@ const FoyerDesktop = ({
                 return floatValue >= 0 &&  floatValue <= 150000;
               }}
             />
-            <small onClick={() => focusMethod("revInvest1-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("revInvest1-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
         <div className='invest-rev padding-investisseur'>
@@ -101,9 +103,11 @@ const FoyerDesktop = ({
                 return floatValue >= 0 &&  floatValue <= 150000;
               }}
             />
-            <small onClick={() => focusMethod("revInvest2-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("revInvest2-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
         <div className='invest-rev'>

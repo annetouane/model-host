@@ -508,6 +508,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               showModal={showModal}
               sepSpace={sepSpace}
               setMobileDisplayTab={setMobileDisplayTab}
+              focusMethod={focusMethod}
               mobileDisplayTab={mobileDisplayTab}
               revInvest1={revInvest1}
               augInvest1={augInvest1}

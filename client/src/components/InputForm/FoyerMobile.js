@@ -52,12 +52,14 @@ const FoyerMobile = ({
               allowNegative={false}
               isAllowed={(values) => {
                 const {floatValue} = values;
-                return floatValue >= 0 &&  floatValue <= 10000;
+                return floatValue >= 0 &&  floatValue <= 150000;
               }}
             />
-            <small onClick={() => focusMethod("revInvest1-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("revInvest1-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
 
@@ -67,7 +69,7 @@ const FoyerMobile = ({
           value={revInvest1}
           onChange={onChange}
           min='0'
-          max='200000'
+          max='150000'
           className='slider mt-5'
         />
         <div className='invest-rev'>
@@ -80,7 +82,7 @@ const FoyerMobile = ({
             className='augmentation fs-12'
           >
             {optionsAugmentation.map((option) => (
-              <option key={option} value={option / 200000}>
+              <option key={option} value={option / 100}>
                 {option}%
               </option>
             ))}
@@ -104,12 +106,14 @@ const FoyerMobile = ({
               allowNegative={false}
               isAllowed={(values) => {
                 const {floatValue} = values;
-                return floatValue >= 0 &&  floatValue <= 200000;
+                return floatValue >= 0 &&  floatValue <= 150000;
               }}
             />
-            <small onClick={() => focusMethod("revInvest2-edit")} style={{ fontSize: "13px" }}>
-              <i class="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("revInvest2-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div> 
 
@@ -119,7 +123,7 @@ const FoyerMobile = ({
           value={revInvest2}
           onChange={onChange}
           min='0'
-          max='200000'
+          max='150000'
           className='slider mt-5'
         />
         <div className='invest-rev w'>

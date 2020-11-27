@@ -32,9 +32,9 @@ const Charges = ({
           <label>Charges courantes :</label>
           <small style={{ marginLeft: 0 }}>
             <i 
-              style={{ marginLeft: 0 }} 
+              style={{ marginLeft: 0, cursor: "auto" }} 
               className="fas fa-exclamation-circle">
-            </i>&nbsp;Exclure les charges locataires
+            </i> Exclure les charges locataires
           </small>
           </div>
           <div className="flex-row ai-fs">
@@ -52,9 +52,11 @@ const Charges = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("charges-edit")} style={{ fontSize: "13px" }}>
-              <i className="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("charges-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>              
           
@@ -100,9 +102,11 @@ const Charges = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("gestion-edit")} style={{ fontSize: "13px" }}>
-              <i className="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("gestion-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>     
 
@@ -147,9 +151,11 @@ const Charges = ({
                 return floatValue >= 0 &&  floatValue <= 10000;
               }}
             />
-            <small onClick={() => focusMethod("fonciere-edit")} style={{ fontSize: "13px" }}>
-              <i className="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("fonciere-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>
 
@@ -192,9 +198,11 @@ const Charges = ({
                 return floatValue >= 0 &&  floatValue <= 2000;
               }}
             />
-            <small onClick={() => focusMethod("pno-edit")} style={{ fontSize: "13px" }}>
-              <i className="far fa-edit"></i>
-            </small>
+            <i 
+              onClick={() => focusMethod("pno-edit")} 
+              style={{ fontSize: "14px" }} 
+              className="far fa-edit"
+            ></i>
           </div>
         </div>          
 

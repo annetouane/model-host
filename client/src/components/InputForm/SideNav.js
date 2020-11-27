@@ -257,6 +257,7 @@ const Indicateurs = ({
           backgroundColor: !formCheck && "#a8a8a8",
           color: !formCheck && "#dfe3da",
           cursor: !formCheck && "not-allowed",
+          lineHeight: '20px'
         }}
       >
         Modélisation <br />
