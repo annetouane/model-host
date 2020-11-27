@@ -138,13 +138,18 @@ export const MainForm = ({ postInputForm, postEmail }) => {
   };
 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: parseInt(e.target.value.replace("€", "").replaceAll(" ", "")) });
+  };
+
+  const onChangeDecimals = (e) => {
+    setFormData({ ...formData, [e.target.name]: parseFloat(e.target.value) });
   };
 
   const onChangeRegime = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
+  // Submit functions ---------------------------------------------------------------------------------
   const onSubmit = async (e) => {
     e.preventDefault();
     if (formData) {
@@ -209,7 +214,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
   revAnnuel -
     (parseInt(fonciere) +
     parseInt(charges) +
-    parseInt(gestion * revAnnuel) +
+    parseInt(gestion) +
     parseInt(pno));
 
   const cashFlowAnnuel =
@@ -217,7 +222,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
     (mensualite * 12 +
       parseInt(fonciere) +
       parseInt(charges) +
-      parseInt(gestion * revAnnuel) +
+      parseInt(gestion) +
       parseInt(pno));
 
   const sepSpace = (value) => {
@@ -279,6 +284,11 @@ export const MainForm = ({ postInputForm, postEmail }) => {
       }
     };
   });
+
+  // focus on edit
+  const focusMethod = function getFocus(id) {           
+    document.getElementById(id).focus();
+  }
 
   return (
     <div >
@@ -401,6 +411,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               showModal={showModal}
               sepSpace={sepSpace}
               setMobileDisplayTab={setMobileDisplayTab}
+              focusMethod={focusMethod}
+              onChangeDecimals={onChangeDecimals}
               mobileDisplayTab={mobileDisplayTab}
               netVendeur={netVendeur}
               travaux={travaux}
@@ -419,6 +431,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               showModal={showModal}
               sepSpace={sepSpace}
               setMobileDisplayTab={setMobileDisplayTab}
+              onChangeDecimals={onChangeDecimals}
+              focusMethod={focusMethod}
               mobileDisplayTab={mobileDisplayTab}
               duree={duree}
               apport={apport}
@@ -441,6 +455,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               showModal={showModal}
               sepSpace={sepSpace}
               setMobileDisplayTab={setMobileDisplayTab}
+              focusMethod={focusMethod}
               mobileDisplayTab={mobileDisplayTab}
               loyer={loyer}
               chargesLoc={chargesLoc}
@@ -458,6 +473,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               showModal={showModal}
               sepSpace={sepSpace}
               setMobileDisplayTab={setMobileDisplayTab}
+              focusMethod={focusMethod}
               mobileDisplayTab={mobileDisplayTab}
               revAnnuel={revAnnuel}
               fonciere={fonciere}
@@ -477,6 +493,8 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               onChangeRegime={onChangeRegime}
               showModal={showModal}
               sepSpace={sepSpace}
+              focusMethod={focusMethod}
+              onChangeDecimals={onChangeDecimals}
               revInvest1={revInvest1}
               augInvest1={augInvest1}
               revInvest2={revInvest2}
@@ -508,6 +526,7 @@ export const MainForm = ({ postInputForm, postEmail }) => {
               onChangeRegime={onChangeRegime}
               showModal={showModal}
               setMobileDisplayTab={setMobileDisplayTab}
+              onChangeDecimals={onChangeDecimals}
               mobileDisplayTab={mobileDisplayTab}
               sciIs={sciIs}
               lmnpReel={lmnpReel}

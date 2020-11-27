@@ -1,11 +1,14 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
+import NumberFormat from 'react-number-format';
 
 const Financement = ({
   onChange,
   showModal,
   sepSpace,
   setMobileDisplayTab,
+  onChangeDecimals,
+  focusMethod,
   mobileDisplayTab,
   duree,
   apport,
@@ -43,7 +46,7 @@ const Financement = ({
             <i
               id='info-duree'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -88,7 +91,7 @@ const Financement = ({
               type='range'
               name='interet'
               value={interet}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               min='0'
               max='0.04'
               step='0.0001'
@@ -105,7 +108,7 @@ const Financement = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
-          <label>
+          <label> 
             Taux d'assurance :{" "}
             {Math.round((assurance * 100 + Number.EPSILON) * 100) / 100} %
           </label>
@@ -114,7 +117,7 @@ const Financement = ({
               type='range'
               name='assurance'
               value={assurance}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               min='0'
               max='0.01'
               step='0.0001'
@@ -123,7 +126,7 @@ const Financement = ({
             <i
               id='info-assurance'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -133,12 +136,34 @@ const Financement = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
-          <label>
-            Frais bancaires : {sepSpace(fraisBancaires)} €
-          </label>
-          {emprunt ?
-          <small>soit {Math.round((fraisBancaires / emprunt * 100 + Number.EPSILON) * 100) / 100} % du capital emprunté</small>
-        : ""}
+          <div className='type-alt-slider'>
+          <div className="flex-column">
+            <label>Frais bancaires :</label>
+              {emprunt ?
+                <small>soit {Math.round((fraisBancaires / emprunt * 100 + Number.EPSILON) * 100) / 100} % du capital emprunté</small>
+              : ""}
+            </div>      
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="frais-bancaire-edit"
+              name='fraisBancaires'
+              value={fraisBancaires}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("frais-bancaire-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
+
           <div className='info-button'>
             <input
               type='range'
@@ -153,7 +178,7 @@ const Financement = ({
             <i
               id='info-frais-bancaires'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -161,13 +186,34 @@ const Financement = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
+          <div className='type-alt-slider'>
+            <div className="flex-column">
+              <label>Frais de courtier :</label>
+                  {emprunt ?
+                  <small>soit {Math.round((fraisCourtier / emprunt * 100 + Number.EPSILON) * 100) / 100} % du capital emprunté</small>
+              : ""}
+            </div>   
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="frais-courtier-edit"
+              name='fraisCourtier'
+              value={fraisCourtier}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("frais-courtier-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
 
-          <label>
-          Frais de courtier : {sepSpace(fraisCourtier)} €
-          </label>
-          {emprunt ?
-          <small>soit {Math.round((fraisCourtier / emprunt + Number.EPSILON) * 100)} % du capital emprunté</small>
-        : ""}
           <div className='info-button'>
             <input
               type='range'
@@ -182,7 +228,7 @@ const Financement = ({
             <i
               id='info-frais-courtier'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>

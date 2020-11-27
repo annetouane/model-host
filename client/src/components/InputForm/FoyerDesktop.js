@@ -1,9 +1,11 @@
 import React from "react";
+import NumberFormat from 'react-number-format';
 
 const FoyerDesktop = ({
   onChange,
   showModal,
-  sepSpace,
+  focusMethod,
+  onChangeDecimals,
   revInvest1,
   augInvest1,
   revInvest2,
@@ -25,26 +27,44 @@ const FoyerDesktop = ({
         <i className='fas fa-house-user header-i'></i>&nbsp;&nbsp;Foyer fiscal
       </h3>
       <div className='form-box-v mt-10'>
-        <div className='info-button'>
-          <h4>Investisseur N° 1 :</h4>
+        <div className='info-button info-button-foyer'>
+          <h5>Revenu d'activité imposable & augmentation annuelle moyenne (%)</h5>
           <i
             id='info-investisseur'
             onClick={showModal}
             className='fas fa-question-circle mb-10'
           ></i>
         </div>
-        <div className='invest-rev'>
-          <label>Revenu net avant impôts : {sepSpace(revInvest1)} €</label>
-          <label>Augmentation annuelle moyenne :</label>
+        <div className='type-alt-slider border-investisseur pad-top-invest'>
+          <label>Investisseur N° 1 :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="revInvest1-edit"
+              name='revInvest1'
+              value={revInvest1}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 150000;
+              }}
+            />
+            <small onClick={() => focusMethod("revInvest1-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
         </div>
-        <div className='invest-rev'>
+        <div className='invest-rev padding-investisseur'>
           <input
             type='range'
             name='revInvest1'
             value={revInvest1}
             onChange={onChange}
             min='0'
-            max='100000'
+            max='150000'
             className='slider'
           />
           <div className='w-15 ml-10'>
@@ -63,16 +83,28 @@ const FoyerDesktop = ({
             </select>
           </div>
         </div>
-      </div>
 
-      <div className='form-box-v mt-10'>
-        <div className='invest-rev'>
-          <h4>Investisseur N° 2 :</h4>
-        </div>
-
-        <div className='invest-rev'>
-          <label>Revenu net avant impôts : {sepSpace(revInvest2)} €</label>
-          <label>Augmentation annuelle moyenne :</label>
+        <div className='type-alt-slider border-investisseur pad-top-invest'>
+          <label>Investisseur N° 2 :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="revInvest2-edit"
+              name='revInvest2'
+              value={revInvest2}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 150000;
+              }}
+            />
+            <small onClick={() => focusMethod("revInvest2-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
         </div>
         <div className='invest-rev'>
           <input
@@ -81,7 +113,7 @@ const FoyerDesktop = ({
             value={revInvest2}
             onChange={onChange}
             min='0'
-            max='100000'
+            max='150000'
             className='slider'
           />
 
@@ -141,7 +173,7 @@ const FoyerDesktop = ({
           <select
             type='select'
             name='partFisc'
-            onChange={onChange}
+            onChange={onChangeDecimals}
             className='input-box-3 fs-12'
           >
             {optionsPartFisc.map((optionPartFisc) => (

@@ -28,7 +28,10 @@
     "jsonwebtoken": "^8.5.1",
     "loanjs": "^1.0.4",
     "moment": "^2.29.0",
-    "mongoose": "^5.10.7"
+    "mongoose": "^5.10.7",
+    "react-number-format": "^4.4.1",
+    "react-numeric": "^1.0.0",
+    "react-numeric-input": "^2.2.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

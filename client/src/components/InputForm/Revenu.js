@@ -1,10 +1,12 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
+import NumberFormat from 'react-number-format';
 
 const Revenu = ({
   onChange,
   sepSpace,
   setMobileDisplayTab,
+  focusMethod,
   mobileDisplayTab,
   loyer,
   chargesLoc,
@@ -27,7 +29,29 @@ const Revenu = ({
       </h3> : ""}
       <div className='flex-row jc-se'>
         <div className='form-box-v mt-10'>
-          <label>Loyer mensuel <small>(hors charges)</small> : {sepSpace(loyer)} €</label>
+        <div className='type-alt-slider'>
+          <label>Loyer mensuel <small>(charges comprises)</small> :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="loyer-edit"
+              name='loyer'
+              value={loyer}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("loyer-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div> 
+
           <div className='info-button'>
             <input
               type='range'
@@ -52,9 +76,29 @@ const Revenu = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
-          <label>
-            Charges locataires <small>(annuelle)</small> : {sepSpace(chargesLoc)} €
-          </label>
+        <div className='type-alt-slider'>
+          <label>Charges locataires <small>(/an)</small> :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="chargesLoc-edit"
+              name='chargesLoc'
+              value={chargesLoc}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("chargesLoc-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
+
           <div className='info-button'>
             <input
               type='range'

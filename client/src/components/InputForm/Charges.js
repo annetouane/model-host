@@ -1,19 +1,19 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
+import NumberFormat from 'react-number-format';
 
 const Charges = ({
   onChange,
   showModal,
-  sepSpace,
   setMobileDisplayTab,
   mobileDisplayTab,
+  focusMethod,
   revAnnuel,
   fonciere,
   gestion,
   charges,
   pno,
   width,
-  formCheck,
 }) => {
   return (
     <section id='charges'>
@@ -26,8 +26,38 @@ const Charges = ({
           <div
               className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
             >
-          <label>Charges courantes : {sepSpace(charges)} €</label>
-          <small><i class="fas fa-exclamation-circle"></i>&nbsp;Exclure les charges locataires</small>
+
+        <div className='type-alt-slider'>
+        <div className="flex-column jc-fs">
+          <label>Charges courantes :</label>
+          <small style={{ marginLeft: 0 }}>
+            <i 
+              style={{ marginLeft: 0 }} 
+              className="fas fa-exclamation-circle">
+            </i>&nbsp;Exclure les charges locataires
+          </small>
+          </div>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="charges-edit"
+              name='charges'
+              value={charges}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("charges-edit")} style={{ fontSize: "13px" }}>
+              <i className="far fa-edit"></i>
+            </small>
+          </div>
+        </div>              
+          
           <div className='info-button'>
             <input
               type='range'
@@ -36,13 +66,13 @@ const Charges = ({
               onChange={onChange}
               min='0'
               max='10000'
-              step='20'
+              step='10'
               className='slider mt-5'
             />
             <i
               id='info-charges'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -50,8 +80,32 @@ const Charges = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
-          <label>Gestion locative : {Math.round((gestion * 100 + Number.EPSILON) * 100) / 100}% soit {sepSpace(gestion * revAnnuel)} €</label>
-          <small>Exprimés en % des loyers perçus</small>
+        <div className='type-alt-slider'>
+          <div className="flex-column jc-fs">
+            <label>Gestion locative :</label>
+            <small style={{ visibility: revAnnuel !== 0 ? 'visible' : 'hidden' }}>{Math.round((gestion / revAnnuel * 100 + Number.EPSILON) * 100) / 100} % des loyers perçus</small>
+            </div>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="gestion-edit"
+              name='gestion'
+              value={gestion}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("gestion-edit")} style={{ fontSize: "13px" }}>
+              <i className="far fa-edit"></i>
+            </small>
+          </div>
+        </div>     
+
           <div className='info-button'>
             <input
               type='range'
@@ -59,14 +113,14 @@ const Charges = ({
               value={gestion}
               onChange={onChange}
               min='0'
-              max='0.1'
-              step='0.001'
+              max='10000'
+              step='10'
               className='slider mt-5'
             />
             <i
               id='info-gestion'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -76,7 +130,29 @@ const Charges = ({
       <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
         >
-          <label>Taxe foncière : {sepSpace(fonciere)} €</label>
+          <div className='type-alt-slider'>
+            <label>Taxe foncière :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="fonciere-edit"
+              name='fonciere'
+              value={fonciere}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("fonciere-edit")} style={{ fontSize: "13px" }}>
+              <i className="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
+
           <div className='info-button'>
             <input
               type='range'
@@ -85,13 +161,13 @@ const Charges = ({
               onChange={onChange}
               min='0'
               max='10000'
-              step='20'
+              step='10'
               className='slider mt-5'
             />
             <i
               id='info-fonciere'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>
@@ -99,7 +175,29 @@ const Charges = ({
         <div
           className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
         >
-          <label>Assurances PNO & GLI : {sepSpace(pno)} €</label>
+          <div className='type-alt-slider'>
+          <label>Assurances PNO & GLI :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="pno-edit"
+              name='pno'
+              value={pno}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 2000;
+              }}
+            />
+            <small onClick={() => focusMethod("pno-edit")} style={{ fontSize: "13px" }}>
+              <i className="far fa-edit"></i>
+            </small>
+          </div>
+        </div>          
+
           <div className='info-button'>
             <input
               type='range'
@@ -107,14 +205,14 @@ const Charges = ({
               value={pno}
               onChange={onChange}
               min='0'
-              max='5000'
+              max='2000'
               step='10'
               className='slider mt-5'
             />
             <i
               id='info-pno'
               onClick={showModal}
-              class='fas fa-question-circle'
+              className='fas fa-question-circle'
             ></i>
           </div>
         </div>

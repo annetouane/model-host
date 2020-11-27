@@ -1,11 +1,13 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
+import NumberFormat from 'react-number-format';
 
 const FoyerMobile = ({
   onChange,
   showModal,
   sepSpace,
   setMobileDisplayTab,
+  focusMethod,
   mobileDisplayTab,
   revInvest1,
   augInvest1,
@@ -35,14 +37,37 @@ const FoyerMobile = ({
             class='fas fa-question-circle mb-10'
           ></i>
         </div>
-        <label>Revenu net avant impôts : {sepSpace(revInvest1)} €</label>
+
+        <div className='type-alt-slider'>
+            <label>Revenu net avant impôt :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="revInvest1-edit"
+              name='revInvest1'
+              value={revInvest1}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 10000;
+              }}
+            />
+            <small onClick={() => focusMethod("revInvest1-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
+
         <input
           type='range'
           name='revInvest1'
           value={revInvest1}
           onChange={onChange}
           min='0'
-          max='100000'
+          max='200000'
           className='slider mt-5'
         />
         <div className='invest-rev'>
@@ -55,7 +80,7 @@ const FoyerMobile = ({
             className='augmentation fs-12'
           >
             {optionsAugmentation.map((option) => (
-              <option key={option} value={option / 100}>
+              <option key={option} value={option / 200000}>
                 {option}%
               </option>
             ))}
@@ -65,14 +90,36 @@ const FoyerMobile = ({
 
       <div className='form-box-v mt-10'>
         <h4>Investisseur N° 2 :</h4>
-        <label>Revenu net avant impôts : {sepSpace(revInvest2)} €</label>
+        <div className='type-alt-slider'>
+            <label>Revenu net avant impôt :</label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="revInvest2-edit"
+              name='revInvest2'
+              value={revInvest2}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 200000;
+              }}
+            />
+            <small onClick={() => focusMethod("revInvest2-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div> 
+
         <input
           type='range'
           name='revInvest2'
           value={revInvest2}
           onChange={onChange}
           min='0'
-          max='100000'
+          max='200000'
           className='slider mt-5'
         />
         <div className='invest-rev w'>

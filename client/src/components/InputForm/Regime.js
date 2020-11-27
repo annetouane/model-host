@@ -2,7 +2,7 @@ import React from "react";
 import MobilePagination from "./MobilePagination";
 
 const Regime = ({
-  onChange,
+  onChangeDecimals,
   onChangeRegime,
   showModal,
   setMobileDisplayTab,
@@ -117,7 +117,7 @@ const Regime = ({
               type='range'
               name='irl'
               value={irl}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               min='0'
               max='0.03'
               step='0.001'

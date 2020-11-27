@@ -107,7 +107,7 @@ const modalInfo = [
     id: "info-gestion",
     titre: "Gestion locative",
     texte:
-      "<p>Frais de gestion du bien par une agence immobilière. Les frais de gestion locative ne peuvent être récupérés sur les locataires mais ils représentent des charges déductibles permettant de réduire le revenu imposable. Ces frais sont généralement compris entre 5% et 10% des loyers annuels. L’investisseur peut également choisir de gérer son bien lui-même pour augmenter le rendement de l'investissement.</p>",
+      "<p>Frais de gestion du bien par une agence immobilière. Les frais de gestion locative ne peuvent être récupérés sur les locataires mais ils représentent des charges déductibles permettant de réduire le revenu imposable. Ces frais sont généralement compris entre 5% et 10% des loyers annuels. L’investisseur peut également choisir de gérer son bien lui-même pour augmenter le rendement de l'investissement.</p> <p> Il est important de vérifier l’assiette d’application des frais de gestion locative : sur le loyer uniquement, le loyer et les charges comprises, ou les encaissements : le loyer, les charges et le dépôt de garantie</p> ",
   },
   {
     id: "info-charges",

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import MobilePagination from "./MobilePagination";
 import ReactTooltip from 'react-tooltip';
+import NumberFormat from 'react-number-format';
 
 const Projet = ({
   onChange,
   showModal,
   sepSpace,
   setMobileDisplayTab,
+  focusMethod,
+  onChangeDecimals,
   mobileDisplayTab,
   netVendeur,
   travaux,
@@ -23,7 +26,7 @@ const Projet = ({
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
-  setTimeout(() => setIsButtonDisabled(true), 30000);
+  setTimeout(() => setIsButtonDisabled(true), 20000);
   
   return (
     <section id='projet' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
@@ -32,7 +35,6 @@ const Projet = ({
         <i className='fas fa-landmark header-i'></i>
         &nbsp;&nbsp;Description du projet
       </h3> : ""}
-      {/* "#01c96c 007be8" */}
       {width > 770 && !isButtonDisabled ? 
         <ReactTooltip
           delayHide={200} 
@@ -47,10 +49,32 @@ const Projet = ({
         : ""}
       
       <div className='form-box-v mt-10'>
-        <label>Net vendeur : {sepSpace(netVendeur)} €</label>
+        <div className='type-alt-slider'>
+          <label>Net vendeur <small>(hors frais d'agence)</small> : </label>
+          <div className="flex-row ai-fs">
+            <NumberFormat
+              id="projet-edit"
+              name='netVendeur'
+              value={netVendeur}
+              displayType={'number'}
+              thousandSeparator={" "}
+              suffix={' €'}
+              onChange={onChange}
+              allowNegative={false}
+              isAllowed={(values) => {
+                const {floatValue} = values;
+                return floatValue >= 0 &&  floatValue <= 1000000;
+              }}
+            />
+            <small onClick={() => focusMethod("projet-edit")} style={{ fontSize: "13px" }}>
+              <i class="far fa-edit"></i>
+            </small>
+          </div>
+        </div>
+
         <div className='info-button'>
           <input
-            data-tip="Utiliser les flèches du <br/> clavier pour  ajuster la <br/>valeur des jauges"
+            data-tip="La valeur des jauges est modifiable soit<br>avec la souris, soit à l'aide des flèches<br>du clavier ou en éditant directement<br>la valeur à droite de chaque jauge"
             type='range'
             name='netVendeur'
             value={netVendeur}
@@ -68,45 +92,91 @@ const Projet = ({
         </div>
       </div>
 
-      <div className='form-box-v mt-10'>
-        <label>Travaux : {sepSpace(travaux)} €</label>
-        <div className='info-button'>
-          <input
-            type='range'
-            name='travaux'
-            value={travaux}
-            onChange={onChange}
-            min='0'
-            max='300000'
-            step='200'
-            className='slider mt-5'
-          />
-          <i
-            id='info-travaux'
-            onClick={showModal}
-            className='fas fa-question-circle'
-          ></i>
-        </div>
-      </div>
+      <div className='form-group'>
+        <div className={width < 770 ? 'form-box-v mt-10' : 'form-box-v mr-5 mt-10'}>
+        <div className='type-alt-slider'>
+            <label>Travaux : </label>
+            <div className="flex-row ai-fs">
+              <NumberFormat
+                id="travaux-edit"
+                name='travaux'
+                value={travaux}
+                displayType={'number'}
+                thousandSeparator={" "}
+                suffix={' €'}
+                onChange={onChange}
+                allowNegative={false}
+                isAllowed={(values) => {
+                  const {floatValue} = values;
+                  return floatValue >= 0 &&  floatValue <= 300000;
+                }}
+              />
+              <small onClick={() => focusMethod("travaux-edit")} style={{ fontSize: "13px" }}>
+                <i class="far fa-edit"></i>
+              </small>
+            </div>
+          </div>
 
-      <div className='form-box-v mt-10'>
-        <label>Ammeublement : {sepSpace(ammeublement)} €</label>
-        <div className='info-button'>
-          <input
-            type='range'
-            name='ammeublement'
-            value={ammeublement}
-            onChange={onChange}
-            min='0'
-            max='100000'
-            step='100'
-            className='slider mt-5'
-          />
-          <i
-            id='info-ammeublement'
-            onClick={showModal}
-            className='fas fa-question-circle'
-          ></i>
+          <div className='info-button'>
+            <input
+              type='range'
+              name='travaux'
+              value={travaux}
+              onChange={onChange}
+              min='0'
+              max='300000'
+              step='200'
+              className='slider mt-5'
+            />
+            <i
+              id='info-travaux'
+              onClick={showModal}
+              className='fas fa-question-circle'
+            ></i>
+          </div>
+        </div>
+        
+        <div className={width < 770 ? 'form-box-v mt-10' : 'form-box-v ml-5 mt-10'}>
+          <div className='type-alt-slider'>
+            <label>Ammeublemment : </label>
+            <div className="flex-row ai-fs">
+              <NumberFormat
+                id="ammeublement-edit"
+                name='ammeublement'
+                value={ammeublement}
+                displayType={'number'}
+                thousandSeparator={" "}
+                suffix={' €'}
+                onChange={onChange}
+                allowNegative={false}
+                isAllowed={(values) => {
+                  const {floatValue} = values;
+                  return floatValue >= 0 &&  floatValue <= 100000;
+                }}
+              />
+              <small onClick={() => focusMethod("ammeublement-edit")} style={{ fontSize: "13px" }}>
+                <i class="far fa-edit"></i>
+              </small>
+            </div>
+          </div>
+
+          <div className='info-button'>
+            <input
+              type='range'
+              name='ammeublement'
+              value={ammeublement}
+              onChange={onChange}
+              min='0'
+              max='100000'
+              step='100'
+              className='slider mt-5'
+            />
+            <i
+              id='info-ammeublement'
+              onClick={showModal}
+              className='fas fa-question-circle'
+            ></i>
+          </div>
         </div>
       </div>
 
@@ -121,7 +191,7 @@ const Projet = ({
               type='select'
               name='notaire'
               value={notaire}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               className='input-box-2 fs-12'
             >
               <option value='0.075'>7.5% (Ancien)</option>
@@ -145,7 +215,7 @@ const Projet = ({
               type='select'
               name='agence'
               value={agence}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               className='input-box-2 fs-12'
             >
               {optionsAgence.map((option) => (
