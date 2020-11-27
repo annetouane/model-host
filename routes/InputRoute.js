@@ -14,12 +14,12 @@ router.post("/", async (req, res) => {
       netVendeur: parseInt(req.body.netVendeur),
       travaux: parseInt(req.body.travaux),
       ammeublement: parseInt(req.body.ammeublement),
-      notaire: req.body.notaire,
-      agence: req.body.agence,
+      notaire: parseFloat(req.body.notaire),
+      agence: parseFloat(req.body.agence),
       duree: parseInt(req.body.duree),
       apport: parseInt(req.body.apport),
-      interet: req.body.interet,
-      assurance: req.body.assurance,
+      interet: parseFloat(req.body.interet),
+      assurance: parseFloat(req.body.assurance),
       fraisBancaires: parseInt(req.body.fraisBancaires),
       fraisCourtier: parseInt(req.body.fraisCourtier),
       loyer: parseInt(req.body.loyer),
@@ -33,13 +33,13 @@ router.post("/", async (req, res) => {
       augInvest1: parseInt(req.body.augInvest1),
       revInvest2: parseInt(req.body.revInvest2),
       augInvest2: parseInt(req.body.augInvest2),
-      partFisc: req.body.partFisc,
+      partFisc: parseFloat(req.body.partFisc),
       sciIs: req.body.sciIs,
       lmnpReel: req.body.lmnpReel,
       lmnpMicro: req.body.lmnpMicro,
       nueReel: req.body.nueReel,
       nueMicro: req.body.nueMicro,
-      irl: req.body.irl,
+      irl: parseFloat(req.body.irl),
     };
 
     const {
@@ -128,7 +128,7 @@ router.post("/", async (req, res) => {
 
              // charges d'exploitation
              item.chargesLocs = item.annee == 1 ? chargesLoc : chargesLoc * Math.pow(1 + irl, item.annee-1),
-             item.gestionLoc = item.loyer * gestion, // déjà indexé sur inflation / irl
+             item.gestionLoc = item.annee == 1 ? gestion : gestion * Math.pow(1 + irl, item.annee-1),
              item.chargesCour = item.annee == 1 ? charges : charges * Math.pow(1 + irl, item.annee-1),
              item.taxeFonc = item.annee == 1 ? fonciere : fonciere * Math.pow(1 + irl, item.annee-1),
              item.pno = pno, // à indexer ?
