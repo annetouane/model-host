@@ -35,7 +35,7 @@ const Revenu = ({
             (<i 
               style={{ marginLeft: 0, cursor: "auto" }} 
               className="fas fa-exclamation-circle">
-            </i>charges comprises)
+            </i> charges comprises)
           </small> :</label>
 
 
