@@ -14,7 +14,7 @@ const modalInfo = [
   },
   {
     id: "info-ammeublement",
-    titre: "Ammeublement",
+    titre: "Ameublement",
     texte:
       "<p>Dépenses engagées pour équiper le bien dans le cadre d’une location meublée. Une liste de meubles et d’équipements est prévue par la loi afin de pouvoir louer en meublé. Les dépenses d’ameublement peuvent être passées en charges (si inférieur à 500 €) ou en amortissements (sur une durée de 7 ans) ce qui permet également de réduire le revenu imposable. Retrouvez cette liste sur site <a href='https://www.pap.fr/locataire/vide-meuble-colocation/liste-des-meubles-obligatoires-pour-une-location-meublee/a18106' target='_blank' rel='noopener noreferrer'>pap.fr</a></p><p><b>Simulimo applique une durée d'amortissement par défaut de 7 ans pour l'ammeublement</b></p>",
   },
@@ -28,7 +28,7 @@ const modalInfo = [
     id: "info-agence",
     titre: "Frais d'agence",
     texte:
-      "<p>Certaines acquisitions se font par le biais d’agences immobilières mandatées par un acquéreur pour rechercher un bien et jouer le rôle d’intermédiaire dans la transaction. Cette rémunération de l’agence est généralement à la charge de l’acquéreur mais peut également être à la charge du vendeur (ex : zone géographique avec peu d’acheteur et beaucoup de biens à vendre). En fonction du régime fiscal d’exploitation du bien, les frais d’agence seront considérés comme des charges déductibles du revenu imposable. En fonction du régime fiscal d’exploitation du bien, les frais d'agence sont amortissables et permettent donc de réduire le revenu imposable.</p>><p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour les frais d'acquisition</b></p>",
+      "<p>Certaines acquisitions se font par le biais d’agences immobilières mandatées par un acquéreur pour rechercher un bien et jouer le rôle d’intermédiaire dans la transaction. Cette rémunération de l’agence est généralement à la charge de l’acquéreur mais peut également être à la charge du vendeur (ex : zone géographique avec peu d’acheteur et beaucoup de biens à vendre). En fonction du régime fiscal d’exploitation du bien, les frais d’agence seront considérés comme des charges déductibles du revenu imposable. En fonction du régime fiscal d’exploitation du bien, les frais d'agence sont amortissables et permettent donc de réduire le revenu imposable.</p><p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour les frais d'acquisition</b></p>",
   },
   {
     id: "info-duree",
@@ -48,20 +48,6 @@ const modalInfo = [
     texte:
       "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p>",
   },
-  
-  {
-    id: "info-assurance",
-    titre: "Taux d'assurance",
-    texte:
-      "<p>Les frais d’assurance sont l’un des modes de rémunération de la banque. L'emprunteur verse chaque année une somme égale au taux d'assurance multiplier par le capital initialement emprunté. Il ne varie pas durant toute la durée de l’emprunt et les versements sont inclus dans la mensualité. Le taux d’assurance est déterminé par le profil de l’emprunteur (âge, fumeur ou non, statut professionnel …). Les frais d’assurance sont des charges déductibles permettant de réduire le revenu imposable.</p>",
-  },
-  {
-    id: "info-interet",
-    titre: "Taux d'intérêt",
-    texte:
-      "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p>",
-  },
-  
   {
     id: "info-assurance",
     titre: "Taux d'assurance",
@@ -87,9 +73,9 @@ const modalInfo = [
   },
   {
     id: "info-locataire",
-    titre: "Charges locataires",
+    titre: "Charges locatives",
     texte:
-      "<p>Charges payées annuellement par le propriétaire pour les services de gardiennage, nettoyage ou/et autres. Ces charges sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Il est cependant nécessaire de les évaluer car lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de <b>23 000 € charges locataires comprises.</b> Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire. De plus, le site </p>",
+      "<p>Les charges locatives sont les charges que le locataire paye en même temps que son loyer. <strong>Ces charges représentent en moyenne 70 à 80 % des charges de copropriété</strong> préalablement payées par le propriétaire du logement. C’est pour cela qu’elles sont appelées « charges récupérables ».</p> <p>Attention, lorsque le bien est exploité en location meublée, le seuil de revenu conditionnant la qualification de l’activité en professionnelle / non-professionnelle est de <b>23 000 € charges locataires comprises.</b> Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a> dresse la liste des charges récupérables auprès du locataire.</p>",
   },
   {
     id: "info-occupation",
@@ -113,7 +99,7 @@ const modalInfo = [
     id: "info-charges",
     titre: "Charges courantes",
     texte:
-      "<p>Charges qui incombent au propriétaire bailleur. Ces frais peuvent être très variables d’un investissement à un autre et également d’une année à une autre pour un même bien. Il est recommandé de mettre de côté une somme fixe chaque année pour ne pas être à cours de liquidités au moment venu de réparer la toiture. Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable.</p><p>Il ne faut pas inclure les charges locataires dans les charges courantes car elles sont récupérables auprès des locataires. De ce fait, elles ne font augmenter ni le revenu annuel, ni le revenu imposable. Enfin, il est interdit de les déduire du revenu imposable.</p> <p>Le site <a href='https://www.immobilier-danger.com/Charges-non-imputables-au-959.html' target='_blank' rel='noopener noreferrer'>immobilier.danger.com</a> recense toutes les charges non-récupérables sur le locataire.</p>",
+      "<p>Dépenses courantes que doivent payer collectivement les co-propriétaires. Ces frais peuvent être très variables d’un bien à un autre et également d’une année à une autre pour un même bien, par exemple lorsque des travaux doivent être effectués (ravalement, toiture ...). Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F2590'>service-publique.fr</a> référence les charges de co-propriété ainsi que les droits et devoirs des co-propriétaires</p> <p>Enfin, certaines charges sont récupérables sur du locataire. La liste des charge récupérables sur le locataire se trouvent également sur le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a>.</p>",
   },
   {
     id: "info-pno",

@@ -15,11 +15,11 @@ router.post("/", async (req, res) => {
       travaux: parseInt(req.body.travaux),
       ammeublement: parseInt(req.body.ammeublement),
       notaire: parseFloat(req.body.notaire),
-      agence: parseFloat(req.body.agence),
+      agence: parseInt(req.body.agence),
       duree: parseInt(req.body.duree),
       apport: parseInt(req.body.apport),
-      interet: parseFloat(req.body.interet),
-      assurance: parseFloat(req.body.assurance),
+      interet: parseFloat(req.body.interet) / 100,
+      assurance: parseFloat(req.body.assurance) / 100,
       fraisBancaires: parseInt(req.body.fraisBancaires),
       fraisCourtier: parseInt(req.body.fraisCourtier),
       loyer: parseInt(req.body.loyer),
@@ -30,18 +30,18 @@ router.post("/", async (req, res) => {
       charges: parseInt(req.body.charges),
       pno: parseInt(req.body.pno),
       revInvest1: parseInt(req.body.revInvest1),
-      augInvest1: parseInt(req.body.augInvest1),
+      augInvest1: parseFloat(req.body.augInvest1),
       revInvest2: parseInt(req.body.revInvest2),
-      augInvest2: parseInt(req.body.augInvest2),
+      augInvest2: parseFloat(req.body.augInvest2),
       partFisc: parseFloat(req.body.partFisc),
       sciIs: req.body.sciIs,
       lmnpReel: req.body.lmnpReel,
       lmnpMicro: req.body.lmnpMicro,
       nueReel: req.body.nueReel,
-      nueMicro: req.body.nueMicro,
-      irl: parseFloat(req.body.irl),
+      nueMicro: req.body.nueMicro, 
+      irl: parseFloat(req.body.irl) / 100,
     };
-
+        
     const {
       netVendeur,
       travaux,
@@ -74,39 +74,53 @@ router.post("/", async (req, res) => {
       irl,
     } = inputs;
 
-    console.log(inputs)
-
-    const coutProjet = netVendeur + travaux + ammeublement + notaire * netVendeur + agence * netVendeur + fraisBancaires + fraisCourtier
-    const emprunt = coutProjet - apport
-
-    const loan = new LoanJS.Loan(
-      emprunt,        // emprunt
-      duree * 12,     // échéances
-      interet * 100,  // intérêt
-      false           // mensualité fixe
-    );
-
-    let loan1 = loan.installments.map(x => {
-      return { capital: x.capital, 
-               interet: x.interest, 
-               total: x.installment,
-               assurance: emprunt * assurance / 12 
-              }
-    });
+    const coutProjet = netVendeur + travaux + ammeublement + notaire * netVendeur + agence + fraisBancaires + fraisCourtier
+    // const emprunt = coutProjet - apport;
+    const emprunt = coutProjet > apport ? coutProjet - apport : 0;
+    console.log(emprunt)
 
     let array = []
 
-    while (loan1.length > 0) {
-      const filteredArray = loan1.slice(0, 12);
-      let transformToYear = filteredArray.reduce((acc, val) => ({
-        capital: acc.capital + val.capital, 
-        interet: acc.interet + val.interet,
-        assurance: acc.assurance + val.assurance,
-        chargesFi: acc.interet + val.interet + acc.assurance + val.assurance
-      }));
-      array.push(transformToYear);
-      loan1.splice(0, 12);
-    };
+    if (emprunt === 0) {
+      for (let i = 1; i <= duree; i++) {
+        const emptyObject = { capital: 0, 
+                              interet: 0, 
+                              assurance: 0,
+                              chargesFi: 0,
+                              }
+        array.push(emptyObject)
+      };
+
+    } else {
+      const loan = new LoanJS.Loan(
+        emprunt,        // emprunt
+        duree * 12,     // échéances
+        interet * 100,  // intérêt
+        false           // mensualité fixe
+      );
+  
+      let loan1 = loan.installments.map(x => {
+        return { capital: x.capital, 
+                 interet: x.interest, 
+                 total: x.installment,
+                 assurance: emprunt * assurance / 12
+                }
+      });
+
+      while (loan1.length > 0) {
+        const filteredArray = loan1.slice(0, 12);
+        let transformToYear = filteredArray.reduce((acc, val) => ({
+          capital: acc.capital + val.capital,
+          interet: acc.interet + val.interet,
+          assurance: acc.assurance + val.assurance,
+          chargesFi: acc.interet + val.interet + acc.assurance + val.assurance
+        }));
+        array.push(transformToYear);
+        loan1.splice(0, 12);
+      };
+    }
+
+    console.log(inputs)
 
     let capitalPrevious = 0;
     let sciLmnpPrevious = 0;
@@ -122,7 +136,7 @@ router.post("/", async (req, res) => {
              // cumul capital remboursé n-1
              item.reimbursedCapital = capitalPrevious,
              capitalPrevious = item.capital + item.reimbursedCapital,
- 
+
              // revenu
              item.loyer = item.annee == 1 ? loyer * occupation : loyer * occupation * Math.pow(1 + irl, item.annee-1),
 
@@ -139,11 +153,11 @@ router.post("/", async (req, res) => {
              item.leveragedNetOpInc = item.loyer - item.chargesExpl - item.chargesFi,
              item.profitBeforeTax = item.loyer - item.chargesExpl - item.chargesFi - item.capital,
 
-             //amortissement
+             // amortissement
              item.amImmeuble = item.annee <= 30 ? netVendeur * 0.9 / 30 : 0,
              item.amTravaux = item.annee <= 10 ? travaux / 10 : 0,
              item.amAmmeublement = item.annee <= 7 ? ammeublement / 7 : 0,
-             item.amFraisAcq = item.annee <= 30 ? (netVendeur * notaire + netVendeur * agence) / 30 : 0,
+             item.amFraisAcq = item.annee <= 30 ? (netVendeur * notaire + agence) / 30 : 0,
              item.amTotal = item.amImmeuble + item.amTravaux + item.amAmmeublement + item.amFraisAcq,
 
              // calcul déficit foncier en sci à l'is et lmnp au réel
@@ -370,21 +384,6 @@ router.post("/", async (req, res) => {
             item.nueMicroRoE = item.annee == 1 ? (item.capital + item.nueMicroCashFlowNet) / apport : (item.capital + item.nueMicroCashFlowNet) / (apport + item.reimbursedCapital),
             item.nueMicroRoA = (item.capital + item.nueMicroCashFlowNet) / (coutProjet) * 100
           });
-
-        // // array contenant des objects décrivant les métriques d'une année
-        // const func = (arr) => {
-        //   keys = Object.keys(arr); // taille de l'array
-        //   for(let i = 0; i < keys.length; i++) { // boucle sur l'array
-        //       let result = arr.filter(item => item.loyer);
-        //       console.log(result) // log l'objet
-        //       // current = Object.entries(arr[i]); // stock l'object en itération
-        //       // console.log(current) // log l'objet
-        //       // previous = i != 0 ? arr[i - 1] : 0; // stock l'object itéré précédemment
-        //       // console.log(previous) // log l'objet
-        //   }
-        // }
-
-        // func(array)
 
     // insert user inputs into database
     newInputs = InputForm(inputs);

@@ -1,5 +1,6 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
+import NumberFormat from 'react-number-format';
 
 const Regime = ({
   onChangeDecimals,
@@ -7,6 +8,7 @@ const Regime = ({
   showModal,
   setMobileDisplayTab,
   mobileDisplayTab,
+  focusMethod,
   sciIs,
   lmnpReel,
   lmnpMicro,
@@ -108,10 +110,41 @@ const Regime = ({
           année sur l'autre.
         </p>
         <div className='irl'>
-          <label>
-            Indice de référence des loyers :{" "}
-            {Math.round((irl * 100 + Number.EPSILON) * 100) / 100} %
-          </label>
+          <div className='type-alt-slider'>
+            <div style={{width: '100%'}} className='flex-row jc-sb ai-fc'>
+              <div>
+                <label>Indice de référence des loyers</label>
+                <button 
+                        id='info-irl' 
+                        onClick={showModal}
+                        className='question-mark'
+                >?</button>
+              </div>
+
+              <div className="border-input">
+                    <NumberFormat
+                      id="frais-irl"
+                      name='irl'
+                      value={irl}
+                      decimalScale={2}
+                      suffix={' %'}
+                      onChange={onChangeDecimals}
+                      allowNegative={false}
+                      isAllowed={(values) => {
+                        const {floatValue} = values;
+                        return floatValue >= 0 && floatValue <= 3;
+                      }}
+                    />
+                    <i
+                      onClick={() => focusMethod("frais-irl")}
+                      style={{ fontSize: "14px" }}
+                      className="fas fa-pencil-alt"
+                    ></i>
+                  </div>
+                </div>
+
+            {/* <label>{Math.round((irl * 100 + Number.EPSILON) * 100) / 100} %</label> */}
+          </div>
           <div className='info-button'>
             <input
               type='range'
@@ -119,15 +152,10 @@ const Regime = ({
               value={irl}
               onChange={onChangeDecimals}
               min='0'
-              max='0.03'
-              step='0.001'
+              max='3'
+              step='0.1'
               className='slider mt-5'
             />
-            <i
-              id='info-irl'
-              onClick={showModal}
-              class='fas fa-question-circle'
-            ></i>
           </div>
         </div>
       </div>

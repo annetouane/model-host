@@ -61,27 +61,32 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 5px;
 }
 
 .pad-top-invest {
   padding-top: 10px;
 }
 
-.type-alt-slider i {
-  margin-left: 5px;
-  cursor: pointer;
-}
-
 .type-alt-slider input {
   padding: 0;
   border: none;
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Courrier", sans-serif;
   color: #333;
-  width: 70px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 65px;
+  /* margin-right: 5px; */
   text-align: right;
+  font-weight: bold;
+  color: #007be8;
+  /* border-bottom: 1px solid #007be8; */
+  padding-bottom: 5px;
+}
+
+.border-input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dotted #007be8;
 }
 
 .type-alt-slider input:focus {
@@ -91,4 +96,7 @@
 .type-alt-slider i {
   color: #007be8;
   font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
+  padding-bottom: 8px;
 }

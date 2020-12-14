@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MobilePagination from "./MobilePagination";
 // import ReactTooltip from 'react-tooltip';
 import NumberFormat from 'react-number-format';
@@ -19,11 +19,6 @@ const Projet = ({
   width,
   formCheck,
 }) => {
-  const optionsAgence = []; // frais d'agence
-  for (let i = 0; i < 11; i++) {
-    optionsAgence.push(i);
-  }
-
   // const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   // setTimeout(() => setIsButtonDisabled(true), 20000);
@@ -50,16 +45,24 @@ const Projet = ({
       
       <div className='form-box-v mt-10'>
         <div className='type-alt-slider'>
+        <div>  
           <label>Net vendeur&nbsp;
             <small style={{ marginLeft: 0 }}>
-              (<i 
-                style={{ marginLeft: 0, cursor: "auto" }} 
-                className="fas fa-exclamation-circle">
-              </i> hors frais d'agence)
-            </small> :
-          </label>
-          <small></small> : 
-          <div className="flex-row ai-fs">
+              <strong>
+                (<i 
+                  style={{ marginLeft: 0, cursor: "auto", color: "#007be8" }} 
+                  className="fas fa-exclamation-circle">
+                </i> hors frais d'agence)
+              </strong>
+            </small>
+            </label>
+            <button 
+              id='info-net-vendeur' 
+              onClick={showModal}
+              className='question-mark'
+            >?</button>
+          </div>
+          <div className="border-input">
             <NumberFormat
               id="projet-edit"
               name='netVendeur'
@@ -76,8 +79,8 @@ const Projet = ({
             />
             <i 
               onClick={() => focusMethod("projet-edit")} 
-              style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              style={{ fontSize: "14px" }}
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -94,19 +97,103 @@ const Projet = ({
             step='500'
             className='slider mt-5'
           />
-          <i
-            id='info-net-vendeur'
-            onClick={showModal}
-            className='fas fa-question-circle'
-          ></i>
         </div>
       </div>
 
       <div className='form-group'>
-        <div className={width < 770 ? 'form-box-v mt-10' : 'form-box-v mr-5 mt-10'}>
+        <div
+          className={width < 770 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
+          style={{ height: width > 770 ? "100px" : "100%" }}
+        >
+            <div>
+              <label>Frais de notaire</label>
+              <button
+                id='info-notaire' 
+                onClick={showModal}
+                className='question-mark'
+              >?</button>
+            </div>
+            <select
+              type='select'
+              name='notaire'
+              value={notaire}
+              onChange={onChangeDecimals}
+              className='input-box-2 fs-12'
+            >
+              <option value='0.075'>7.5% (Ancien)</option>
+              <option value='0.03'>3%   (Neuf)</option>
+            </select>
+            <p className='data-bold-blue'>{sepSpace(netVendeur * notaire)} €</p>
+        </div>
+
+        <div
+          className={width < 770 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
+          style={{ height: "100px" }}
+        >
+          <div 
+            className='type-alt-slider'
+            style={{ margin: "0" }}
+            >
+            <div>
+              <label>Frais d'agence</label>
+              <button
+                  id='info-agence' 
+                  onClick={showModal}
+                  className='question-mark'
+              >?</button>
+            </div>
+
+            <div className="border-input">
+              <NumberFormat
+                id="frais-agence"
+                name='agence'
+                value={agence}
+                decimalScale={2}
+                suffix={' €'}
+                thousandSeparator={' '}
+                onChange={onChange}
+                allowNegative={false}
+                isAllowed={(values) => {
+                  const {floatValue} = values;
+                  return floatValue >= 0 &&  floatValue <= 50000;
+                }}
+              />
+            <i
+              onClick={() => focusMethod("frais-agence")}
+              style={{ fontSize: "14px" }}
+              className="fas fa-pencil-alt"
+            ></i>
+            </div>
+          </div>
+              <small> soit {netVendeur == 0 ? 0 : (Math.round((agence / netVendeur * 100 + Number.EPSILON) * 100) / 100)} % du net vendeur
+              </small>
+          <div className='info-button'>
+            <input
+              type='range'
+              name='agence'
+              value={agence}
+              onChange={onChange}
+              min='0'
+              max='50000'
+              step='100'
+              className='slider mt-5'
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className='form-group'>
+        <div className={width < 770 ? 'form-box-v-half mt-10' : 'form-box-v-half mr-5 mt-10'}>
         <div className='type-alt-slider'>
-            <label>Travaux : </label>
-            <div className="flex-row ai-fs">
+          <div>
+              <label>Travaux</label>
+              <button
+                    id='info-travaux' 
+                    onClick={showModal}
+                    className='question-mark'
+              >?</button>
+            </div>
+            <div className="border-input">
               <NumberFormat
                 id="travaux-edit"
                 name='travaux'
@@ -124,7 +211,7 @@ const Projet = ({
               <i 
                 onClick={() => focusMethod("travaux-edit")} 
                 style={{ fontSize: "14px" }} 
-                className="far fa-edit"
+                className="fas fa-pencil-alt"
               ></i>
             </div>
           </div>
@@ -140,18 +227,20 @@ const Projet = ({
               step='200'
               className='slider mt-5'
             />
-            <i
-              id='info-travaux'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
         
-        <div className={width < 770 ? 'form-box-v mt-10' : 'form-box-v ml-5 mt-10'}>
+        <div className={width < 770 ? 'form-box-v-half mt-10' : 'form-box-v-half ml-5 mt-10'}>
           <div className='type-alt-slider'>
-            <label>Ammeublemment : </label>
-            <div className="flex-row ai-fs">
+          <div>
+              <label>Ammeublement</label>
+              <button
+                    id='info-ammeublement' 
+                    onClick={showModal}
+                    className='question-mark'
+              >?</button>
+            </div>
+            <div className="border-input">
               <NumberFormat
                 id="ammeublement-edit"
                 name='ammeublement'
@@ -169,7 +258,7 @@ const Projet = ({
               <i 
                 onClick={() => focusMethod("ammeublement-edit")} 
                 style={{ fontSize: "14px" }} 
-                className="far fa-edit"
+                className="fas fa-pencil-alt"
               ></i>
             </div>
           </div>
@@ -185,67 +274,10 @@ const Projet = ({
               step='100'
               className='slider mt-5'
             />
-            <i
-              id='info-ammeublement'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
       </div>
-
-      <div className='form-group'>
-        <div
-          className={width < 770 ? "form-box-h mt-10" : "form-box-h mr-5 mt-10"}
-        >
-          <div className='horizontal-input'>
-            <label>Frais de notaire :</label>
-            <p>{sepSpace(netVendeur * notaire)} €</p>
-            <select
-              type='select'
-              name='notaire'
-              value={notaire}
-              onChange={onChangeDecimals}
-              className='input-box-2 fs-12'
-            >
-              <option value='0.075'>7.5% (Ancien)</option>
-              <option value='0.03'>3%   (Neuf)</option>
-            </select>
-          </div>
-          <i
-            id='info-notaire'
-            onClick={showModal}
-            className='fas fa-question-circle fa-lg'
-          ></i>
-        </div>
-
-        <div
-          className={width < 770 ? "form-box-h mt-10" : "form-box-h ml-5 mt-10"}
-        >
-          <div className='horizontal-input'>
-            <label style={{ marginRight: "5px" }}>Frais d'agence :</label>
-            <p>{sepSpace(netVendeur * agence)} €</p>
-            <select
-              type='select'
-              name='agence'
-              value={agence}
-              onChange={onChangeDecimals}
-              className='input-box-2 fs-12'
-            >
-              {optionsAgence.map((option) => (
-                <option key={option} value={option / 100}>
-                  {option}%
-                </option>
-              ))}
-            </select>
-          </div>
-          <i
-            id='info-agence'
-            onClick={showModal}
-            className='fas fa-question-circle fa-lg'
-          ></i>
-        </div>
-      </div>
+      
       {width < 700 ?
       <MobilePagination
           setMobileDisplayTab={setMobileDisplayTab}

@@ -8,6 +8,7 @@ import favicon from "./img/favicon.ico";
 
 // components
 import NavBar from "./components/Layout/NavBar";
+import Authentication from "./components/auth/Authentication"
 import MainForm from "./components/InputForm/mainForm";
 
 // stylesheets
@@ -25,6 +26,7 @@ const App = () => {
         </Helmet>
           <NavBar />
           <Switch>
+            <Route exact path='/auth' component={Authentication} />
             <Route exact path='/' component={MainForm} />
           </Switch>
         </Router>

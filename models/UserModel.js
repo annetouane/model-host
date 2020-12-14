@@ -16,10 +16,10 @@ const UserSchema = Schema({
     type: Boolean,
     default: false,
   },
-  // condition: {
-  //   type: Boolean,
-  //   required: true,
-  // },
+  condition: {
+    type: Boolean,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

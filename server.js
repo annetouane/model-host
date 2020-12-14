@@ -9,6 +9,12 @@ const path = require("path");
 // routes
 const InputRoute = require("./routes/InputRoute");
 const EmailRoute = require("./routes/EmailRoute");
+const SignUpRoute = require("./routes/SignUpRoute");
+const AccountConfirmationRoute = require("./routes/AccountConfirmationRoute");
+const SignInRoute = require("./routes/SignInRoute");
+const ForgottenRoute = require("./routes/ForgottenRoute");
+const ChangePasswordRoute = require("./routes/ChangePasswordRoute");
+const LoadUserRoute = require("./routes/LoadUserRoute");
 
 // init server
 const app = express();
@@ -34,7 +40,13 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 connectDB();
 
 app.use("/input", InputRoute);
-app.use("/email", EmailRoute);
+app.use("/user-email", EmailRoute);
+app.use("/signup", SignUpRoute);
+app.use("/email-confirmation", AccountConfirmationRoute);
+app.use("/signin", SignInRoute);
+app.use("/forgotten-pwd", ForgottenRoute);
+app.use("/change-pwd", ChangePasswordRoute);
+app.use("/", LoadUserRoute);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

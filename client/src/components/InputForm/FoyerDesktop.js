@@ -29,15 +29,17 @@ const FoyerDesktop = ({
       <div className='form-box-v mt-10'>
         <div className='info-button info-button-foyer'>
           <h5>Revenu d'activité imposable & augmentation annuelle moyenne (%)</h5>
-          <i
-            id='info-investisseur'
-            onClick={showModal}
-            className='fas fa-question-circle mb-10'
-          ></i>
         </div>
         <div className='type-alt-slider border-investisseur pad-top-invest'>
-          <label>Investisseur N° 1 :</label>
-          <div className="flex-row ai-fs">
+          <div>
+            <label>Investisseur N° 1</label>
+            <button 
+                id='info-investisseur' 
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+          </div>
+          <div className="border-input">
             <NumberFormat
               id="revInvest1-edit"
               name='revInvest1'
@@ -55,7 +57,7 @@ const FoyerDesktop = ({
             <i 
               onClick={() => focusMethod("revInvest1-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -74,7 +76,7 @@ const FoyerDesktop = ({
               type='select'
               name='augInvest1'
               value={augInvest1}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               className='augmentation fs-12'
             >
               {optionsAugmentation.map((option) => (
@@ -87,8 +89,15 @@ const FoyerDesktop = ({
         </div>
 
         <div className='type-alt-slider border-investisseur pad-top-invest'>
-          <label>Investisseur N° 2 :</label>
-          <div className="flex-row ai-fs">
+          <div>
+            <label>Investisseur N° 2</label>
+            <button 
+                id='info-investisseur' 
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+          </div>
+          <div className="border-input">
             <NumberFormat
               id="revInvest2-edit"
               name='revInvest2'
@@ -106,7 +115,7 @@ const FoyerDesktop = ({
             <i 
               onClick={() => focusMethod("revInvest2-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -126,7 +135,7 @@ const FoyerDesktop = ({
               type='select'
               name='augInvest2'
               value={augInvest2}
-              onChange={onChange}
+              onChange={onChangeDecimals}
               className='input-box-3 fs-12'
             >
               {optionsAugmentation.map((option) => (
@@ -166,13 +175,14 @@ const FoyerDesktop = ({
         </p>
         <div className='par-fisc'>
           <div className='info-button'>
-            <label>Part(s) Fiscale(s) :</label>
-            <i
-              id='info-partfisc'
-              onClick={showModal}
-              className='fas fa-question-circle'
-              style={{ marginBottom: "5px" }}
-            ></i>
+            <div>
+            <label>Part(s) Fiscale(s)</label>
+            <button 
+                id='info-partfisc' 
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+            </div>
           </div>
           <select
             type='select'

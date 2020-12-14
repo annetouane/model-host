@@ -31,11 +31,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Coût du projet</h4>
-          <i
-            id='info-projet'
+          <button 
+            id='info-projet' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+            >?</button>
         </div>
         <h4 className='bold color-blue'>
           {netVendeurCheck ? sepSpace(coutProjet).toString() + " €" : "-"}
@@ -44,11 +44,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Emprunt</h4>
-          <i
-            id='info-emprunt'
+          <button 
+            id='info-emprunt' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck
@@ -59,11 +59,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Mensualité</h4>
-          <i
-            id='info-mensualite'
+          <button 
+            id='info-mensualite' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck
@@ -74,11 +74,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Revenu annuel</h4>
-          <i
-            id='info-revenu'
+          <button 
+            id='info-revenu' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck
@@ -89,11 +89,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Rendement annuel brut</h4>
-          <i
-            id='info-rentabrute'
+          <button 
+            id='info-rentabrute' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck
@@ -104,11 +104,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Résultat opérationnel</h4>
-          <i
-            id='info-noi'
+          <button 
+            id='info-noi' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
@@ -119,11 +119,11 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10' style={{ marginBottom: formCheck ? "60px" : "0" }}>
         <div className='info-button'>
           <h4>Trésorerie avant impôt</h4>
-          <i
-            id='info-treso-av-impot'
+          <button 
+            id='info-treso-av-impot' 
             onClick={showModal}
-            class='fas fa-question-circle fa-lg'
-          ></i>
+            className='question-mark'
+          >?</button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck && chargesCheck

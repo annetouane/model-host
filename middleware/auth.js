@@ -2,10 +2,8 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 // middleware that will valide the token sent in the request
-
-// middle functions have access to request and response objects
+// middleware functions have access to request and response objects
 // next is a callback that needs to be run so it can move on to the next piece of middleware
-
 module.exports = function (req, res, next) {
   // get the token from the header
   const token = req.header("x-auth-token");

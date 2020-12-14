@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const config = require("config");
-const jwt = require("jsonwebtoken");
 const sgMail = require("@sendgrid/mail");
 
 // import model
@@ -18,9 +16,9 @@ router.post(
     check("email", "Ceci n'est pas un format d'adresse email valide").isEmail(),
     check(
       "password",
-      "Veuillez choisir un mot de passe comportant 6 caractères minimum"
-    ).isLength({ min: 6 }),
-    // check("condition", "Accepter les conditions d'utilisation").isIn([true]),
+      "Veuillez choisir un mot de passe comportant 8 caractères minimum"
+    ).isLength({ min: 8 }),
+    check("condition", "Merci d'accepter les conditions d'utilisation").isIn([true]),
   ],
   async (req, res) => {
     // pass the req to validate its parameters
@@ -32,14 +30,14 @@ router.post(
     }
 
     // destructure req.body
-    const { email, password } = req.body;
+    const { email, password, condition } = req.body;
     try {
       // check if user exists (value or null)
       let user = await User.findOne({ email });
       // if user found (matching email) : sends 400 and array with error message
       if (user) {
         return res.status(400).json({
-          errors: [{ msg: "Adresse email déjà utilisée" }],
+          msg: "Adresse e-mail déjà utilisée",
         });
         // if user isn't found :
       } else {
@@ -47,7 +45,7 @@ router.post(
         user = new User({
           email,
           password,
-          // condition,
+          condition,
         });
 
         // encrypt the password (bcrypt) : create the salt (object to hash)
@@ -58,21 +56,6 @@ router.post(
         // save the user to the DB
         await user.save();
 
-        // // generate JWT in which the user ID will be inserted
-        // const payload = {
-        //   user: {
-        //     id: user.id,
-        //   },
-        // };
-        // // sign the token with the secret key
-        // jwt.sign(
-        //   payload,
-        //   config.get("jwtSecret"),
-        //   { expiresIn: 3600 }, // expire date (in seconds, set to 3600 for prod)
-        //   // callback to get either an error or the token to be sent back to the client
-        //   (err, token) => {
-        //     // throw deliver error synchronously
-        //     if (err) throw err;
         res.json({
           email: user.email,
         });
@@ -85,13 +68,12 @@ router.post(
         const msg = {
           to: user.email,
           from: "antoine.chardigny@essec.edu",
-          subject: "Validation compte",
+          subject: "Simulimo - activation de votre compte",
           html: `
-                <h1>Merci d'avoir crée votre compte</h1>
-                <h3>Veuillez cliquer sur le lien ci-dessous pour valider votre compte</h3>
-                <p>
-                  Lien: ${"http://localhost:5000/confirmation/" + user.id}
-                </p>
+                <h3>Merci d'avoir crée votre compte. Pour l'activer, merci de cliquer sur le lien ci-dessous </h3>
+                <a href=${"http://localhost:5000/confirmation/" + user.id}>
+                  Activer mon compte
+                </a>
                 <h3>A bientôt</h3>`,
         };
         sgMail
@@ -102,7 +84,6 @@ router.post(
           .catch((error) => {
             console.log(error.response.body);
           });
-        // }); JWT
       }
     } catch (err) {
       // log the error and send to client a server error

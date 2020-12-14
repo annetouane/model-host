@@ -41,13 +41,13 @@ export const postEmail = (email) => async (dispatch) => {
   try {
     if (process.env.NODE_ENV === "production") {
       await axios.post(
-        "https://simulimo.herokuapp.com/email",
+        "https://simulimo.herokuapp.com/user-email",
         { email: email }
       );
       // setAlert({ msg: res.data });
       console.log("heroku");
     } else {
-      await axios.post("http://localhost:5000/email", { email: email });
+      await axios.post("http://localhost:5000/user-email", { email: email });
       // setAlert({ msg: res.data });
       console.log("local");
     }

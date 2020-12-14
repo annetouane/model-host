@@ -12,6 +12,7 @@ const Charges = ({
   fonciere,
   gestion,
   charges,
+  chargesLoc,
   pno,
   width,
 }) => {
@@ -24,20 +25,28 @@ const Charges = ({
       </h3> : ""}
         <div className='form-group'>
           <div
-              className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+              className={width < 770 ? "form-box-v-half mt-10" : "form-box-v-half mt-10 mr-5"}
+              style={{height: "100px"}}
             >
 
         <div className='type-alt-slider'>
         <div className="flex-column jc-fs">
-          <label>Charges courantes :</label>
+          <div >
+            <label>Charges courantes</label>
+            <button 
+                id='info-charges' 
+                onClick={showModal}
+                className='question-mark'
+              >?</button>
+          </div>
           <small style={{ marginLeft: 0 }}>
             <i 
-              style={{ marginLeft: 0, cursor: "auto" }} 
+              style={{ marginLeft: 0, cursor: "auto", color: "#007be8" }} 
               className="fas fa-exclamation-circle">
-            </i> Exclure les charges locataires
+            </i> <strong>Inclure les charges locataires</strong>
           </small>
           </div>
-          <div className="flex-row ai-fs">
+          <div className="border-input">
             <NumberFormat
               id="charges-edit"
               name='charges'
@@ -55,7 +64,7 @@ const Charges = ({
             <i 
               onClick={() => focusMethod("charges-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>              
@@ -69,25 +78,32 @@ const Charges = ({
               min='0'
               max='10000'
               step='10'
-              className='slider mt-5'
+              className='slider'
             />
-            <i
-              id='info-charges'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
 
         <div
-          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+          className={width < 770 ? "form-box-v-half mt-10" : "form-box-v-half mt-10 ml-5"}
+          style={{ height: "100px" }}
         >
         <div className='type-alt-slider'>
           <div className="flex-column jc-fs">
-            <label>Gestion locative :</label>
-            <small style={{ visibility: revAnnuel !== 0 ? 'visible' : 'hidden' }}>{Math.round((gestion / revAnnuel * 100 + Number.EPSILON) * 100) / 100} % des loyers perçus</small>
+            <div>
+              <label>Gestion locative</label>
+              <button 
+                  id='info-gestion' 
+                  onClick={showModal}
+                  className='question-mark'
+                >?</button>
             </div>
-          <div className="flex-row ai-fs">
+              <small 
+                // style={{ visibility: revAnnuel !== 0 ? 'visible' : 'hidden' }}
+                >
+                  {Math.round((gestion / (revAnnuel - chargesLoc) * 100 + Number.EPSILON) * 100) / 100} % des loyers perçus hors charges
+              </small>
+            </div>
+          <div className="border-input">
             <NumberFormat
               id="gestion-edit"
               name='gestion'
@@ -105,7 +121,7 @@ const Charges = ({
             <i 
               onClick={() => focusMethod("gestion-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>     
@@ -119,24 +135,26 @@ const Charges = ({
               min='0'
               max='10000'
               step='10'
-              className='slider mt-5'
+              className='slider'
             />
-            <i
-              id='info-gestion'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
       </div>
 
       <div className='form-group'>
       <div
-          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v-half mt-10" : "form-box-v-half mt-10 mr-5"}
         >
           <div className='type-alt-slider'>
-            <label>Taxe foncière :</label>
-          <div className="flex-row ai-fs">
+            <div>
+              <label>Taxe foncière</label>
+              <button 
+                  id='info-fonciere' 
+                  onClick={showModal}
+                  className='question-mark'
+              >?</button>
+            </div>
+          <div className="border-input">
             <NumberFormat
               id="fonciere-edit"
               name='fonciere'
@@ -154,7 +172,7 @@ const Charges = ({
             <i 
               onClick={() => focusMethod("fonciere-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -170,20 +188,22 @@ const Charges = ({
               step='10'
               className='slider mt-5'
             />
-            <i
-              id='info-fonciere'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
 
         <div
-          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 ml-5"}
+          className={width < 770 ? "form-box-v-half mt-10" : "form-box-v-half mt-10 ml-5"}
         >
           <div className='type-alt-slider'>
-          <label>Assurances PNO & GLI :</label>
-          <div className="flex-row ai-fs">
+          <div>
+              <label>Assurances PNO & GLI</label>
+              <button 
+                  id='info-pno' 
+                  onClick={showModal}
+                  className='question-mark'
+              >?</button>
+            </div>
+          <div className="border-input">
             <NumberFormat
               id="pno-edit"
               name='pno'
@@ -201,7 +221,7 @@ const Charges = ({
             <i 
               onClick={() => focusMethod("pno-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>          
@@ -217,11 +237,6 @@ const Charges = ({
               step='10'
               className='slider mt-5'
             />
-            <i
-              id='info-pno'
-              onClick={showModal}
-              className='fas fa-question-circle'
-            ></i>
           </div>
         </div>
       </div>

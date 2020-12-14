@@ -8,6 +8,7 @@ const Revenu = ({
   setMobileDisplayTab,
   focusMethod,
   mobileDisplayTab,
+  onChangeDecimals,
   loyer,
   chargesLoc,
   occupation,
@@ -18,6 +19,7 @@ const Revenu = ({
   const optionsOccupation = []; // options taux occupation
   for (let i = 1; i <= 12; i += 0.5) {
     optionsOccupation.push(i);
+    console.log(optionsOccupation)
   }
 
   return (
@@ -27,19 +29,26 @@ const Revenu = ({
         <i className='fas fa-hand-holding-usd header-i'></i>
         &nbsp;&nbsp;Revenu annuel d'exploitation
       </h3> : ""}
-      <div className='flex-row jc-se'>
+      <div className='form-group'>
         <div className='form-box-v mt-10'>
         <div className='type-alt-slider'>
+          <div>
           <label>Loyer mensuel&nbsp;
-          <small style={{ marginLeft: 0 }}>
-            (<i 
-              style={{ marginLeft: 0, cursor: "auto" }} 
-              className="fas fa-exclamation-circle">
-            </i> charges comprises)
-          </small> :</label>
-
-
-          <div className="flex-row ai-fs">
+            <small style={{ marginLeft: 0 }}>
+            <strong>
+              (<i 
+                style={{ marginLeft: 0, cursor: "auto", color: "#007be8" }} 
+                className="fas fa-exclamation-circle">
+              </i> charges comprises)</strong>
+            </small>
+          </label>
+          <button 
+              id='info-loyer' 
+              onClick={showModal}
+              className='question-mark'
+            >?</button>
+          </div>
+          <div className="border-input">
             <NumberFormat
               id="loyer-edit"
               name='loyer'
@@ -57,7 +66,7 @@ const Revenu = ({
               <i 
                 onClick={() => focusMethod("loyer-edit")} 
                 style={{ fontSize: "14px" }} 
-                className="far fa-edit"
+                className="fas fa-pencil-alt"
               ></i>
             </div>
           </div>
@@ -73,22 +82,26 @@ const Revenu = ({
               step='20'
               className='slider mt-5'
             />
-            <i
-              id='info-loyer'
-              onClick={showModal}
-              class='fas fa-question-circle'
-            ></i>
           </div>
         </div>
       </div>
 
       <div className='form-group'>
         <div
-          className={width < 770 ? "form-box-v mt-10" : "form-box-v mt-10 mr-5"}
+          className={width < 770 ? "form-box-v-half mt-10" : "form-box-v-half mt-10 mr-5"}
         >
         <div className='type-alt-slider'>
-          <label>Charges locataires <small>(/an)</small> :</label>
-          <div className="flex-row ai-fs">
+          <div>
+            <label>
+              Charges locataires<small><strong> (/an)</strong></small>
+            </label>
+            <button 
+                id='info-locataire'
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+          </div>
+          <div className="border-input">
             <NumberFormat
               id="chargesLoc-edit"
               name='chargesLoc'
@@ -106,7 +119,7 @@ const Revenu = ({
             <i 
               onClick={() => focusMethod("chargesLoc-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -122,11 +135,6 @@ const Revenu = ({
               step='20'
               className='slider mt-5'
             />
-            <i
-              id='info-locataire'
-              onClick={showModal}
-              class='fas fa-question-circle'
-            ></i>
           </div>
         </div>
 
@@ -135,12 +143,19 @@ const Revenu = ({
             width < 770 ? "form-box-h-4 mt-10" : "form-box-h-4 mt-10 ml-5"
           }
         >
-          <label>Occupation annuelle : </label>
+          <div>
+            <label>Occupation annuelle</label>
+            <button 
+                  id='info-occupation'
+                  onClick={showModal}
+                  className='question-mark'
+              >?</button>
+          </div>
           <select
             type='select'
             name='occupation'
             value={occupation}
-            onChange={onChange}
+            onChange={onChangeDecimals}
             className='input-box-2 fs-12'
           >
             {optionsOccupation.map((option) => (
@@ -149,11 +164,6 @@ const Revenu = ({
               </option>
             ))}
           </select>
-          <i
-            id='info-occupation'
-            onClick={showModal}
-            class='fas fa-question-circle'
-          ></i>
         </div>
       </div>
       {width < 700 ?

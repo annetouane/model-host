@@ -31,15 +31,17 @@ const FoyerMobile = ({
       <div className='form-box-v mt-10'>
         <div className='info-button'>
           <h4>Investisseur N° 1 :</h4>
-          <i
-            id='info-investisseur'
-            onClick={showModal}
-            class='fas fa-question-circle mb-10'
-          ></i>
         </div>
 
         <div className='type-alt-slider'>
-            <label>Revenu net avant impôt :</label>
+          <div>
+            <label>Revenu net avant impôt</label>
+            <button 
+                id='info-investisseur' 
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+          </div>
           <div className="flex-row ai-fs">
             <NumberFormat
               id="revInvest1-edit"
@@ -57,8 +59,8 @@ const FoyerMobile = ({
             />
             <i 
               onClick={() => focusMethod("revInvest1-edit")} 
-              style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              style={{ fontSize: "14px" }}
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div>
@@ -93,7 +95,14 @@ const FoyerMobile = ({
       <div className='form-box-v mt-10'>
         <h4>Investisseur N° 2 :</h4>
         <div className='type-alt-slider'>
-            <label>Revenu net avant impôt :</label>
+        <div>
+            <label>Revenu net avant impôt</label>
+            <button 
+                id='info-investisseur' 
+                onClick={showModal}
+                className='question-mark'
+            >?</button>
+          </div>
           <div className="flex-row ai-fs">
             <NumberFormat
               id="revInvest2-edit"
@@ -112,7 +121,7 @@ const FoyerMobile = ({
             <i 
               onClick={() => focusMethod("revInvest2-edit")} 
               style={{ fontSize: "14px" }} 
-              className="far fa-edit"
+              className="fas fa-pencil-alt"
             ></i>
           </div>
         </div> 
@@ -167,7 +176,14 @@ const FoyerMobile = ({
           explique comment calculer le nombre de parts fiscales de votre foyer
         </p>
         <div className='info-button'>
-          <label className='fs-12'>Part(s) Fiscale(s) :</label>
+          <div>
+            <label className='fs-12'>Part(s) Fiscale(s)</label>
+            <button 
+                  id='info-partfisc' 
+                  onClick={showModal}
+                  className='question-mark'
+            >?</button>
+          </div> 
           <select
             type='select'
             name='partFisc'
@@ -178,12 +194,6 @@ const FoyerMobile = ({
               <option key={optionPartFisc}>{optionPartFisc}</option>
             ))}
           </select>
-          <i
-            id='info-partfisc'
-            onClick={showModal}
-            className='fas fa-question-circle'
-            style={{ marginBottom: "5px" }}
-          ></i>
         </div>
       </div>
       <MobilePagination

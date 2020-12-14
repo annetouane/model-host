@@ -4,7 +4,6 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-const sgMail = require("@sendgrid/mail");
 
 // import model
 const User = require("../models/UserModel");
@@ -15,7 +14,7 @@ const User = require("../models/UserModel");
 router.post(
   "/",
   [
-    check("email", "Invalid email").isEmail(),
+    check("email", "Invalid e-mail").isEmail(),
     check("password", "Please enter your password").exists(),
   ],
   async (req, res) => {
@@ -35,19 +34,19 @@ router.post(
       // if user not found (matching email) : sends 400 and array with error message
       if (!user) {
         return res.status(400).json({
-          errors: [{ msg: "Invalid credentials" }],
+          msg: "Vos identifiants sont incorrects",
         });
-      }
+      };
 
       const confirmed = user.confirmed;
       // if email not confirmed : sends 400 and error
       if (!confirmed) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Please confirm your email adress" }] });
-      }
+          .json({ msg: "Un e-mail contenant le lien d'activation de votre compte vous a été adressé" });
+      };
 
-      // user found in the DB:
+      // user found in the DB
       // compare the password in plain text from the request
       // to the encrypted password retrieved from the database
       const isMatch = await bcrypt.compare(password, user.password);
@@ -55,10 +54,10 @@ router.post(
       // if no match (passwords don't match): sends 400 and array with error message
       if (!isMatch) {
         return res.status(400).json({
-          errors: [{ msg: "Invalid credentials" }],
+          msg: "Vos identifiants sont incorrects",
         });
-      }
-      // if password match :
+      };
+      // if password match
       // generate JWT in which the user ID will be inserted
       const payload = {
         user: {
@@ -85,3 +84,6 @@ router.post(
     }
   }
 );
+
+module.exports = router;
+
