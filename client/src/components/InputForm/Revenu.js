@@ -19,7 +19,6 @@ const Revenu = ({
   const optionsOccupation = []; // options taux occupation
   for (let i = 1; i <= 12; i += 0.5) {
     optionsOccupation.push(i);
-    console.log(optionsOccupation)
   }
 
   return (

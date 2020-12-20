@@ -12,13 +12,13 @@ const UserSchema = Schema({
     type: String,
     required: true,
   },
-  confirmed: {
-    type: Boolean,
-    default: false,
-  },
   condition: {
     type: Boolean,
     required: true,
+  },
+  confirmed: {
+    type: Boolean,
+    default: false,
   },
   date: {
     type: Date,

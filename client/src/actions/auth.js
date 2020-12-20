@@ -9,6 +9,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  OPEN_AUTH,
+  CLOSE_AUTH,
 } from "./types";
 
 // load the user each time the main app is updated to check authentication
@@ -44,7 +46,7 @@ export const register = (formData) => async (dispatch) => {
     // attach the response to the playload
     dispatch(
       setAlert(
-        `A validation link has been sent to : ${res.data.email}`,
+        `A validation link has been sent to : ${res.data.emailSignUp}`,
         "success",
         10000
       )
@@ -70,20 +72,17 @@ export const register = (formData) => async (dispatch) => {
 };
 
 // Login User
-export const login = (email, password) => async (dispatch) => {
-  const body = { email, password };
-
+export const login = (formData) => async (dispatch) => {
   try {
     // sends back the user
-    const res = await api.post("/signin", body);
-    console.log(res.data);
+    const res = await api.post("/signin", formData);
 
     dispatch({
       type: LOGIN_SUCCESS,
       // insert the user in the payload
       payload: res.data,
     });
-
+    
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
@@ -152,4 +151,14 @@ export const updPassword = (password, setRedirect) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, "red")));
     }
   }
+};
+
+// Open Auth Window
+export const openAuth = () => (dispatch) => {
+  dispatch({ type: OPEN_AUTH });
+};
+
+// Close Auth Window
+export const closeAuth = () => (dispatch) => {
+  dispatch({ type: CLOSE_AUTH });
 };

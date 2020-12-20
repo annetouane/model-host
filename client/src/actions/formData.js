@@ -2,7 +2,14 @@
 import axios from "axios";
 
 // action type
-import { MODEL_DATA } from "./types";
+import { MODEL_DATA, STORE_PARAMS } from "./types";
+
+export const storeParams = (formData) => (dispatch) => {
+    dispatch({
+      type: STORE_PARAMS,
+      payload: formData,
+    });
+  }
 
 export const postInputForm = (formData) => async (dispatch) => {
   try {
@@ -22,6 +29,10 @@ export const postInputForm = (formData) => async (dispatch) => {
       console.log(res.data)
       // setAlert({ msg: res.data });
       console.log("local");
+      dispatch({
+        type: STORE_PARAMS,
+        payload: formData,
+      });
       dispatch({
         type: MODEL_DATA,
         payload: res.data,

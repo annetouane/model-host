@@ -1,5 +1,5 @@
 // packages
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -8,14 +8,34 @@ import favicon from "./img/favicon.ico";
 
 // components
 import NavBar from "./components/Layout/NavBar";
-import Authentication from "./components/auth/Authentication"
+import Landing from "./components/Layout/Landing"
 import MainForm from "./components/InputForm/mainForm";
+
+// actions
+import { loadUser } from "./actions/auth";
+import setAuthToken from "./utilities/setAuthToken";
 
 // stylesheets
 import "./css/utilities.css";
 import "./css/slider.css";
 
+if (localStorage.token) {
+  // console.log("app1.js");
+  // console.log(localStorage.token);
+  setAuthToken(localStorage.token);
+}
+
+// // useEffect will execute each time the app is updated
+// // this sets the token in local storage
 const App = () => {
+  useEffect(() => {
+    // dispatch is a method on the store, dispatch load user which will dispatch the action to the reducer
+    // console.log("app2.js");
+    // console.log(localStorage.token);
+    store.dispatch(loadUser());
+    // [] argument makes sure it only run ones instead of an infinite nbr of times
+  }, []);
+  
   return (
     <Provider store={store}>
       <Fragment>
@@ -26,8 +46,8 @@ const App = () => {
         </Helmet>
           <NavBar />
           <Switch>
-            <Route exact path='/auth' component={Authentication} />
-            <Route exact path='/' component={MainForm} />
+            <Route exact path='/' component={Landing} />
+            <Route exact path='/investment-modelisation' component={MainForm} />
           </Switch>
         </Router>
       </Fragment>

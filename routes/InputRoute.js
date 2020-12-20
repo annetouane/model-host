@@ -213,11 +213,17 @@ router.post("/", async (req, res) => {
             item.sciRevFoncImp = item.loyer - item.sciLmnpChargesDeduc - item.sciLmnpDefFoncier <= 0 ? 0 : item.loyer - item.sciLmnpChargesDeduc - item.sciLmnpDefFoncier,
             item.sciImpRevFonc = item.sciRevFoncImp <= 38400 ? item.sciRevFoncImp * 0.15 : 38400 * 0.15 + (item.sciRevFoncImp - 38400) * 0.28,
             item.sciIsCashFlowBeforeFlatTax = item.loyer - item.chargesFi - item.chargesExpl - item.sciImpRevFonc - item.capital,
-            item.sciIsCashFlowAfterFlatTax = item.sciIsCashFlowBeforeFlatTax > 0 ? item.sciIsCashFlowBeforeFlatTax * 0.7 : 0,
-            item.sciIsRoEBeforeFlatTax = item.annee == 1 ? (item.capital + item.sciIsCashFlowBeforeFlatTax) / apport : (item.capital + item.sciIsCashFlowBeforeFlatTax) / (apport + item.reimbursedCapital),
+            item.sciIsCashFlowAfterFlatTax = item.sciIsCashFlowBeforeFlatTax > 0 ? item.sciIsCashFlowBeforeFlatTax * 0.7 : item.sciIsCashFlowBeforeFlatTax,
+            item.sciIsRoEBeforeFlatTax = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.sciIsCashFlowBeforeFlatTax) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.sciIsCashFlowBeforeFlatTax) / (apport + item.reimbursedCapital) * 100
+                : item.sciIsCashFlowBeforeFlatTax / coutProjet * 100,
             item.sciIsRoABeforeFlatTax = (item.capital + item.sciIsCashFlowBeforeFlatTax) / (coutProjet) * 100,
-            item.sciIsRoEAfterFlatTax = item.annee == 1 ? (item.capital + item.sciIsCashFlowAfterFlatTax) / apport : (item.capital + item.sciIsCashFlowAfterFlatTax) / (apport + item.reimbursedCapital),
-            item.sciIsRoAAfterFlatTax = (item.capital + item.sciIsCashFlowAfterFlatTax) / (coutProjet) * 100,
+            item.sciIsRoEAfterFlatTax = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.sciIsCashFlowAfterFlatTax) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.sciIsCashFlowAfterFlatTax) / (apport + item.reimbursedCapital) * 100
+                : item.sciIsCashFlowAfterFlatTax / coutProjet * 100,
+            item.sciIsRoAAfterFlatTax = (item.capital + item.sciIsCashFlowAfterFlatTax) / (coutProjet) * 100, 
 
             //*********************************************************************************************//
             // LMNP Réel **********************************************************************************//
@@ -257,7 +263,10 @@ router.post("/", async (req, res) => {
             item.lmnpReelCotSoc = item.lmnpReelRevFoncImp * 0.172,
             item.lmnpReelImpRevFonc = item.lmnpReelImpotRevTot + item.lmnpReelCotSoc - item.impotRevAct,
             item.lmnpReelCashFlowNet = item.loyer - item.chargesFi - item.chargesExpl - item.lmnpReelImpRevFonc - item.capital,
-            item.lmnpReelRoE = item.annee == 1 ? (item.capital + item.lmnpReelCashFlowNet) / apport : (item.capital + item.lmnpReelCashFlowNet) / (apport + item.reimbursedCapital),
+            item.lmnpReelRoE = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.lmnpReelCashFlowNet) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.lmnpReelCashFlowNet) / (apport + item.reimbursedCapital) * 100
+                : item.lmnpReelCashFlowNet / coutProjet * 100,
             item.lmnpReelRoA = (item.capital + item.lmnpReelCashFlowNet) / (coutProjet) * 100,
             
             //*********************************************************************************************//
@@ -297,8 +306,11 @@ router.post("/", async (req, res) => {
             item.lmnpMicroImpotRevTot = item.lmnpMicroC3 - item.lmnpMicroD3 > item.plafonnement ? item.lmnpMicroC3 - item.plafonnement : item.lmnpMicroD3,
             item.lmnpMicroCotSoc = item.lmnpMicroRevFoncImp * 0.172,
             item.lmnpMicroImpRevFonc = item.lmnpMicroImpotRevTot + item.lmnpMicroCotSoc - item.impotRevAct,
-            item.lmnpMicroCashFlowNet = item.loyer - item.chargesFi - item.chargesExpl - item.lmnpMicroImpRevFonc - item.capital,            
-            item.lmnpMicroRoE = item.annee == 1 ? (item.capital + item.lmnpMicroCashFlowNet) / apport : (item.capital + item.lmnpMicroCashFlowNet) / (apport + item.reimbursedCapital),
+            item.lmnpMicroCashFlowNet = item.loyer - item.chargesFi - item.chargesExpl - item.lmnpMicroImpRevFonc - item.capital,
+            item.lmnpMicroRoE = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.lmnpMicroCashFlowNet) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.lmnpMicroCashFlowNet) / (apport + item.reimbursedCapital) * 100
+                : item.lmnpMicroCashFlowNet / coutProjet * 100,
             item.lmnpMicroRoA = (item.capital + item.lmnpMicroCashFlowNet) / (coutProjet) * 100,
 
             //*********************************************************************************************//
@@ -340,7 +352,10 @@ router.post("/", async (req, res) => {
             item.nueReelImpRevFonc = item.nueReelImpotRevTot + item.nueReelCotSoc - item.impotRevAct >= 0 ? item.nueReelImpotRevTot + item.nueReelCotSoc - item.impotRevAct : 0,
             item.nueReelReducImpRevAct = item.nueReelDeducRevAct != 0 ? item.impotRevAct - item.nueReelImpotRevTot : 0,
             item.nueReelCashFlowNet = item.loyer + item.nueReelReducImpRevAct - item.chargesFi - item.chargesExpl - item.nueReelImpRevFonc - item.capital,
-            item.nueReelRoE = item.annee == 1 ? (item.capital + item.nueReelCashFlowNet) / apport : (item.capital + item.nueReelCashFlowNet) / (apport + item.reimbursedCapital),
+            item.nueReelRoE = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.nueReelCashFlowNet) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.nueReelCashFlowNet) / (apport + item.reimbursedCapital) * 100
+                : item.nueReelCashFlowNet / coutProjet * 100,            
             item.nueReelRoA = (item.capital + item.nueReelCashFlowNet) / (coutProjet) * 100,
 
             //*********************************************************************************************//
@@ -381,7 +396,10 @@ router.post("/", async (req, res) => {
             item.nueMicroCotSoc = item.nueMicroRevFoncImp * 0.172,
             item.nueMicroImpRevFonc = item.nueMicroImpotRevTot + item.nueMicroCotSoc - item.impotRevAct >= 0 ? item.nueMicroImpotRevTot + item.nueMicroCotSoc - item.impotRevAct : 0,
             item.nueMicroCashFlowNet = item.loyer - item.chargesFi - item.chargesExpl - item.nueMicroImpRevFonc - item.capital,
-            item.nueMicroRoE = item.annee == 1 ? (item.capital + item.nueMicroCashFlowNet) / apport : (item.capital + item.nueMicroCashFlowNet) / (apport + item.reimbursedCapital),
+            item.nueMicroRoE = 
+                item.annee == 1 && coutProjet > apport ? (item.capital + item.nueMicroCashFlowNet) / apport * 100 
+                : item.annee != 1 && coutProjet > apport ? (item.capital + item.nueMicroCashFlowNet) / (apport + item.reimbursedCapital) * 100
+                : item.nueMicroCashFlowNet / coutProjet * 100,            
             item.nueMicroRoA = (item.capital + item.nueMicroCashFlowNet) / (coutProjet) * 100
           });
 

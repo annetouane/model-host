@@ -14,8 +14,8 @@ const User = require("../models/UserModel");
 router.post(
   "/",
   [
-    check("email", "Invalid e-mail").isEmail(),
-    check("password", "Please enter your password").exists(),
+    check("emailSignIn", "Invalid e-mail").isEmail(),
+    check("passwordSignIn", "Please enter your password").exists(),
   ],
   async (req, res) => {
     // pass the req to validate its parameters
@@ -26,10 +26,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { emailSignIn, passwordSignIn } = req.body;
     try {
       // check if user exists (true false)
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email: emailSignIn });
+      console.log(user)
 
       // if user not found (matching email) : sends 400 and array with error message
       if (!user) {
@@ -49,7 +50,7 @@ router.post(
       // user found in the DB
       // compare the password in plain text from the request
       // to the encrypted password retrieved from the database
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(passwordSignIn, user.password);
 
       // if no match (passwords don't match): sends 400 and array with error message
       if (!isMatch) {

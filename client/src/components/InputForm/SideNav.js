@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Link } from "react";
 
 const Indicateurs = ({
   onSubmit,
@@ -249,7 +249,6 @@ const Indicateurs = ({
         </div>
       </div>
       <button
-        type='submit'
         className='button-model'
         onClick={onSubmit}
         disabled={!formCheck}
@@ -260,15 +259,17 @@ const Indicateurs = ({
           lineHeight: '20px'
         }}
       >
-        Modélisation <br />
-        Fiscale &nbsp;
-        <span
-          style={{
-            display: !formCheck && "none",
-          }}
-        >
-          <i className='fas fa-forward'></i>
-        </span>
+        <a >
+          Modélisation <br/>
+          Fiscale &nbsp;
+          <span
+            style={{
+              display: !formCheck && "none",
+            }}
+          >
+            <i className='fas fa-forward'></i>
+          </span>
+        </a>
       </button>
     </nav>
   );

@@ -5,17 +5,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 // actions
-import { register, login } from "../../actions/auth";
+import { register, login, closeAuth } from "../../actions/auth";
 
-const Authentication = ({  register, login }) => {
-
+const AuthModalLanding = ({ register, login, landingAuthModal, closeAuth }) => {
   const [tab, setTab] = useState(true);
 
   const [signUp, setSignUp] = useState({
     emailSignUp: "",
     passwordSignUp: "",
     condition: false,
-  }); 
+  });
 
   const { emailSignUp, passwordSignUp, condition } = signUp;
 
@@ -26,6 +25,11 @@ const Authentication = ({  register, login }) => {
   const onChangeConditionSignUp = (e) => {
     setSignUp({ ...signUp, [e.target.name]: e.target.checked });
   };
+
+  const onSignUp = (e) => {
+    e.preventDefault();
+    register(signUp)
+  }
 
   // sign in
   const [signIn, setSignIn] = useState({
@@ -39,22 +43,26 @@ const Authentication = ({  register, login }) => {
     setSignIn({ ...signIn, [e.target.name]: e.target.value });
   };
 
+  const onSignIn = (e) => {
+    e.preventDefault();
+    login(signIn)
+  }
+
+  // password
   const [passwordShown, setPasswordShown] = useState(false);
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  // redirect if logged-in success
-  // if (isAuthenticated) {
-  //   return <Redirect to='/' />;
-  // }
-
   return (
-    <section className="authentication">
-      <div className='auth-box'>
+    <section className={landingAuthModal && landingAuthModal ? "auth-modal" : "auth-modal-none"}>
+      <div className='auth-box' style={{ margin: 0 }}>
+        <div onClick={closeAuth}>
+          <i className='fa fa-arrow-right fa-2x quit-auth-modal'></i>
+        </div>
         <div className='auth-header'>
-          <button 
+          <button
             onClick={() => setTab(true)}
             style={{ borderBottom: tab ? "#007be8 solid 2px" : "" }}
             >Créer un compte
@@ -65,25 +73,31 @@ const Authentication = ({  register, login }) => {
             >Se connecter
           </button>
         </div>
-        {tab ? 
-        <div className="auth-form">
-          <input 
+        {tab ?
+        <form 
+          className="auth-form"
+          onSubmit={onSignUp}
+        >
+          <input
             name='emailSignUp'
             value={emailSignUp}
             type='email'
             onChange={onChangeSignUp}
-            placeholder='Email' 
+            placeholder='Email'
+            required
           />
-          <input 
+          <input
             name='passwordSignUp'
             value={passwordSignUp}        
             type={passwordShown ? "text" : "password"}
             onChange={onChangeSignUp}
-            placeholder='Mot de passe' />
+            placeholder='Mot de passe'
+            required
+            />
           <div className="pwd-icon" onClick={togglePasswordVisiblity}>
             {passwordShown ?
               <i class="far fa-eye-slash">&nbsp;Cacher</i> :
-              <i class="far fa-eye">&nbsp;Montrer</i> 
+              <i class="far fa-eye">&nbsp;Montrer</i>
             }
           </div>
           <div className='pwd-checks'>
@@ -116,24 +130,33 @@ const Authentication = ({  register, login }) => {
               className='ml-5 mr-5'
               name='condition'
               value={condition}
-              onChange={onChangeConditionSignUp}/>
-            <p>Accepter que Simulimo transmette mes informations à ses partenaires à des fins commerciales. <b>Vous pourrez changer d'avis à tout moment.</b> <a href="">En savoir plus</a></p>
+              onChange={onChangeConditionSignUp}
+              required
+              />
+            <p>Accepter que Simulimo transmette mes informations à ses partenaires à des fins commerciales. <b>Vous pourrez changer d'avis à tout moment.</b> <a href="" target='_blank'>En savoir plus</a></p>
           </div>
           <button>Créer un compte</button>
-        </div> :
-        <div className="auth-form">
+        </form> :
+        <form
+          className="auth-form"
+          onSubmit={onSignIn}
+        >
           <input 
             name='emailSignIn'
             value={emailSignIn}
             type='email' 
             onChange={onChangeSignIn}
-            placeholder='Email' />
+            placeholder='Email'
+            required
+            />
           <input 
             name='passwordSignIn'
             value={passwordSignIn}        
             type={passwordShown ? "text" : "password"}
             onChange={onChangeSignIn}
-            placeholder='Mot de passe' />
+            placeholder='Mot de passe'
+            required
+            />
           <div className="pwd-icon" onClick={togglePasswordVisiblity}>
             {passwordShown ?
               <i class="far fa-eye-slash">&nbsp;Cacher</i> :
@@ -141,20 +164,18 @@ const Authentication = ({  register, login }) => {
             }
           </div>
           <button>Se connecter</button>
-        </div>}
+        </form>}
       </div>
     </section>
   );
 };
 
-Authentication.propTypes = {
-  register: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  // isAuthenticated: PropTypes.bool,
-};
-
-// const mapStateToProps = (state) => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-// });
-
-export default connect(null, { login, register })(Authentication);
+AuthModalLanding.propTypes = {
+    landingAuthModal: PropTypes.bool.isRequired,
+  };
+  
+  const mapStateToProps = (state) => ({
+    landingAuthModal: state.auth.landingAuth,
+  });
+  
+export default connect(mapStateToProps, { register, login, closeAuth })(AuthModalLanding);

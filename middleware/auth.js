@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
 
   // verify token's validity
   try {
-    // try to decode the token received from the front-end with the secret key
+    // decode the token received from the front-end with the secret key
     const decoded = jwt.verify(token, config.get("jwtSecret"));
     // take request object and assign the decoded value which has user in the payload
     // req.user can then be used in any protected route for authentification purpose

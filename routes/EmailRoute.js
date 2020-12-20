@@ -7,7 +7,7 @@ const router = express.Router();
 const UserEmail = require("../models/EmailModel");
 
 // @route : POST /
-// @description : post new activity
+// @description : post new email
 // @ access : authentication (Public)
 router.post("/", async (req, res) => {
   // const errors = validationResult(req);

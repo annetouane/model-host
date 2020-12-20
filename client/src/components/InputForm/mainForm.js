@@ -16,24 +16,29 @@ import IndicateursDesktop from "./IndicateursDesktop";
 import IndicateursMobile from "./IndicateursMobile";
 import SideNav from "./SideNav";
 import MobileNav from "./MobileNav";
-import ModalEmail from "./modalEmail";
 import Footer from "./Footer";
 import InfoModal from "./InfoModal";
 import MobileNavButton from "./MobileNavButton";
 import MobileTitle from "./MobileTitle"
 import ButtonModelMobile from "./ButtonModelMobile";
+import AuthModal from '../auth/Authentication';
 // import Modelisation from "../dashboards/Modelisation"
+import AuthModalLanding from '../auth/AuthModalLanding';
 
 // actions
-import { postInputForm, postEmail } from "../../actions/formData";
+import { storeParams, postInputForm, postEmail } from "../../actions/formData";
+import { openAuth } from "../../actions/auth";
 
-export const MainForm = ({ postInputForm, postEmail }) => {
+export const MainForm = ({ storeParams, postInputForm, postEmail, isAuthenticated, openAuth }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   });
   const { width } = dimensions;
 
   useEffect(() => {
+    // update the reducer asynchronously with the new values of the form
+    storeParams(formData)
+
     // set the windows dimensions on render
     // prevent function execution more than once per minute
     const debouncedHandleResize = function handleResize() {
@@ -54,30 +59,30 @@ export const MainForm = ({ postInputForm, postEmail }) => {
 
   // init form state
   const [formData, setFormData] = useState({
-    netVendeur: 0,
+    netVendeur: 300000,
     travaux: 0,
     ammeublement: 0,
     notaire: 0.075,
     agence: 0,
     duree: 20,
-    apport: null,
+    apport: 30000,
     interet: 1.2,
     assurance: 0.1,
     fraisBancaires: 0,
     fraisCourtier: 0,
-    loyer: 0,
+    loyer: 2000,
     chargesLoc: 0,
     occupation: 11,
-    fonciere: 0,
+    fonciere: 30000,
     gestion: 0,
     charges: 0,
     pno: 0,
-    revInvest1: 0,
+    revInvest1: 30000,
     augInvest1: 0.01,
     revInvest2: 0,
     augInvest2: 0.01,
     partFisc: 1,
-    sciIs: false,
+    sciIs: true,
     lmnpReel: false,
     lmnpMicro: false,
     nueReel: false,
@@ -152,14 +157,17 @@ export const MainForm = ({ postInputForm, postEmail }) => {
   // Submit functions ---------------------------------------------------------------------------------
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (formData) {
-      postInputForm(formData);
+    if(isAuthenticated) {
+      if (formData) {
+        postInputForm(formData);
+      } else {
+        console.log("error");
+        // setAlert("Start time can't be superieur to end time", "red");
+      }
     } else {
-      console.log("error");
-      // setAlert("Start time can't be superieur to end time", "red");
+      openAuth()
+      setClick(false);
     }
-    setModal(true);
-    setClick(false);
   };
 
   const onSubmitEmail = async (e) => {
@@ -292,7 +300,10 @@ export const MainForm = ({ postInputForm, postEmail }) => {
 
   return (
     <div >
-      {/* <InfoModal /> */}
+      {/* authentication window */}
+      <AuthModalLanding />
+
+      {/* information windows */}
       {displayInfoModal ? (
         <InfoModal
           idContent={idContent}
@@ -335,13 +346,13 @@ export const MainForm = ({ postInputForm, postEmail }) => {
         ""
       )}
 
-      <ModalEmail
-        onSubmitEmail={onSubmitEmail}
-        onChangeEmailModal={onChangeEmailModal}
+      <AuthModal
+        // onSubmitEmail={onSubmitEmail}
+        // onChangeEmailModal={onChangeEmailModal}
         setModal={setModal}
         modal={modal}
-        eModal={eModal}
-        width={width}
+        // eModal={eModal}
+        // width={width}
       />
 
       {width < 770 ?
@@ -574,10 +585,14 @@ export const MainForm = ({ postInputForm, postEmail }) => {
   );
 };
 
-// declare/define the type of props
 MainForm.propTypes = {
+  storeParams: PropTypes.func.isRequired,
   postInputForm: PropTypes.func.isRequired,
   postEmail: PropTypes.func.isRequired,
 };
 
-export default connect(null, { postInputForm, postEmail })(MainForm);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { storeParams, postInputForm, postEmail, openAuth })(MainForm);

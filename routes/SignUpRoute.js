@@ -13,14 +13,15 @@ const User = require("../models/UserModel");
 router.post(
   "/",
   [
-    check("email", "Ceci n'est pas un format d'adresse email valide").isEmail(),
+    check("emailSignUp", "Ceci n'est pas un format d'adresse email valide").isEmail(),
     check(
-      "password",
+      "passwordSignUp",
       "Veuillez choisir un mot de passe comportant 8 caractères minimum"
     ).isLength({ min: 8 }),
     check("condition", "Merci d'accepter les conditions d'utilisation").isIn([true]),
   ],
   async (req, res) => {
+    // console.log(req.body)
     // pass the req to validate its parameters
     const errors = validationResult(req);
     // if a field isn't validate
@@ -29,11 +30,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // destructure req.body
-    const { email, password, condition } = req.body;
+    // destructure req
+    const { emailSignUp, passwordSignUp, condition } = req.body;
     try {
       // check if user exists (value or null)
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email: emailSignUp });
+
       // if user found (matching email) : sends 400 and array with error message
       if (user) {
         return res.status(400).json({
@@ -43,21 +45,25 @@ router.post(
       } else {
         // create a new user using the User model
         user = new User({
-          email,
-          password,
+          email: emailSignUp,
+          password: "",
           condition,
         });
+
 
         // encrypt the password (bcrypt) : create the salt (object to hash)
         const salt = await bcrypt.genSalt(10);
         // hash the password
-        user.password = await bcrypt.hash(password, salt);
+        user.password = await bcrypt.hash(passwordSignUp, salt);
+
+        console.log('new', user)
 
         // save the user to the DB
         await user.save();
 
         res.json({
           email: user.email,
+         id: user._id,
         });
 
         // using Twilio SendGrid's v3 Node.js Library
@@ -71,7 +77,7 @@ router.post(
           subject: "Simulimo - activation de votre compte",
           html: `
                 <h3>Merci d'avoir crée votre compte. Pour l'activer, merci de cliquer sur le lien ci-dessous </h3>
-                <a href=${"http://localhost:5000/confirmation/" + user.id}>
+                <a href=${"http://localhost:5000/email-confirmation/" + user.id}>
                   Activer mon compte
                 </a>
                 <h3>A bientôt</h3>`,

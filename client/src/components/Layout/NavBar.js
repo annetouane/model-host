@@ -1,32 +1,68 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { openAuth } from "../../actions/auth"
 
-export const NavBar = () => {
+export const NavBar = ({ isAuthenticated, openAuth }) => {
   return (
     <nav className='landing-nav' >
       <div className='flex-row ai-fc'>
-        <h1 className='bold'>SIMULIMO </h1>
+        <a 
+          style={{ fontSize: "24px",
+                  fontWeight: "bold" 
+                }}
+          href='/'
+          >SIMULIMO
+        </a>
       </div>
-
-      {/* <div>
+    {isAuthenticated ? 
+      <div>
         <ul>
           <li>
-            <a href='/register'>
+            <a href='/profile'>
               <span className='link'>
-                Signup&nbsp;&nbsp;<i className='fas fa-user-plus'></i>
+                Mon Compte&nbsp;&nbsp;<i className="far fa-user-circle"></i>
               </span>
             </a>
           </li>
           <li>
-            <a href='/login'>
+            <a href='/logout'>
               <span className='link'>
-                Login&nbsp;&nbsp;<i className='fas fa-sign-in-alt'></i>
+                Déconnexion&nbsp;&nbsp;<i className='fas fa-sign-in-alt'></i>
               </span>
             </a>
           </li>
         </ul>
-      </div> */}
+      </div>
+      : 
+      <div>
+        <ul>
+          <li>
+            <a href='/investment-modelisation'>
+              <span className='link'>
+                Simulateur&nbsp;&nbsp;<i className="fas fa-chart-bar"></i>
+              </span>
+            </a>
+          </li>
+          <li>
+            <button onClick={openAuth}>
+              <span className='link'>
+                S'identifier&nbsp;&nbsp;<i className="far fa-user-circle"></i>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>}
     </nav>
   );
 };
 
-export default NavBar;
+NavBar.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { openAuth })(NavBar);
