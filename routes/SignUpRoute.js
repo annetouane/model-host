@@ -35,11 +35,12 @@ router.post(
     try {
       // check if user exists (value or null)
       let user = await User.findOne({ email: emailSignUp });
-
+      console.log(user)
       // if user found (matching email) : sends 400 and array with error message
       if (user) {
-        return res.status(400).json({
+        res.status(401).send({
           msg: "Adresse e-mail déjà utilisée",
+          color: "red",
         });
         // if user isn't found :
       } else {
@@ -56,14 +57,17 @@ router.post(
         // hash the password
         user.password = await bcrypt.hash(passwordSignUp, salt);
 
-        console.log('new', user)
-
         // save the user to the DB
         await user.save();
 
+        // sends back user to the server
         res.json({
           email: user.email,
          id: user._id,
+         alert: {
+           msg: `Votre compte a été créé. Merci de cliquer sur le lien d'activitation envoyé à ${user.email} pour activer votre compte`,
+           color: "green", 
+         }
         });
 
         // using Twilio SendGrid's v3 Node.js Library

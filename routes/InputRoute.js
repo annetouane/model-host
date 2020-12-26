@@ -11,6 +11,10 @@ router.post("/", async (req, res) => {
   try {
     // create new input object
     const inputs = {
+      user: req.body.user,
+      nomProjet: req.body.nomProjet,
+      codePostal: req.body.codePostal,
+      typeBien: req.body.typeBien,
       netVendeur: parseInt(req.body.netVendeur),
       travaux: parseInt(req.body.travaux),
       ammeublement: parseInt(req.body.ammeublement),
@@ -41,8 +45,11 @@ router.post("/", async (req, res) => {
       nueMicro: req.body.nueMicro, 
       irl: parseFloat(req.body.irl) / 100,
     };
-        
+
     const {
+      nomProjet,
+      codePostal,
+      typeBien,
       netVendeur,
       travaux,
       ammeublement,
@@ -74,10 +81,11 @@ router.post("/", async (req, res) => {
       irl,
     } = inputs;
 
+    console.log(inputs)
+
     const coutProjet = netVendeur + travaux + ammeublement + notaire * netVendeur + agence + fraisBancaires + fraisCourtier
     // const emprunt = coutProjet - apport;
     const emprunt = coutProjet > apport ? coutProjet - apport : 0;
-    console.log(emprunt)
 
     let array = []
 
@@ -119,8 +127,6 @@ router.post("/", async (req, res) => {
         loan1.splice(0, 12);
       };
     }
-
-    console.log(inputs)
 
     let capitalPrevious = 0;
     let sciLmnpPrevious = 0;

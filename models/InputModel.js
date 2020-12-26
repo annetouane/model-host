@@ -3,6 +3,19 @@ const Schema = mongoose.Schema;
 
 // create schema
 const InputFormSchema = Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",  
+  },
+  nomProjet: {
+    type: String,
+  },
+  codePostal: {
+    type: String,
+  },
+  typeBien: {
+    type: String,
+  },
   netVendeur: {
     type: Number,
     required: true,

@@ -1,9 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { openAuth } from "../../actions/auth"
+import { authToggle, accountModalToggle, logout } from "../../actions/auth"
 
-export const NavBar = ({ isAuthenticated, openAuth }) => {
+export const NavBar = ({ 
+  isAuthenticated, 
+  authToggle, 
+  accountModalToggle,
+  logout  }) => {
+
+
+  const openAccount = () => {
+    accountModalToggle(true)
+  };
+
   return (
     <nav className='landing-nav' >
       <div className='flex-row ai-fc'>
@@ -19,18 +29,20 @@ export const NavBar = ({ isAuthenticated, openAuth }) => {
       <div>
         <ul>
           <li>
-            <a href='/profile'>
+            <a href='/investment-modelisation'>
               <span className='link'>
-                Mon Compte&nbsp;&nbsp;<i className="far fa-user-circle"></i>
+                Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
               </span>
             </a>
           </li>
           <li>
-            <a href='/logout'>
+            <button
+              onClick={openAccount}  
+            >
               <span className='link'>
-                Déconnexion&nbsp;&nbsp;<i className='fas fa-sign-in-alt'></i>
+                Mon Compte&nbsp;<i className="far fa-user-circle"></i>
               </span>
-            </a>
+            </button>
           </li>
         </ul>
       </div>
@@ -40,14 +52,16 @@ export const NavBar = ({ isAuthenticated, openAuth }) => {
           <li>
             <a href='/investment-modelisation'>
               <span className='link'>
-                Simulateur&nbsp;&nbsp;<i className="fas fa-chart-bar"></i>
+                Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
               </span>
             </a>
           </li>
-          <li>
-            <button onClick={openAuth}>
+          <li> 
+            <button 
+              onClick={() => authToggle(true)}
+              >
               <span className='link'>
-                S'identifier&nbsp;&nbsp;<i className="far fa-user-circle"></i>
+                S'identifier&nbsp;<i className="far fa-user-circle"></i>
               </span>
             </button>
           </li>
@@ -59,10 +73,13 @@ export const NavBar = ({ isAuthenticated, openAuth }) => {
 
 NavBar.propTypes = {
   isAuthenticated: PropTypes.bool,
+  authToggle: PropTypes.func.isRequired,
+  accountModalToggle: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { openAuth })(NavBar);
+export default connect(mapStateToProps, { authToggle, logout, accountModalToggle })(NavBar);

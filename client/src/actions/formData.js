@@ -18,7 +18,6 @@ export const postInputForm = (formData) => async (dispatch) => {
         "https://simulimo.herokuapp.com/input",
         formData
       );
-      // setAlert({ msg: res.data });
       console.log("heroku");
       dispatch({
         type: MODEL_DATA,
@@ -26,8 +25,7 @@ export const postInputForm = (formData) => async (dispatch) => {
       });
     } else {
       const res = await axios.post("http://localhost:5000/input", formData);
-      console.log(res.data)
-      // setAlert({ msg: res.data });
+      console.log('model data',res.data)
       console.log("local");
       dispatch({
         type: STORE_PARAMS,

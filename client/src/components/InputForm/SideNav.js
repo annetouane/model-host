@@ -1,4 +1,7 @@
 import React, { Link } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../../actions/auth"
 
 const Indicateurs = ({
   onSubmit,
@@ -10,7 +13,10 @@ const Indicateurs = ({
   foyerCheck,
   regimeCheck,
   formCheck,
+  onSave,
+  onFisc,
 }) => {
+
   return (
     <nav className='side-column-nav mr-20 mt-50'>
       <h3>
@@ -248,30 +254,44 @@ const Indicateurs = ({
           ></i>
         </div>
       </div>
-      <button
-        className='button-model'
-        onClick={onSubmit}
+      <div className='flex-row ai-fc'>
+      <a
+        className='button-model mr-5'
+        onClick={onSave}
+        disabled={!netVendeurCheck}
+        style={{
+          backgroundColor: !netVendeurCheck && "#a8a8a8",
+          color: !netVendeurCheck && "#dfe3da",
+          cursor: !netVendeurCheck && "not-allowed",
+        }}
+      >
+          <i className="far fa-save fa-2x"></i>
+          Sauvegarder
+      </a>
+      <a
+        className='button-model ml-5'
+        onClick={onFisc}
         disabled={!formCheck}
         style={{
           backgroundColor: !formCheck && "#a8a8a8",
           color: !formCheck && "#dfe3da",
           cursor: !formCheck && "not-allowed",
-          lineHeight: '20px'
         }}
       >
-        <a >
-          Modélisation <br/>
-          Fiscale &nbsp;
-          <span
-            style={{
-              display: !formCheck && "none",
-            }}
-          >
-            <i className='fas fa-forward'></i>
-          </span>
-        </a>
-      </button>
+        <i className="fas fa-balance-scale fa-2x"></i>
+        Fiscalité
+      </a>
+      </div>
     </nav>
   );
 };
-export default Indicateurs;
+
+Indicateurs.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Indicateurs);

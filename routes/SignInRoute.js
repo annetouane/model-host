@@ -13,51 +13,53 @@ const User = require("../models/UserModel");
 // @access   Public
 router.post(
   "/",
-  [
-    check("emailSignIn", "Invalid e-mail").isEmail(),
-    check("passwordSignIn", "Please enter your password").exists(),
-  ],
+  // [
+  //   check("emailSignIn", "Invalid e-mail").isEmail(),
+  //   check("passwordSignIn", "Please enter your password").exists(),
+  // ],
   async (req, res) => {
-    // pass the req to validate its parameters
-    const errors = validationResult(req);
-    // if a field isn't valide
-    if (!errors.isEmpty()) {
-      // status 400 + array with errors
-      return res.status(400).json({ errors: errors.array() });
-    }
+    // // pass the req to validate its parameters
+    // const errors = validationResult(req);
+    // // if a field isn't valide
+    // if (!errors.isEmpty()) {
+    //   // status 400 + array with errors
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
 
     const { emailSignIn, passwordSignIn } = req.body;
     try {
       // check if user exists (true false)
       let user = await User.findOne({ email: emailSignIn });
-      console.log(user)
 
       // if user not found (matching email) : sends 400 and array with error message
       if (!user) {
-        return res.status(400).json({
+        return res.status(400).send({
           msg: "Vos identifiants sont incorrects",
+          color: "red",
         });
       };
-
-      const confirmed = user.confirmed;
-      // if email not confirmed : sends 400 and error
-      if (!confirmed) {
-        return res
-          .status(400)
-          .json({ msg: "Un e-mail contenant le lien d'activation de votre compte vous a été adressé" });
-      };
-
-      // user found in the DB
+      
       // compare the password in plain text from the request
       // to the encrypted password retrieved from the database
       const isMatch = await bcrypt.compare(passwordSignIn, user.password);
 
-      // if no match (passwords don't match): sends 400 and array with error message
+      // check if password match
       if (!isMatch) {
-        return res.status(400).json({
+        return res.status(400).send({
           msg: "Vos identifiants sont incorrects",
+          color: "red",
         });
       };
+
+      // check if email not confirmed
+      const confirmed = user.confirmed;
+      if (!confirmed) {
+        return res.status(401).send({ 
+          msg: "Pour accéder à votre compte, merci de cliquer sur le lien d'activation qui vous a été adressé par email",
+          color: "orange"
+        });
+      };
+
       // if password match
       // generate JWT in which the user ID will be inserted
       const payload = {
@@ -67,8 +69,8 @@ router.post(
       };
       // sign the token with the secret key
       jwt.sign(
-        payload,
-        config.get("jwtSecret"),
+        payload, 
+        config.get("jwtSecret"), 
         { expiresIn: 3600 },
         // callback to get either an error or the token to be sent back to the client
         (err, token) => {

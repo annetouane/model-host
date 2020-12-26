@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MobilePagination from "./MobilePagination";
 import NumberFormat from 'react-number-format';
 

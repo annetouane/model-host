@@ -10,5 +10,10 @@ export const LOGOUT = "LOGOUT";
 export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 export const MODEL_DATA = "MODEL_DATA";
 export const STORE_PARAMS = "STORE_PARAMS";
-export const OPEN_AUTH = "OPEN_AUTH";
-export const CLOSE_AUTH = "CLOSE_AUTH";
+export const AUTH_TOGGLE = "AUTH_TOGGLE";
+export const DETECT_SAVE = "DETECT_SAVE";
+export const SAVE_TOGGLE = "SAVE_TOGGLE";
+export const DETECT_MODEL = "DETECT_MODEL";
+export const MODEL_TOGGLE = "MODEL_TOGGLE";
+export const ACCOUNT_TOGGLE = "ACCOUNT_TOGGLE";
+

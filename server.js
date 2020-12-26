@@ -15,6 +15,7 @@ const SignInRoute = require("./routes/SignInRoute");
 const ForgottenRoute = require("./routes/ForgottenRoute");
 const ChangePasswordRoute = require("./routes/ChangePasswordRoute");
 const LoadUserRoute = require("./routes/LoadUserRoute");
+const DeleteAccount = require("./routes/DeleteAccount");
 
 // init server
 const app = express();
@@ -47,6 +48,7 @@ app.use("/signin", SignInRoute);
 app.use("/forgotten-pwd", ForgottenRoute);
 app.use("/change-pwd", ChangePasswordRoute);
 app.use("/", LoadUserRoute);
+app.use("/delete-user", DeleteAccount);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

@@ -5,7 +5,7 @@ import { SET_ALERT, REMOVE_ALERT } from "./types";
 // called from the component, this action will trigger the reducer
 // (dispatch) allows to dispatch several action types in the same function
 // (dispatch) is part of the thunk middleware
-export const setAlert = (msg, alertType, timeout = 5000) => (dispatch) => {
+export const setAlert = (msg, alertType, timeout = 10000) => (dispatch) => {
   const id = uuidv4();
   // pass an object with TYPE
   // payload : msg to display, alert type (to set color) and alert id

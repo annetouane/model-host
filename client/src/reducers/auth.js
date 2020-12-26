@@ -7,18 +7,26 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     ACCOUNT_DELETED,
-    OPEN_AUTH,
-    CLOSE_AUTH,
+    AUTH_TOGGLE,
+    DETECT_SAVE,
+    SAVE_TOGGLE,
+    DETECT_MODEL,
+    MODEL_TOGGLE,
+    ACCOUNT_TOGGLE
   } from "../actions/types";
   
   // init state : token stored in localStorage : look for an item called token
-  //
   const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null, // when we make a successful response from login/register -> set to true
+    isAuthenticated: null, // when successful response from login -> set to true
     loading: true, // set it to false when loaded
-    user: null, // include some user data from the backend
-    landingAuth: false,
+    user: null, // insert user id & email
+    authModal: false,
+    detectSave: false,
+    saveModal: false,
+    detectModel: false,
+    modelModal: false,
+    accountModal: false,
   };
   
   export default function (state = initialState, action) {
@@ -45,7 +53,7 @@ import {
         localStorage.setItem("token", payload.token);
         return {
           ...state,
-          ...payload, // adds the user to the reducer
+          ...payload, // adds the token to the reducer
           isAuthenticated: true,
           loading: false,
         };
@@ -64,25 +72,48 @@ import {
         // remove the token from local storage
         localStorage.removeItem("token");
         return {
-          // clears the state
+          // clears the state !!!!!!!!
           ...state,
           token: null,
           isAuthenticated: false,
           loading: false,
           user: null,
         };
-      case OPEN_AUTH:
+      // AUTH window actions
+      case AUTH_TOGGLE:
         return {
           ...state,
-          landingAuth: true,
+          authModal: payload,
         };
-      case CLOSE_AUTH:
+      // SAVE window actions
+      case DETECT_SAVE:
         return {
           ...state,
-          landingAuth: false,
+          detectSave: payload,
+        };
+        case SAVE_TOGGLE:
+          return {
+            ...state,
+            saveModal: payload,
+          };
+      // MODEL window actions
+      case DETECT_MODEL:
+        return {
+          ...state,
+          detectModel: payload,
+        };
+        case MODEL_TOGGLE:
+          return {
+            ...state,
+            modelModal: payload,
+          };
+      // account modal
+      case ACCOUNT_TOGGLE:
+        return {
+          ...state,
+          accountModal: payload,
         };
       default:
         return state;
     }
   }
-  

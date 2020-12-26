@@ -14,6 +14,7 @@ const Footer = ({ onSubmitEmail, onChangeEmailFooter, eFooter, clickFooter }) =>
             name='eFooter'
             value={eFooter}
             onChange={onChangeEmailFooter}
+            required
           />
           {!clickFooter ? 
           <button>Valider</button>

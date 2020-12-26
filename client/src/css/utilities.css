@@ -282,7 +282,7 @@ input:focus {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 70px);
   z-index: 20000;
 }
 
@@ -292,11 +292,9 @@ input:focus {
 
 .auth-box {
   position: relative;
+  margin-top: 100px;
   width: 500px;
   height: 500px;
-  margin: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -306,6 +304,18 @@ input:focus {
   box-shadow: 0.5px 0.5px #c8c9ca;
   background-color: #fff;
   border-radius: 10px;
+}
+
+.auth-box p {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.auth-box-end {
+  display: flex;
+  align-items: flex-start;
+  font-size: 12px;
+  margin-top: 15px;
 }
 
 .auth-box button {
@@ -321,7 +331,7 @@ input:focus {
   top: 30px;
   right: 30px;
   z-index: 10000000;
-  color: #007be8;
+  color: rgb(105, 105, 105);
   cursor: pointer;
 }
 
@@ -345,7 +355,7 @@ input:focus {
   border-radius: 5px;
   border: 1px solid #cacaca;
   padding: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .auth-form input:focus {
@@ -392,6 +402,154 @@ input:focus {
 
 .pwd-checks i {
   font-size: 12px;
+}
+
+/*  paramètre du compte */
+.account-box {
+  position: relative;
+  margin-top: 100px;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 50px;
+  border: 1px solid #c8c9ca;
+  box-shadow: 0.5px 0.5px #c8c9ca;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.account-box form {
+  width: 100%;
+}
+
+.account-params {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.account-params button {
+  width: 120px;
+  padding: 7px 0;
+}
+
+.button-change-password {
+  color: #fff;
+  background-color: #007be8;
+  border: solid 1px #007be8;
+  border-radius: 5px;
+  box-shadow: 0.5px 0.5px #c8c9ca;
+  cursor: pointer;
+}
+
+.button-change-password:hover {
+  background-color: #2d95f0;
+}
+
+.button-delete-account {
+  color: #fff;
+  background-color: #007be8;
+  border: solid 1px #007be8;
+  border-radius: 5px;
+  box-shadow: 0.5px 0.5px #c8c9ca;
+  cursor: pointer;
+}
+
+.button-delete-account:hover {
+  background-color: #2d95f0;
+}
+
+.button-disconnect {
+  color: #fff;
+  background-color: #007be8;
+  border: solid 1px #007be8;
+  border-radius: 5px;
+  box-shadow: 0.5px 0.5px #2d95f0;
+  cursor: pointer;
+}
+
+.button-disconnect:hover {
+  background-color: #2d95f0;
+}
+
+.password-change-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-change-form input {
+  width: 190px;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: 1px solid #767777;
+}
+.password-change-form button {
+  width: 120px;
+  height: 43px;
+  padding: 7px 0;
+  background-color: #01c96c;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  box-shadow: 1px 1px #c8c9ca;
+  font-weight: bold;
+}
+
+.password-change-form button:hover {
+  color: #fff;
+}
+
+.pwd-change-bottom {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.pwd-change-bottom button {
+  width: 120px;
+  padding: 7px 0;
+  margin-right: 10px;
+}
+
+.account-delete {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-delete p {
+  font-size: 14px;
+  margin: 20px 0 10px 0;
+}
+
+.account-delete input {
+  border-radius: 5px;
+  border: 1px solid #767777;
+}
+
+.account-delete button {
+  width: 120px;
+  height: 43px;
+  padding: 7px 0;
+  margin-top: 15px;
+  background-color: #01c96c;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  box-shadow: 1px 1px #c8c9ca;
+  font-weight: bold;
+}
+
+.account-delete button:hover {
+  color: #fff;
 }
 
 /* text box */
@@ -765,6 +923,131 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
 }
 
+/* save form */
+.save-box {
+  position: relative;
+  width: 700px;
+  max-height: 500px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 50px 80px;
+  border: 1px solid #c8c9ca;
+  box-shadow: 0.5px 0.5px #c8c9ca;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.save-box h4 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.save-box p {
+  margin-bottom: 5px;
+}
+
+.save-box button {
+  background-color: #01c96c;
+  color: #333;
+  border: 1px solid #c8c9ca;
+  padding: 10px 30px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save-box button:hover {
+  color: #fff;
+}
+
+.save-box p {
+  font-size: 12px;
+}
+
+.save-box h5 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.save-form {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  width: 100%;
+}
+
+.save-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.save-input label {
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+.save-input input {
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid rgb(118, 118, 118);
+}
+
+.save-input select {
+  width: 150px;
+  border-radius: 5px;
+  height: 41px;
+}
+
+.no-save-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+}
+
+.no-save-button button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  width: 105px;
+  border: 2px solid #333;
+}
+
+.no-save-button button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+/* modelisation modal */
+.model-box {
+  position: relative;
+  width: 700px;
+  height: 500px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 80px;
+  border: 1px solid #c8c9ca;
+  box-shadow: 0.5px 0.5px #c8c9ca;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.model-box svg {
+  width: 100%;
+}
+
 /* side navbar */
 .side-column-nav {
   width: 200px; /* changed */
@@ -879,10 +1162,14 @@ input::-webkit-inner-spin-button {
 }
 
 .button-model {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 15px; /* changed */
   height: 60px; /* changed */
-  width: 100%;
-  color: #fff;
+  width: 100px;
+  color: #333;
   cursor: pointer;
   padding: 5px;
   border: 1px solid #c8c9ca;
@@ -890,7 +1177,16 @@ input::-webkit-inner-spin-button {
   border-radius: 10px;
   background-color: #01c96c;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
+}
+
+.button-model:hover {
+  color: #fff;
+}
+
+.button-model i {
+  margin-bottom: 3px;
+  margin-top: 2px;
 }
 
 .button-model-mobile-on:focus {
@@ -962,6 +1258,12 @@ input[type="number"] {
   /* font-family: "Quicksand", sans-serif; */
 }
 
+input[type="text"] {
+  padding: 12px 10px;
+  color: #333;
+  /* font-family: "Quicksand", sans-serif; */
+}
+
 .footer-email button {
   height: 100%;
   background-color: #01c96c;
@@ -970,9 +1272,13 @@ input[type="number"] {
   height: 30px;
   border-radius: 5px;
   margin-left: 5px;
-  color: #fff;
+  color: #333;
   font-weight: bold;
   cursor: pointer;
+}
+
+.footer-email button:hover {
+  color: #fff;
 }
 
 .footer-email button:focus {
