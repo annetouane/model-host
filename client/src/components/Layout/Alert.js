@@ -14,7 +14,6 @@ const Alerte = ({ alerts }) =>
     <div
       style={{
         color: alert.alertType,
-        padding: "10px",
         borderRadius: "5px",
         zIndex: 10000000,
         width: "100%",

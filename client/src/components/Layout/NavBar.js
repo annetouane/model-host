@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { authToggle, accountModalToggle, logout } from "../../actions/auth"
+import { authToggle, accountModalToggle, landingToggle } from "../../actions/auth"
 
 export const NavBar = ({ 
-  isAuthenticated, 
-  authToggle, 
+  isAuthenticated,
+  authToggle,
   accountModalToggle,
-  logout  }) => {
+  landingToggle,
+  landingModal
+}) => {
 
+    const [dimensions, setDimensions] = useState({
+      width: window.innerWidth,
+    });
+    const { width } = dimensions;
+
+    useEffect(() => { 
+      const debouncedHandleResize = function handleResize() {
+        setDimensions({
+          height: window.innerHeight,
+          width: window.innerWidth,
+        });
+      };
+      window.addEventListener("resize", debouncedHandleResize);
+      return (_) => {
+        window.removeEventListener("resize", debouncedHandleResize);
+      };
+    });
 
   const openAccount = () => {
     accountModalToggle(true)
@@ -17,23 +36,29 @@ export const NavBar = ({
   return (
     <nav className='landing-nav' >
       <div className='flex-row ai-fc'>
-        <a 
+        <button 
           style={{ fontSize: "24px",
                   fontWeight: "bold" 
                 }}
-          href='/'
+          onClick={() => landingToggle(true)}
           >SIMULIMO
-        </a>
+        </button>
       </div>
-    {isAuthenticated ? 
+    {isAuthenticated && width > 770 ?
       <div>
         <ul>
           <li>
-            <a href='/investment-modelisation'>
+            {landingModal ?
+              <button onClick={() => landingToggle(false)}>
+                <span className='link'>
+                  Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
+                </span>
+              </button> :
+              <button onClick={() => landingToggle(true)}>
               <span className='link'>
-                Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
+                Accueil&nbsp;<i class="fas fa-home"></i>
               </span>
-            </a>
+              </button>}
           </li>
           <li>
             <button
@@ -46,15 +71,21 @@ export const NavBar = ({
           </li>
         </ul>
       </div>
-      : 
+      : !isAuthenticated && width > 770 ?
       <div>
         <ul>
           <li>
-            <a href='/investment-modelisation'>
+            {landingModal ?
+              <button onClick={() => landingToggle(false)}>
+                <span className='link'>
+                  Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
+                </span>
+              </button> :
+              <button onClick={() => landingToggle(true)}>
               <span className='link'>
-                Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
+                Accueil&nbsp;<i class="fas fa-home"></i>
               </span>
-            </a>
+            </button>}
           </li>
           <li> 
             <button 
@@ -66,7 +97,8 @@ export const NavBar = ({
             </button>
           </li>
         </ul>
-      </div>}
+      </div>
+      : ""}
     </nav>
   );
 };
@@ -75,11 +107,12 @@ NavBar.propTypes = {
   isAuthenticated: PropTypes.bool,
   authToggle: PropTypes.func.isRequired,
   accountModalToggle: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  landingToggle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  landingModal: state.auth.landingModal,
 });
 
-export default connect(mapStateToProps, { authToggle, logout, accountModalToggle })(NavBar);
+export default connect(mapStateToProps, { authToggle, accountModalToggle, landingToggle })(NavBar);

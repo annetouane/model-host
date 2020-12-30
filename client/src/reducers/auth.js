@@ -12,7 +12,8 @@ import {
     SAVE_TOGGLE,
     DETECT_MODEL,
     MODEL_TOGGLE,
-    ACCOUNT_TOGGLE
+    ACCOUNT_TOGGLE,
+    LANDING_TOGGLE
   } from "../actions/types";
   
   // init state : token stored in localStorage : look for an item called token
@@ -27,6 +28,7 @@ import {
     detectModel: false,
     modelModal: false,
     accountModal: false,
+    landingModal: true,
   };
   
   export default function (state = initialState, action) {
@@ -79,11 +81,17 @@ import {
           loading: false,
           user: null,
         };
-      // AUTH window actions
+      // AUTH window
       case AUTH_TOGGLE:
         return {
           ...state,
           authModal: payload,
+        };
+      // landing window
+      case LANDING_TOGGLE:
+        return {
+          ...state,
+          landingModal: payload,
         };
       // SAVE window actions
       case DETECT_SAVE:

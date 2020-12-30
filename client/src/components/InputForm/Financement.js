@@ -104,7 +104,7 @@ const Financement = ({
               className={isNaN(parseInt(apport)) ? 'input-box-false fs-12' : 'input-box fs-12'}
             />
           </div>
-            {(apport > coutProjet && netVendeur != 0) ?
+            {(apport > coutProjet && netVendeur !== 0) ?
               <small
                 style={{ marginTop: "5px",
                          color: "#007be8", 

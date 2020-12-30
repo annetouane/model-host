@@ -1,8 +1,8 @@
-// package
-import axios from "axios";
-
 // action type
 import { MODEL_DATA, STORE_PARAMS } from "./types";
+
+// utilities
+import api from "../utilities/api";
 
 export const storeParams = (formData) => (dispatch) => {
     dispatch({
@@ -11,31 +11,24 @@ export const storeParams = (formData) => (dispatch) => {
     });
   }
 
-export const postInputForm = (formData) => async (dispatch) => {
+export const postInputForm = (formData, id) => async (dispatch) => {
+  console.log("input")
+  // insert the form into a new variable
+  const postInput = formData
+  // insert the user ID in the form data
+  postInput.user = id
   try {
-    if (process.env.NODE_ENV === "production") {
-      const res = await axios.post(
-        "https://simulimo.herokuapp.com/input",
-        formData
-      );
-      console.log("heroku");
+      const res = await api.post("/input", postInput);
+      console.log(res.data)
       dispatch({
         type: MODEL_DATA,
         payload: res.data,
       });
-    } else {
-      const res = await axios.post("http://localhost:5000/input", formData);
-      console.log('model data',res.data)
-      console.log("local");
       dispatch({
         type: STORE_PARAMS,
         payload: formData,
       });
-      dispatch({
-        type: MODEL_DATA,
-        payload: res.data,
-      });
-    }
+  
   } catch (err) {
     const error = err.response.data.msg;
     if (error) {
@@ -49,20 +42,20 @@ export const postEmail = (email) => async (dispatch) => {
   console.log("mail", email)
   try {
     if (process.env.NODE_ENV === "production") {
-      await axios.post(
-        "https://simulimo.herokuapp.com/user-email",
+      await api.post(
+        "/user-email",
         { email: email }
       );
       // setAlert({ msg: res.data });
       console.log("heroku");
     } else {
-      await axios.post("http://localhost:5000/user-email", { email: email });
+      await api.post("/user-email", { email: email });
       // setAlert({ msg: res.data });
       console.log("local");
-    }
+    } 
   } catch (err) {
     const error = err.response.data.msg;
-    if (error) {
+    if (error) { 
       console.log(error);
       // dispatch(setAlert(error, "red"));
     }

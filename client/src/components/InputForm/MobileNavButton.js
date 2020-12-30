@@ -5,10 +5,15 @@ const mobileNavButton = ({ toggleMobileNav, setToggleMobileNav, netVendeurCheck 
     <div className='mobile-nav-button'>
         {toggleMobileNav ? 
         <i 
-          className="fas fa-chevron-circle-up fa-2x"
+          className="fas fa-times fa-2x"
           onClick={() => setToggleMobileNav(!toggleMobileNav)}
-          ></i> :
-        <i className="fas fa-chevron-circle-down fa-2x" onClick={() => setToggleMobileNav(!toggleMobileNav)}></i>}
+          >
+        </i> :
+        <i
+          className="far fa-compass fa-2x"
+          onClick={() => setToggleMobileNav(!toggleMobileNav)}
+        >
+        </i>}
     </div>
   );
 };

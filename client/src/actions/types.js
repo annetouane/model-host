@@ -16,4 +16,5 @@ export const SAVE_TOGGLE = "SAVE_TOGGLE";
 export const DETECT_MODEL = "DETECT_MODEL";
 export const MODEL_TOGGLE = "MODEL_TOGGLE";
 export const ACCOUNT_TOGGLE = "ACCOUNT_TOGGLE";
+export const LANDING_TOGGLE = "LANDING_TOGGLE";
 

@@ -1,61 +1,59 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
+// const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const auth = require("../middleware/auth");
+
+// import model
+const User = require("../models/UserModel");
 
 // @route    POST /forgotten/:token
 // @desc     New password
 // @access   Private
-router.post(
-    "/:id",
-    [
-      check(
-        "password",
-        "Veuillez choisir un mot de passe comportant 8 caractères minimum"
-      ).isLength({ min: 8 }),
-    ], 
-    async (req, res) => {
-      // pass the req to validate its parameters
-      const errors = validationResult(req);
-      // if a field isn't validate
-      if (!errors.isEmpty()) {
-        // status 400 + array with errors
-        return res.status(400).json({ errors: errors.array() });
-      }
-      // check that id has a mongoDB format
-      const id = req.params.id;
-      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        return res.status(400).json({
-          errors: [{ msg: "Utilisateur introuvable" }],
-        });
-      } else {
-            try {
-                // check that user exists
-                const user = await User.findOne({ _id: id });
-                if (!user) {
-                    return res.status(400).json({
-                    errors: [{ msg: "Utilisateur introuvable" }],
-                    });
-                } else {
-                    // encrypt the password (bcrypt) : create the salt (object to hash)
-                    const salt = await bcrypt.genSalt(10);
-                    // hash the password
-                    newPassword = await bcrypt.hash(req.body.password, salt);
-                    await User.findByIdAndUpdate(user.id, {
-                    $set: { password: newPassword },
-                    });
-                res.json({
-                msg: "Votre mot de passe a été modifié avec succès",
-                redirect: true,
-                    });
-                }
-            } catch (err) {
-            console.error(err.message);
-            res.status(500).send("server error");
-            }
+router.post("/", auth, async (req, res) => {
+    console.log(req.body)
+    const stringifiedArray = {
+      oldPassword: String(req.body.oldPassword),
+      newPassword: String(req.body.newPassWord),
+    }
+    const { oldPassword,newPassword } = stringifiedArray
+    
+    // check if user exists (true false)
+    let user = await User.findOne({ _id: req.user.id });
+    
+    // if user not found (matching email) : sends 400 and array with error message
+    if (!user) {
+      return res.status(400).send({
+        msg: "Utilisateur introuvable",
+        color: "red",
+      });
+    };
+
+    // compare the password in plain text from the request
+    // to the encrypted password retrieved from the database
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    // check if password match
+    if (!isMatch) {
+      return res.status(400).send({
+        msg: "Ancien mot de passe incorrect",
+        color: "red",
+      });
+    } else {
+        try {
+          // encrypt the password (bcrypt) : create the salt (object to hash)
+          const salt = await bcrypt.genSalt(10);
+          // hash the password
+          const password = await bcrypt.hash(newPassword, salt);
+          await User.findByIdAndUpdate({ _id: req.user.id }, { $set: { password: password }});
+          res.send({
+            msg: "Votre mot de passe a été modifié avec succès",
+          });
+        } catch (err) {
+        console.error(err.message);
+        res.status(500).send("server error");
+        }
       }
     }
   );
 
 module.exports = router;
-  

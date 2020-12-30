@@ -4,58 +4,32 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 // component
-import Alerte from "./../Layout/Alert";
+import Alerte from "../Layout/Alert";
 
 // actions
-import { authToggle, saveModalClic, modelModalClic, loginLanding, registerLanding } from "../../actions/auth";
+import { authToggle, saveModalClic, modelModalClic } from "../../actions/auth";
 
-const AuthModalLanding = ({
+const AuthModalComplete = ({ 
+  onChangeSignUp,
+  onChangeConditionSignUp,
+  onChangeSignIn,
+  onSignUp,
+  onSignIn,
+  setSignUp,
+  setSignIn,
+  emailSignUp,
+  passwordSignUp,
+  condition,
+  emailSignIn,
+  passwordSignIn,
   detectSave, // detect clic on sauvegarder
   detectModel, // detect clic on model
   authModal, // bool open close auth
   authToggle, // action open close auth
   saveModalClic, // detect clic save
-  modelModalClic, // detect clic model
-  registerLanding,
-  loginLanding,
+  modelModalClic // detect clic model
  }) => {
-
-  // sign up *******************************************************************************
-  const [signUp, setSignUp] = useState({
-    emailSignUp: "",
-    passwordSignUp: "",
-    condition: false,
-  });
-  const { emailSignUp, passwordSignUp, condition } = signUp;
-
-  const onChangeSignUp = (e) => {
-    setSignUp({ ...signUp, [e.target.name]: e.target.value });
-  };
-  const onChangeConditionSignUp = (e) => {
-    setSignUp({ ...signUp, [e.target.name]: e.target.checked });
-  };
-
-  const onSignUpLanding = (e) => {
-    e.preventDefault();
-    registerLanding(signUp)
-  }
-
-  // sign in *******************************************************************************
-  const [signIn, setSignIn] = useState({
-    emailSignIn: "",
-    passwordSignIn: "",
-  }); 
-  const { emailSignIn, passwordSignIn } = signIn;
-
-  const onChangeSignIn = (e) => {
-    setSignIn({ ...signIn, [e.target.name]: e.target.value });
-  };
-
-  const onSignInLanding = (e) => {
-    e.preventDefault();
-    loginLanding(signIn)
-  }
-
+  
   // choix tab : création compte ou connection
   const [signUpTab, setSignUpTab] = useState(true);
 
@@ -148,7 +122,7 @@ const AuthModalLanding = ({
         {signUpTab ?
         <form
           className="auth-form"
-          onSubmit={onSignUpLanding}
+          onSubmit={onSignUp}
         >
           <input
             name='emailSignUp'
@@ -216,7 +190,7 @@ const AuthModalLanding = ({
         </form> :
         <form
           className="auth-form"
-          onSubmit={onSignInLanding}
+          onSubmit={onSignIn}
         >
           <input 
             name='emailSignIn'
@@ -250,15 +224,15 @@ const AuthModalLanding = ({
   );
 };
 
-AuthModalLanding.propTypes = {
+AuthModalComplete.propTypes = {
   authModal: PropTypes.bool.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
   authToggle: PropTypes.func.isRequired,
   saveModalClic: PropTypes.func.isRequired,
   modelModalClic: PropTypes.func.isRequired,
-  registerLanding: PropTypes.func.isRequired,
-  loginLanding: PropTypes.func.isRequired,
+  onSignUp: PropTypes.func.isRequired,
+  onSignIn: PropTypes.func.isRequired,
   };
   
   const mapStateToProps = (state) => ({
@@ -269,6 +243,4 @@ AuthModalLanding.propTypes = {
   
 export default connect(mapStateToProps, { authToggle, 
                                           saveModalClic, 
-                                          modelModalClic,
-                                          registerLanding,
-                                          loginLanding })(AuthModalLanding);
+                                          modelModalClic })(AuthModalComplete);

@@ -7,6 +7,7 @@ const InputForm = require("../models/InputModel");
 // @description : post new activity
 // @ access : authentication (Public)
 router.post("/", async (req, res) => {
+  console.log(req.body)
 
   try {
     // create new input object
@@ -81,10 +82,9 @@ router.post("/", async (req, res) => {
       irl,
     } = inputs;
 
-    console.log(inputs)
+    // console.log(inputs)
 
     const coutProjet = netVendeur + travaux + ammeublement + notaire * netVendeur + agence + fraisBancaires + fraisCourtier
-    // const emprunt = coutProjet - apport;
     const emprunt = coutProjet > apport ? coutProjet - apport : 0;
 
     let array = []

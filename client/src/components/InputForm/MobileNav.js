@@ -1,9 +1,12 @@
-import React from "react";
-import { Fragment } from "react";
+// packages
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+// actions
+import { authToggle, landingToggle } from "../../actions/auth"
 
 const MobileNav = ({
-  onSubmit,
-  showModal,
   setMobileDisplayTab,
   setToggleMobileNav,
   setClick,
@@ -15,8 +18,9 @@ const MobileNav = ({
   chargesCheck,
   foyerCheck,
   regimeCheck,
-  formCheck,
   toggleMobileNav,
+  authToggle,
+  landingToggle,
 }) => {
 
   const volver = () => {
@@ -25,12 +29,25 @@ const MobileNav = ({
     setDisplayInfoModal(false);
     setToggleMobileNav(!toggleMobileNav)
   };
-  
+
   return (
     <Fragment>
     {toggleMobileNav ? 
     <nav className='mobile-nav'>
       <div className='mobile-nav-box'>
+        <button onClick={() => landingToggle(false)}>
+          <span className='link'>
+            Simulateur&nbsp;<i className="fas fa-chart-bar"></i>
+          </span>
+        </button>
+
+        <button 
+          onClick={() => authToggle(true)}
+          >
+          <span className='link'>
+            S'identifier&nbsp;<i className="far fa-user-circle"></i>
+          </span>
+        </button>
         
         {/* projet */}
         <div
@@ -166,160 +183,17 @@ const MobileNav = ({
     </nav>
     : ""}
     </Fragment>
-
-
-    // <div className='mobile-nav'>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: true,
-    //         displayFinancement: false,
-    //         displayRevenu: false,
-    //         displayCharges: false,
-    //         displayFoyer: false,
-    //         displayRegime: false,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         netVendeurCheck && displayProjet
-    //           ? "fas fa-landmark fa-2x mobile-nav-i-selected-valid"
-    //           : displayProjet
-    //           ? "fas fa-landmark fa-2x mobile-nav-i-selected"
-    //           : netVendeurCheck
-    //           ? "fas fa-landmark fa-2x mobile-nav-i-valid"
-    //           : "fas fa-landmark fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: false,
-    //         displayFinancement: true,
-    //         displayRevenu: false,
-    //         displayCharges: false,
-    //         displayFoyer: false,
-    //         displayRegime: false,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         apportCheck && displayFinancement
-    //           ? "fas fa-piggy-bank fa-2x mobile-nav-i-selected-valid"
-    //           : displayFinancement
-    //           ? "fas fa-piggy-bank fa-2x mobile-nav-i-selected"
-    //           : apportCheck
-    //           ? "fas fa-piggy-bank fa-2x mobile-nav-i-valid"
-    //           : "fas fa-piggy-bank fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: false,
-    //         displayFinancement: false,
-    //         displayRevenu: true,
-    //         displayCharges: false,
-    //         displayFoyer: false,
-    //         displayRegime: false,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         loyerCheck && displayRevenu
-    //           ? "fas fa-hand-holding-usd fa-2x mobile-nav-i-selected-valid"
-    //           : displayRevenu
-    //           ? "fas fa-hand-holding-usd fa-2x mobile-nav-i-selected"
-    //           : loyerCheck
-    //           ? "fas fa-hand-holding-usd fa-2x mobile-nav-i-valid"
-    //           : "fas fa-hand-holding-usd fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: false,
-    //         displayFinancement: false,
-    //         displayRevenu: false,
-    //         displayCharges: true,
-    //         displayFoyer: false,
-    //         displayRegime: false,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         chargesCheck && displayCharges
-    //           ? "fas fa-weight-hanging fa-2x mobile-nav-i-selected-valid"
-    //           : displayCharges
-    //           ? "fas fa-weight-hanging fa-2x mobile-nav-i-selected"
-    //           : chargesCheck
-    //           ? "fas fa-weight-hanging fa-2x mobile-nav-i-valid"
-    //           : "fas fa-weight-hanging fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: false,
-    //         displayFinancement: false,
-    //         displayRevenu: false,
-    //         displayCharges: false,
-    //         displayFoyer: true,
-    //         displayRegime: false,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         foyerCheck && displayFoyer
-    //           ? "fas fa-house-user fa-2x mobile-nav-i-selected-valid"
-    //           : displayFoyer
-    //           ? "fas fa-house-user fa-2x mobile-nav-i-selected"
-    //           : foyerCheck
-    //           ? "fas fa-house-user fa-2x mobile-nav-i-valid"
-    //           : "fas fa-house-user fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    //   <button
-    //     onClick={() => {
-    //       setMobileDisplay({
-    //         displayProjet: false,
-    //         displayFinancement: false,
-    //         displayRevenu: false,
-    //         displayCharges: false,
-    //         displayFoyer: false,
-    //         displayRegime: true,
-    //       });
-    //       volver();
-    //     }}
-    //   >
-    //     <i
-    //       className={
-    //         regimeCheck && displayRegime
-    //           ? "fas fa-balance-scale fa-2x mobile-nav-i-selected-valid"
-    //           : displayRegime
-    //           ? "fas fa-balance-scale fa-2x mobile-nav-i-selected"
-    //           : regimeCheck
-    //           ? "fas fa-balance-scale fa-2x mobile-nav-i-valid"
-    //           : "fas fa-balance-scale fa-2x mobile-nav-i"
-    //       }
-    //     ></i>
-    //   </button>
-    // </div>
   );
 };
-export default MobileNav;
+
+// MobileNav.propTypes = {
+  
+// };
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  detectSave: state.auth.detectSave,
+  detectModel: state.auth.detectModel,
+});
+
+export default connect(mapStateToProps, { authToggle, landingToggle })(MobileNav);

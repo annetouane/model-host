@@ -21,19 +21,20 @@ import InfoModal from "./InfoModal";
 import MobileNavButton from "./MobileNavButton";
 import MobileTitle from "./MobileTitle"
 import ButtonModelMobile from "./ButtonModelMobile";
-import AuthModalLanding from '../auth/AuthModalLanding';
+import AuthModalComplete from '../auth/AuthModalComplete';
 import SaveModal from './SaveModal'
 import Modelisation from "../dashboards/Modelisation"
 import AccountModal from "../auth/AccountModal"
+import Landing from "../Layout/Landing"
 
 // actions
 import { storeParams, postInputForm, postEmail } from "../../actions/formData";
-import { register, 
-         login, 
-         authToggle, 
-         saveModalClic, 
-         saveModalToggle, 
-         modelModalClic, 
+import { register,
+         login,
+         authToggle,
+         saveModalClic,
+         saveModalToggle,
+         modelModalClic,
          modelModalToggle } from "../../actions/auth";
 
 export const MainForm = ({ 
@@ -49,40 +50,15 @@ export const MainForm = ({
   modelModalClic,
   modelModalToggle,
   detectSave,
-  detectModel }) => {
+  detectModel,
+  userInfo }) => {
 
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   });
   const { width } = dimensions;
 
-  const [inputSaved, setIinputSaved ] = useState(false);
-
-  useEffect(() => {
-    // update the reducer asynchronously with the new values of the form
-    storeParams(formData)
-
-    // alert user before leaving the page
-    if (inputSaved) {
-      window.addEventListener('beforeunload',  alertUser)
-    };
-    
-    // set the windows dimensions on render
-    // prevent function execution more than once per minute
-    const debouncedHandleResize = function handleResize() {
-      setDimensions({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
-    };
-    // resize triggered whenever the screen size changes
-    window.addEventListener("resize", debouncedHandleResize);
-    return (_) => {
-      // remove event to avoid app freeze and allows f° exec max once per second
-      window.removeEventListener("resize", debouncedHandleResize);
-      // window.removeEventListener('beforeunload', alertUser)
-    };
-  });
+  // const [inputSaved, setIinputSaved ] = useState(false);
 
   const [mobileDisplayTab, setMobileDisplayTab] = useState(0)
 
@@ -282,7 +258,8 @@ export const MainForm = ({
   // mobile - add border on scroll
   const [scrollTop, setScrollTop] = useState(true);
   
-  useEffect(() => { // detect scroll
+  useEffect(() => { 
+    // detect scroll
     window.onscroll = function() {
       if(window.pageYOffset !== 0) {
         setScrollTop(false)
@@ -290,6 +267,29 @@ export const MainForm = ({
       if(window.pageYOffset === 0) {
         setScrollTop(true)
       }
+    };
+    // update the reducer asynchronously with the new values of the form
+    storeParams(formData)
+
+    // // alert user before leaving the page
+    // if (inputSaved) {
+    //   window.addEventListener('beforeunload',  alertUser)
+    // };
+    
+    // set the windows dimensions on render
+    // prevent function execution more than once per minute
+    const debouncedHandleResize = function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+    // resize triggered whenever the screen size changes
+    window.addEventListener("resize", debouncedHandleResize);
+    return (_) => {
+      // remove event to avoid app freeze and allows f° exec max once per second
+      window.removeEventListener("resize", debouncedHandleResize);
+      // window.removeEventListener('beforeunload', alertUser)
     };
   });
 
@@ -301,10 +301,10 @@ export const MainForm = ({
   // saving form *******************************************************************************
 
   // open alert window
-  const alertUser = e => {
-    e.preventDefault()
-    e.returnValue = ''
-  }
+  // const alertUser = e => {
+  //   e.preventDefault()
+  //   e.returnValue = ''
+  // }
 
   const onSave = (e) => {
     e.preventDefault();
@@ -320,9 +320,10 @@ export const MainForm = ({
 
   const onFisc = (e) => {
     e.preventDefault();
+    console.log('test')
     modelModalClic(true) // detect clic sur model
     if (isAuthenticated) { // if user logged
-      postInputForm(formData) // submit input to db
+      postInputForm(formData, userInfo._id) // submit input to db
       modelModalToggle(true) // open modelisation fiscale
     } else {
       authToggle(true) // sinon ouvre auth modal
@@ -390,13 +391,20 @@ export const MainForm = ({
 
   return (
     <Fragment >
+
+      {/* landing window */}
+      <Landing 
+      />
+
       {/* authentication window */}
-      <AuthModalLanding
+      <AuthModalComplete
         onChangeSignUp={onChangeSignUp}
         onChangeConditionSignUp={onChangeConditionSignUp}
         onChangeSignIn={onChangeSignIn}
         onSignUp={onSignUp}
         onSignIn={onSignIn}
+        setSignUp={setSignUp}
+        setSignIn={setSignIn}
         emailSignUp={emailSignUp}
         passwordSignUp={passwordSignUp} 
         condition={condition}
@@ -711,6 +719,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   detectSave: state.auth.detectSave,
   detectModel: state.auth.detectModel,
+  userInfo: state.auth.user,
 });
 
 export default connect(mapStateToProps, { 

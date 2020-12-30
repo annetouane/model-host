@@ -25,7 +25,7 @@ const SaveModal = ({
     <section className={saveModal ? "auth-modal" : "auth-modal-none"}>
       <div className='save-box' style={{ margin: 0, padding: "40px" }}>
         <div >
-          <i className='fas fa-window-close fa-2x fa-2x quit-auth-modal'
+          <i className='fas fa-times quit-auth-modal'
              onClick={saveClose}></i>
         </div>
         <h4>Sauvergarder mon projet</h4>

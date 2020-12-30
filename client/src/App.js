@@ -8,7 +8,6 @@ import favicon from "./img/favicon.ico";
 
 // components
 import NavBar from "./components/Layout/NavBar";
-import Landing from "./components/Layout/Landing"
 import MainForm from "./components/InputForm/mainForm";
 
 // actions
@@ -46,8 +45,7 @@ const App = () => {
         </Helmet>
           <NavBar />
           <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route exact path='/investment-modelisation' component={MainForm} />
+            <Route exact path='/' component={MainForm} />
           </Switch>
         </Router>
       </Fragment>

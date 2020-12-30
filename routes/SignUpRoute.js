@@ -21,7 +21,6 @@ router.post(
     check("condition", "Merci d'accepter les conditions d'utilisation").isIn([true]),
   ],
   async (req, res) => {
-    // console.log(req.body)
     // pass the req to validate its parameters
     const errors = validationResult(req);
     // if a field isn't validate
@@ -35,7 +34,6 @@ router.post(
     try {
       // check if user exists (value or null)
       let user = await User.findOne({ email: emailSignUp });
-      console.log(user)
       // if user found (matching email) : sends 400 and array with error message
       if (user) {
         res.status(401).send({
@@ -65,8 +63,8 @@ router.post(
           email: user.email,
          id: user._id,
          alert: {
-           msg: `Votre compte a été créé. Merci de cliquer sur le lien d'activitation envoyé à ${user.email} pour activer votre compte`,
-           color: "green", 
+           msg: `Votre compte a été créé. Merci de cliquer sur le lien d'activation envoyé à ${user.email} pour activer votre compte`,
+           color: "green",
          }
         });
 

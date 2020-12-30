@@ -165,7 +165,7 @@ const Projet = ({
             ></i>
             </div>
           </div>
-              <small> soit {netVendeur == 0 ? 0 : (Math.round((agence / netVendeur * 100 + Number.EPSILON) * 100) / 100)} % du net vendeur
+              <small> soit {netVendeur === 0 ? 0 : (Math.round((agence / netVendeur * 100 + Number.EPSILON) * 100) / 100)} % du net vendeur
               </small>
           <div className='info-button'>
             <input

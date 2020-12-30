@@ -1,7 +1,6 @@
-import React, { Link } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../../actions/auth"
 
 const Indicateurs = ({
   onSubmit,
@@ -255,7 +254,7 @@ const Indicateurs = ({
         </div>
       </div>
       <div className='flex-row ai-fc'>
-      <a
+      <button
         className='button-model mr-5'
         onClick={onSave}
         disabled={!netVendeurCheck}
@@ -267,8 +266,8 @@ const Indicateurs = ({
       >
           <i className="far fa-save fa-2x"></i>
           Sauvegarder
-      </a>
-      <a
+      </button>
+      <button
         className='button-model ml-5'
         onClick={onFisc}
         disabled={!formCheck}
@@ -280,7 +279,7 @@ const Indicateurs = ({
       >
         <i className="fas fa-balance-scale fa-2x"></i>
         Fiscalité
-      </a>
+      </button>
       </div>
     </nav>
   );
