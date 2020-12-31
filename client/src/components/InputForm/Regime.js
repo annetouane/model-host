@@ -1,6 +1,6 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
-import NumberFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
 
 const Regime = ({
   onChangeDecimals,
@@ -19,12 +19,18 @@ const Regime = ({
   formCheck,
 }) => {
   return (
-    <section id='regime' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
-      {width > 770 ?
-      <h3 className='form-header'>
-        <i className='fas fa-balance-scale header-i'></i>
-        &nbsp;&nbsp;Régime fiscal
-      </h3> : ""}
+    <section
+      id='regime'
+      style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}
+    >
+      {width > 770 ? (
+        <h3 className='form-header'>
+          <i className='fas fa-balance-scale header-i'></i>
+          &nbsp;&nbsp;Régime fiscal
+        </h3>
+      ) : (
+        ""
+      )}
       <div className='form-box-v mt-10'>
         <div className='regime-responsive'>
           <div className='regime-responsive-items'>
@@ -97,7 +103,7 @@ const Regime = ({
             >
               pap.fr
             </a>{" "}
-              pour plus d'informations sur la fiscalité immobilière.
+            pour plus d'informations sur la fiscalité immobilière.
           </label>
         </div>
       </div>
@@ -111,37 +117,39 @@ const Regime = ({
         </p>
         <div className='irl'>
           <div className='type-alt-slider'>
-            <div style={{width: '100%'}} className='flex-row jc-sb ai-fc'>
+            <div style={{ width: "100%" }} className='flex-row jc-sb ai-fc'>
               <div>
                 <label>Indice de référence des loyers</label>
-                <button 
-                        id='info-irl' 
-                        onClick={showModal}
-                        className='question-mark'
-                >?</button>
+                <button
+                  id='info-irl'
+                  onClick={showModal}
+                  className='question-mark'
+                >
+                  ?
+                </button>
               </div>
 
-              <div className="border-input">
-                    <NumberFormat
-                      id="frais-irl"
-                      name='irl'
-                      value={irl}
-                      decimalScale={2}
-                      suffix={' %'}
-                      onChange={onChangeDecimals}
-                      allowNegative={false}
-                      isAllowed={(values) => {
-                        const {floatValue} = values;
-                        return floatValue >= 0 && floatValue <= 3;
-                      }}
-                    />
-                    <i
-                      onClick={() => focusMethod("frais-irl")}
-                      style={{ fontSize: "14px" }}
-                      className="fas fa-pencil-alt"
-                    ></i>
-                  </div>
-                </div>
+              <div className='border-input'>
+                <NumberFormat
+                  id='frais-irl'
+                  name='irl'
+                  value={irl}
+                  decimalScale={2}
+                  suffix={" %"}
+                  onChange={onChangeDecimals}
+                  allowNegative={false}
+                  isAllowed={(values) => {
+                    const { floatValue } = values;
+                    return floatValue >= 0 && floatValue <= 3;
+                  }}
+                />
+                <i
+                  onClick={() => focusMethod("frais-irl")}
+                  style={{ fontSize: "14px" }}
+                  className='fas fa-pencil-alt'
+                ></i>
+              </div>
+            </div>
 
             {/* <label>{Math.round((irl * 100 + Number.EPSILON) * 100) / 100} %</label> */}
           </div>
@@ -159,11 +167,14 @@ const Regime = ({
           </div>
         </div>
       </div>
-      {width < 700 ?
-      <MobilePagination
+      {width < 700 ? (
+        <MobilePagination
           setMobileDisplayTab={setMobileDisplayTab}
           mobileDisplayTab={mobileDisplayTab}
-      /> : ""}
+        />
+      ) : (
+        ""
+      )}
     </section>
   );
 };

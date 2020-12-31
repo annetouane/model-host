@@ -57,13 +57,15 @@ const modalInfo = [
   {
     id: "info-frais-bancaires",
     titre: "Frais bancaires",
-    texte: "<p>Pour l'étude du dossier supportant la demande de crédit, toutes les banques exigent une rémunération sous forme de frais de dossier. Ces frais représente généralement 1% à 1,5% du capital emprunté. La banque demande leur règlement à la finalisation du prêt, souvent au moment du déblocage de fonds. Il est tout à fait possible de négocier les frais de dossier avec la banque pour faire baisser le coût du financement</p>"
+    texte:
+      "<p>Pour l'étude du dossier supportant la demande de crédit, toutes les banques exigent une rémunération sous forme de frais de dossier. Ces frais représente généralement 1% à 1,5% du capital emprunté. La banque demande leur règlement à la finalisation du prêt, souvent au moment du déblocage de fonds. Il est tout à fait possible de négocier les frais de dossier avec la banque pour faire baisser le coût du financement</p>",
   },
-  
+
   {
     id: "info-frais-courtier",
     titre: "Frais de courtier",
-    texte: "<p>Le prix payé au courtier rémunère son accompagnement sur toute la durée d'obtention du crédit, la qualité de sa négociation avec la banque qui permet de faire des économies souvent très significatives tout en gagnant du temps.</p> <p>Les frais de courtier ne sont, à priori, pas des charges qui peuvent être utilisées pour réduire le revenu imposable, plus de détails sur le site : <a href='https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/'>corrigetonimpot.fr</a></p>"
+    texte:
+      "<p>Le prix payé au courtier rémunère son accompagnement sur toute la durée d'obtention du crédit, la qualité de sa négociation avec la banque qui permet de faire des économies souvent très significatives tout en gagnant du temps.</p> <p>Les frais de courtier ne sont, à priori, pas des charges qui peuvent être utilisées pour réduire le revenu imposable, plus de détails sur le site : <a href='https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/'>corrigetonimpot.fr</a></p>",
   },
   {
     id: "info-loyer",

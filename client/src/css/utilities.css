@@ -895,6 +895,7 @@ input::-webkit-inner-spin-button {
   padding: 10px;
   color: #fff;
   border-radius: 50%;
+  box-shadow: 0.5px 0.5px 3px #333;
 }
 
 .kpi-i {
@@ -1192,8 +1193,8 @@ input::-webkit-inner-spin-button {
   color: #333;
   cursor: pointer;
   padding: 5px;
-  border: 1px solid #c8c9ca;
-  box-shadow: 0.5px 0.5px #c8c9ca;
+  border: none;
+  box-shadow: 0.5px 0.5px 5px #333;
   border-radius: 10px;
   background-color: #01c96c;
   font-weight: bold;
@@ -1306,29 +1307,22 @@ input[type="text"] {
 }
 
 /* landing page */
-.background {
-  background: url("../img/desktop-wave.svg") no-repeat center center/cover;
-  height: calc(100vh - 80px); /* take 100% of the viewport */
-  color: #fff;
+.landing-page {
+  position: fixed;
+  width: 100%;
+  z-index: 20000;
+  background-color: #fff;
 }
 
-.landing-page {
-  position: absolute;
+.background {
+  background: url("../img/desktop-wave.svg") no-repeat center center/cover;
+  color: #fff;
+  padding: 0 50px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 2s linear;
-  filter: blur(0);
-  transform: scale(1);
-  position: fixed;
-  background-color: #fff;
-  width: 100%;
   height: calc(100vh - 70px);
-  z-index: 20000;
-  padding: 0 50px;
 }
 
 .landing-line {
@@ -1344,15 +1338,12 @@ input[type="text"] {
   display: flex;
   align-items: center;
   margin-top: 30px;
-}
-
-.landing-header h3 {
-  margin-right: 10px;
+  width: 280px;
 }
 
 .landing-header img {
-  width: 25px;
-  padding-bottom: 5px;
+  width: 20px;
+  margin-left: 10px;
 }
 
 .landing-page-body {
@@ -1388,6 +1379,10 @@ input[type="text"] {
   background-color: #03e47b;
 }
 
+.landing-benefits button {
+  margin-top: 20px;
+}
+
 .landing-benefits-group {
   display: flex;
   justify-content: space-evenly;
@@ -1416,36 +1411,22 @@ input[type="text"] {
 
 .landing-devices {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .landing-devices img {
-  background-color: #fff;
   padding: 10px;
   border-radius: 10px;
-}
-
-.landing-devices-desktop {
-  position: fixed;
-  bottom: 45%;
-  right: 10%;
-  width: 400px;
-}
-
-.landing-devices-mobile {
-  position: fixed;
-  bottom: 35%;
-  right: 7%;
-  width: 100px;
-}
-
-.landing-devices-tablet {
-  position: fixed;
-  bottom: 40%;
-  right: 30%;
-  width: 200px;
+  width: 500px;
+  margin-top: 30px;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 .button-app {
@@ -1543,17 +1524,15 @@ input[type="email"] {
 
 .mobile-nav {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  height: 70px;
   position: fixed;
   top: 70px;
   left: 0;
   background-color: #fff;
   width: 100%;
-  z-index: 10000;
-  height: 450px;
+  z-index: 30000;
 }
 
 .mobile-title {
@@ -1639,8 +1618,10 @@ input[type="email"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   background-color: #007be8;
+  border-top: 1px #fff solid;
+  border-bottom: 1px #fff solid;
 }
 
 .mobile-kpi-button button {
@@ -1792,6 +1773,58 @@ input[type="email"] {
     width: 100%;
     padding-left: 20px; /* create space on left and right */
   }
+  /* landing page */
+  .landing-page {
+    overflow-y: scroll;
+    padding: 0;
+  }
+  .background {
+    background: url("../img/mobile-wave.svg") no-repeat center center/cover;
+    height: 700px; /* take 100% of the viewport */
+    color: #fff;
+    padding: 20px 30px;
+  }
+  .landing-header {
+    margin-top: 20px;
+  }
+  .landing-header {
+    text-align: center;
+  }
+  .landing-line {
+    display: none;
+  }
+  .landing-page-body {
+    flex-direction: column;
+  }
+  .landing-benefits-group {
+    padding: 10px 0;
+  }
+  .landing-benefits-box {
+    flex-direction: column;
+    padding: 0;
+    margin: 10px;
+  }
+  .landing-benefits-box img {
+    margin: 0 0 10px 0;
+  }
+  .landing-benefits-box p {
+    text-align: center;
+  }
+  .landing-devices {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .landing-devices img {
+    padding: 0;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    image-rendering: pixelated;
+  }
   #projet,
   #financement,
   #revenu,
@@ -1906,8 +1939,26 @@ input[type="email"] {
     overflow: auto;
   }
   .auth-modal {
+    justify-content: flex-start;
     overflow: auto;
     height: calc(100vh - 70px);
+  }
+  .auth-box {
+    width: 100%;
+    border-radius: 0;
+    padding: 60px 30px 0 30px;
+  }
+  .account-params button {
+    width: 100%;
+  }
+  .quit-auth-modal {
+    top: 60px;
+  }
+  .account-box {
+    width: 100%;
+    padding: 70px 30px 20px 30px;
+    max-height: 100%;
+    border-radius: 0;
   }
   .modal-input {
     position: fixed;

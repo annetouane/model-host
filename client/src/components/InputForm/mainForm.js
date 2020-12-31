@@ -19,30 +19,31 @@ import MobileNav from "./MobileNav";
 import Footer from "./Footer";
 import InfoModal from "./InfoModal";
 import MobileNavButton from "./MobileNavButton";
-import MobileTitle from "./MobileTitle"
+import MobileTitle from "./MobileTitle";
 import ButtonModelMobile from "./ButtonModelMobile";
-import AuthModalComplete from '../auth/AuthModalComplete';
-import SaveModal from './SaveModal'
-import Modelisation from "../dashboards/Modelisation"
-import AccountModal from "../auth/AccountModal"
-import Landing from "../Layout/Landing"
+import AuthModalComplete from "../auth/AuthModalComplete";
+import SaveModal from "./SaveModal";
+import Modelisation from "../dashboards/Modelisation";
+import AccountModal from "../auth/AccountModal";
+import Landing from "../Layout/Landing";
 
 // actions
 import { storeParams, postInputForm, postEmail } from "../../actions/formData";
-import { register,
-         login,
-         authToggle,
-         saveModalClic,
-         saveModalToggle,
-         modelModalClic,
-         modelModalToggle } from "../../actions/auth";
+import { register, login } from "../../actions/auth";
+import {
+  authToggle,
+  saveModalClic,
+  saveModalToggle,
+  modelModalClic,
+  modelModalToggle,
+} from "../../actions/modals";
 
-export const MainForm = ({ 
+export const MainForm = ({
   storeParams,
-  postInputForm, 
-  postEmail, 
-  isAuthenticated, 
-  register, 
+  postInputForm,
+  postEmail,
+  isAuthenticated,
+  register,
   login,
   authToggle,
   saveModalClic,
@@ -51,8 +52,10 @@ export const MainForm = ({
   modelModalToggle,
   detectSave,
   detectModel,
-  userInfo }) => {
-
+  userInfo,
+  kpiMobile,
+  landingModal,
+}) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   });
@@ -60,7 +63,7 @@ export const MainForm = ({
 
   // const [inputSaved, setIinputSaved ] = useState(false);
 
-  const [mobileDisplayTab, setMobileDisplayTab] = useState(0)
+  const [mobileDisplayTab, setMobileDisplayTab] = useState(0);
 
   // init form state
   const [formData, setFormData] = useState({
@@ -135,18 +138,23 @@ export const MainForm = ({
   const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
   const { eFooter } = emailFooter;
 
-  const [modal, setModal] = useState(false);
-
-  // mobile menu
-  const [click, setClick] = useState(false);
-
   // onChange functions ---------------------------------------------------------------------------------
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: parseInt(e.target.value.replace("€", "").replaceAll(" ", "")) });
+    setFormData({
+      ...formData,
+      [e.target.name]: parseInt(
+        e.target.value.replace("€", "").replaceAll(" ", "")
+      ),
+    });
   };
 
   const onChangeDecimals = (e) => {
-    setFormData({ ...formData, [e.target.name]: parseFloat(e.target.value.replace("%", "").replaceAll(" ", "")) });
+    setFormData({
+      ...formData,
+      [e.target.name]: parseFloat(
+        e.target.value.replace("%", "").replaceAll(" ", "")
+      ),
+    });
   };
 
   const onChangeRegime = (e) => {
@@ -180,11 +188,14 @@ export const MainForm = ({
     parseInt(fraisBancaires) +
     parseInt(fraisCourtier);
 
-  const emprunt = parseInt(apport) > parseInt(coutProjet) ? 0 : parseInt(coutProjet) - parseInt(apport);
+  const emprunt =
+    parseInt(apport) > parseInt(coutProjet)
+      ? 0
+      : parseInt(coutProjet) - parseInt(apport);
 
   const mensualite =
     finance.AM(emprunt, interet, parseInt(duree) * 12, 1) +
-    (emprunt * assurance / 100) / 12;
+    (emprunt * assurance) / 100 / 12;
 
   const revAnnuel = parseInt(loyer) * parseInt(occupation);
 
@@ -195,11 +206,11 @@ export const MainForm = ({
     ) / 100;
 
   const netOperatingIncome =
-  revAnnuel -
+    revAnnuel -
     (parseInt(fonciere) +
-    parseInt(charges) +
-    parseInt(gestion) +
-    parseInt(pno));
+      parseInt(charges) +
+      parseInt(gestion) +
+      parseInt(pno));
 
   const cashFlowAnnuel =
     revAnnuel -
@@ -217,7 +228,7 @@ export const MainForm = ({
 
   // rules form checking
   const netVendeurCheck = parseInt(netVendeur) !== 0;
-  const apportCheck = !isNaN(parseInt(apport)); 
+  const apportCheck = !isNaN(parseInt(apport));
   const loyerCheck = parseInt(loyer) !== 0;
   const chargesCheck =
     parseInt(charges) !== 0 ||
@@ -252,30 +263,27 @@ export const MainForm = ({
   // clic footer
   const [clickFooter, setClickFooter] = useState(false);
 
-  // mobile show - hide nav
-  const [toggleMobileNav, setToggleMobileNav] = useState(false);
-
   // mobile - add border on scroll
   const [scrollTop, setScrollTop] = useState(true);
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     // detect scroll
-    window.onscroll = function() {
-      if(window.pageYOffset !== 0) {
-        setScrollTop(false)
+    window.onscroll = function () {
+      if (window.pageYOffset !== 0) {
+        setScrollTop(false);
       }
-      if(window.pageYOffset === 0) {
-        setScrollTop(true)
+      if (window.pageYOffset === 0) {
+        setScrollTop(true);
       }
     };
     // update the reducer asynchronously with the new values of the form
-    storeParams(formData)
+    storeParams(formData);
 
     // // alert user before leaving the page
     // if (inputSaved) {
     //   window.addEventListener('beforeunload',  alertUser)
     // };
-    
+
     // set the windows dimensions on render
     // prevent function execution more than once per minute
     const debouncedHandleResize = function handleResize() {
@@ -294,9 +302,9 @@ export const MainForm = ({
   });
 
   // focus on the field when clicking edit
-  const focusMethod = function getFocus(id) {           
+  const focusMethod = function getFocus(id) {
     document.getElementById(id).focus();
-  }
+  };
 
   // saving form *******************************************************************************
 
@@ -308,27 +316,29 @@ export const MainForm = ({
 
   const onSave = (e) => {
     e.preventDefault();
-    saveModalClic(true) // detect clic sur save
-    if (isAuthenticated) { // if user logged
-      saveModalToggle(true) // ouvre save modal
+    saveModalClic(true); // detect clic sur save
+    if (isAuthenticated) {
+      // if user logged
+      saveModalToggle(true); // ouvre save modal
     } else {
-      authToggle(true) // sinon ouvre auth modal
+      authToggle(true); // sinon ouvre auth modal
     }
-  }
+  };
 
   // modélisation fiscale *******************************************************************************
 
   const onFisc = (e) => {
     e.preventDefault();
-    console.log('test')
-    modelModalClic(true) // detect clic sur model
-    if (isAuthenticated) { // if user logged
-      postInputForm(formData, userInfo._id) // submit input to db
-      modelModalToggle(true) // open modelisation fiscale
+    console.log("test");
+    modelModalClic(true); // detect clic sur model
+    if (isAuthenticated) {
+      // if user logged
+      postInputForm(formData, userInfo._id); // submit input to db
+      modelModalToggle(true); // open modelisation fiscale
     } else {
-      authToggle(true) // sinon ouvre auth modal
+      authToggle(true); // sinon ouvre auth modal
     }
-  }
+  };
 
   // sign up *******************************************************************************
   const [signUp, setSignUp] = useState({
@@ -347,14 +357,14 @@ export const MainForm = ({
 
   const onSignUp = (e) => {
     e.preventDefault();
-    register(signUp, formData, detectSave, detectModel)
-  }
+    register(signUp, formData, detectSave, detectModel);
+  };
 
   // sign in *******************************************************************************
   const [signIn, setSignIn] = useState({
     emailSignIn: "",
     passwordSignIn: "",
-  }); 
+  });
   const { emailSignIn, passwordSignIn } = signIn;
 
   const onChangeSignIn = (e) => {
@@ -363,38 +373,34 @@ export const MainForm = ({
 
   const onSignIn = (e) => {
     e.preventDefault();
-    login(signIn, formData, detectSave, detectModel)
-  }
+    login(signIn, formData, detectSave, detectModel);
+  };
 
   // Submit functions ---------------------------------------------------------------------------------
   const onSubmit = async (e) => {
     e.preventDefault();
-    if(isAuthenticated) {
-        postInputForm(formData); // post input to db
+    if (isAuthenticated) {
+      postInputForm(formData); // post input to db
     } else {
-      // openAuth() // open auth modal
-      setClick(false); // close mobile menu
+      console.log("else on submit");
     }
   };
 
   const onSubmitEmail = async (e) => {
     e.preventDefault();
     if (eFooter) {
-        postEmail(eFooter);
-        setClickFooter(true)
+      postEmail(eFooter);
+      setClickFooter(true);
     } else {
-        console.log("nada");
+      console.log("nada");
     }
     setEmailFooter({ eFooter: "" });
-    setModal(false);
   };
 
   return (
-    <Fragment >
-
+    <Fragment>
       {/* landing window */}
-      <Landing 
-      />
+      <Landing width={width} />
 
       {/* authentication window */}
       <AuthModalComplete
@@ -406,24 +412,24 @@ export const MainForm = ({
         setSignUp={setSignUp}
         setSignIn={setSignIn}
         emailSignUp={emailSignUp}
-        passwordSignUp={passwordSignUp} 
+        passwordSignUp={passwordSignUp}
         condition={condition}
         emailSignIn={emailSignIn}
         passwordSignIn={passwordSignIn}
+        width={width}
       />
 
       {/* account window */}
       <AccountModal />
 
       {/* save window */}
-      <SaveModal 
+      <SaveModal
         onChangeString={onChangeString}
         // switchToSave={switchToSave}
       />
 
       {/* Modélisation fiscale */}
-      <Modelisation 
-      />
+      <Modelisation />
 
       {/* information windows */}
       {displayInfoModal ? (
@@ -434,29 +440,22 @@ export const MainForm = ({
       ) : (
         ""
       )}
-      
-      {width < 770 ?
-        <MobileTitle 
+
+      {width < 770 ? (
+        <MobileTitle
           mobileDisplayTab={mobileDisplayTab}
           scrollTop={scrollTop}
         />
-      : ""} 
+      ) : (
+        ""
+      )}
 
-      {width < 770 && !modal ?
-        <MobileNavButton 
-          setToggleMobileNav={setToggleMobileNav}
-          toggleMobileNav={toggleMobileNav}
-          netVendeurCheck={netVendeurCheck}
-          /> : ""}
+      {width < 770 ? <MobileNavButton /> : ""}
 
       {width < 770 ? (
         <MobileNav
           setMobileDisplayTab={setMobileDisplayTab}
-          setClick={setClick}
-          setModal={setModal}
           setDisplayInfoModal={setDisplayInfoModal}
-          setToggleMobileNav={setToggleMobileNav}
-          toggleMobileNav={toggleMobileNav}
           netVendeurCheck={netVendeurCheck}
           apportCheck={apportCheck}
           loyerCheck={loyerCheck}
@@ -468,12 +467,11 @@ export const MainForm = ({
         ""
       )}
 
-      {width < 770 ?
-        <ButtonModelMobile 
-          onSubmit={onSubmit}
-          formCheck={formCheck}
-          modal={modal}
-        /> : ""}
+      {width < 770 && !landingModal ? (
+        <ButtonModelMobile onSubmit={onSubmit} formCheck={formCheck} />
+      ) : (
+        ""
+      )}
 
       {/* main page */}
       <div className='form-container'>
@@ -498,9 +496,8 @@ export const MainForm = ({
           />
         )}
 
-        {width < 1100 && click ? (
+        {width < 1100 && kpiMobile ? (
           <IndicateursMobile
-            setClick={setClick}
             showModal={showModal}
             sepSpace={sepSpace}
             netVendeurCheck={netVendeurCheck}
@@ -523,7 +520,12 @@ export const MainForm = ({
           ""
         )}
 
-        <div style={{ margin: width < 770 ? "0" : "0 15px", width: width < 770 ? "100%" : "" }}>
+        <div
+          style={{
+            margin: width < 770 ? "0" : "0 15px",
+            width: width < 770 ? "100%" : "",
+          }}
+        >
           {width >= 770 || (width <= 770 && mobileDisplayTab === 0) ? (
             <Projet
               onChange={onChange}
@@ -717,19 +719,22 @@ MainForm.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  detectSave: state.auth.detectSave,
-  detectModel: state.auth.detectModel,
   userInfo: state.auth.user,
+  detectSave: state.modals.detectSave,
+  detectModel: state.modals.detectModel,
+  kpiMobile: state.modals.kpiMobile,
+  landingModal: state.modals.landingModal,
 });
 
-export default connect(mapStateToProps, { 
-                        storeParams, 
-                        postInputForm,
-                        postEmail, 
-                        register,
-                        login,
-                        authToggle,
-                        saveModalClic,
-                        saveModalToggle,
-                        modelModalClic,
-                        modelModalToggle })(MainForm);
+export default connect(mapStateToProps, {
+  storeParams,
+  postInputForm,
+  postEmail,
+  register,
+  login,
+  authToggle,
+  saveModalClic,
+  saveModalToggle,
+  modelModalClic,
+  modelModalToggle,
+})(MainForm);

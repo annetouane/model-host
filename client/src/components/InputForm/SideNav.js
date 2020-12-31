@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 const Indicateurs = ({
-  onSubmit,
   scrollTo,
   netVendeurCheck,
   apportCheck,
@@ -15,7 +14,6 @@ const Indicateurs = ({
   onSave,
   onFisc,
 }) => {
-
   return (
     <nav className='side-column-nav mr-20 mt-50'>
       <h3>
@@ -254,32 +252,32 @@ const Indicateurs = ({
         </div>
       </div>
       <div className='flex-row ai-fc'>
-      <button
-        className='button-model mr-5'
-        onClick={onSave}
-        disabled={!netVendeurCheck}
-        style={{
-          backgroundColor: !netVendeurCheck && "#a8a8a8",
-          color: !netVendeurCheck && "#dfe3da",
-          cursor: !netVendeurCheck && "not-allowed",
-        }}
-      >
-          <i className="far fa-save fa-2x"></i>
+        <button
+          className='button-model mr-5'
+          onClick={onSave}
+          disabled={!netVendeurCheck}
+          style={{
+            backgroundColor: !netVendeurCheck && "#a8a8a8",
+            color: !netVendeurCheck && "#dfe3da",
+            cursor: !netVendeurCheck && "not-allowed",
+          }}
+        >
+          <i className='far fa-save fa-2x'></i>
           Sauvegarder
-      </button>
-      <button
-        className='button-model ml-5'
-        onClick={onFisc}
-        disabled={!formCheck}
-        style={{
-          backgroundColor: !formCheck && "#a8a8a8",
-          color: !formCheck && "#dfe3da",
-          cursor: !formCheck && "not-allowed",
-        }}
-      >
-        <i className="fas fa-balance-scale fa-2x"></i>
-        Fiscalité
-      </button>
+        </button>
+        <button
+          className='button-model ml-5'
+          onClick={onFisc}
+          disabled={!formCheck}
+          style={{
+            backgroundColor: !formCheck && "#a8a8a8",
+            color: !formCheck && "#dfe3da",
+            cursor: !formCheck && "not-allowed",
+          }}
+        >
+          <i className='fas fa-balance-scale fa-2x'></i>
+          Fiscalité
+        </button>
       </div>
     </nav>
   );

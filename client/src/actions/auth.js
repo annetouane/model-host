@@ -1,13 +1,14 @@
 // package
-import jwt from 'jwt-decode'
+import jwt from "jwt-decode";
 
 // components
 import api from "../utilities/api";
 import { setAlert } from "./alert";
-import { postInputForm } from './formData';
+import { postInputForm } from "./formData";
 import setAuthToken from "../utilities/setAuthToken";
 
 // actions
+import { modelModalToggle, saveModalToggle } from "../actions/modals";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -17,12 +18,6 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   AUTH_TOGGLE,
-  DETECT_SAVE,
-  SAVE_TOGGLE,
-  DETECT_MODEL,
-  MODEL_TOGGLE,
-  ACCOUNT_TOGGLE,
-  LANDING_TOGGLE
 } from "./types";
 
 // load the user each time the main app is updated to check authentication
@@ -47,7 +42,12 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-export const register = (registerData, formData, detectSave, detectModel) => async (dispatch) => {
+export const register = (
+  registerData,
+  formData,
+  detectSave,
+  detectModel
+) => async (dispatch) => {
   try {
     // get the server's response
     const res = await api.post("/signup", registerData);
@@ -57,29 +57,28 @@ export const register = (registerData, formData, detectSave, detectModel) => asy
     dispatch({
       type: REGISTER_SUCCESS,
     });
-    
+
     // send alert check email
-    dispatch(
-      setAlert(
-        res.data.alert.msg,
-        res.data.alert.color,
-        5000
-      )
-    );
-    
+    dispatch(setAlert(res.data.alert.msg, res.data.alert.color, 5000));
+
     // 3 scénarios post-login réussi
-    if (detectModel) { // if fiscalité -> post input
+    if (detectModel) {
+      // if fiscalité -> post input
       dispatch(postInputForm(formData, res.data.id));
-      
-    } else { // si save -> save modal ou autre
+    } else {
+      // si save -> save modal ou autre
       const today = new Date();
-      const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(); // why +1 ?
-      formData.nomProjet = `Projet 1 - ${date}`
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate(); // why +1 ?
+      formData.nomProjet = `Projet 1 - ${date}`;
       dispatch(postInputForm(formData, res.data.id));
     }
-
   } catch (err) {
-    console.log(err.response.data.msg)
+    console.log(err.response.data.msg);
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color, 5000));
     }
@@ -88,7 +87,6 @@ export const register = (registerData, formData, detectSave, detectModel) => asy
     });
   }
 };
-
 
 // Register User modal landing
 export const registerLanding = (registerData) => async (dispatch) => {
@@ -101,18 +99,11 @@ export const registerLanding = (registerData) => async (dispatch) => {
     dispatch({
       type: REGISTER_SUCCESS,
     });
-    
-    // send alert check email
-    dispatch(
-      setAlert(
-        res.data.alert.msg,
-        res.data.alert.color,
-        5000
-      )
-    );
 
+    // send alert check email
+    dispatch(setAlert(res.data.alert.msg, res.data.alert.color, 5000));
   } catch (err) {
-    console.log(err.response.data.msg)
+    console.log(err.response.data.msg);
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color, 5000));
     }
@@ -123,37 +114,40 @@ export const registerLanding = (registerData) => async (dispatch) => {
 };
 
 // Login User + save inputs lorsque clic sur fiscalité et renvoi modal dataviz
-export const login = (loginData, formData, detectSave, detectModel) => async (dispatch) => {
+export const login = (loginData, formData, detectSave, detectModel) => async (
+  dispatch
+) => {
   try {
     // sends back the user
     const res = await api.post("/signin", loginData);
 
     // decode le token
-    const decodedToken = jwt(res.data.token)
+    const decodedToken = jwt(res.data.token);
 
     // insert the token in the payload
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data, 
+      payload: res.data,
     });
 
     // load user
     dispatch(loadUser());
 
     // 3 scénarios post-login réussi
-    if (detectModel) { // if fiscalité -> post input
+    if (detectModel) {
+      // if fiscalité -> post input
       dispatch(postInputForm(formData, decodedToken.user.id));
       dispatch(modelModalToggle(true));
-    } else if (detectSave) { // si save -> save modal
+    } else if (detectSave) {
+      // si save -> save modal
       dispatch(saveModalToggle(true));
     } else {
-      console.log("nomal") // sinon ferme la modal (dans la fonction)
+      console.log("nomal"); // sinon ferme la modal (dans la fonction)
     }
     dispatch({
       type: AUTH_TOGGLE,
       payload: false,
     });
-
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
@@ -184,7 +178,6 @@ export const loginLanding = (loginData) => async (dispatch) => {
       type: AUTH_TOGGLE,
       payload: false,
     });
-
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
@@ -212,7 +205,7 @@ export const forgotten = (email) => async (dispatch) => {
       )
     );
   } catch (err) {
-    console.log('error', err)
+    console.log("error", err);
     // display the errors (the array of errors called "errors")
     const errors = err.response.data.errors;
 
@@ -229,70 +222,13 @@ export const updPassword = (formData) => async (dispatch) => {
   try {
     // get the server's response
     const res = await api.post("/change-pwd", formData);
-    console.log(res.data.msg)
+    console.log(res.data.msg);
     // dispatch(setAlert(res.data.msg, res.data.color, 5000));
-
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
-
   }
-};
-
-// Open Auth Window
-export const authToggle = (bool) => (dispatch) => {
-  dispatch({ 
-    type: AUTH_TOGGLE,
-    payload: bool
-  });
-};
-
-// Landing / form Window
-export const landingToggle = (bool) => (dispatch) => {
-  dispatch({ 
-    type: LANDING_TOGGLE,
-    payload: bool
-  });
-};
-
-// detect clic sur le bouton save
-export const saveModalClic = (bool) => (dispatch) => {
-  dispatch({ type: DETECT_SAVE,
-    payload: bool 
-  });
-};
-
-// ouvre la modal save
-export const saveModalToggle = (bool) => (dispatch) => {
-  dispatch({ 
-    type: SAVE_TOGGLE,
-    payload: bool
-  });
-};
-
-// detect clic sur bouton modélisation
-export const modelModalClic = (bool) => (dispatch) => {
-  dispatch({ 
-    type: DETECT_MODEL,
-    payload: bool,
-  });
-};
-
-// ouvre la modal modélisation
-export const modelModalToggle = (bool) => (dispatch) => {
-  dispatch({ 
-    type: MODEL_TOGGLE,
-    payload: bool
-  });
-};
-
-// ouvre la modal mon compte
-export const accountModalToggle = (bool) => (dispatch) => {
-  dispatch({ 
-    type: ACCOUNT_TOGGLE,
-    payload: bool
-  });
 };
 
 // Logout
@@ -302,7 +238,7 @@ export const logout = () => (dispatch) => {
 
 // Delete account
 export const deleteAccount = () => async (dispatch) => {
-  console.log("delete")
+  console.log("delete");
   try {
     await api.delete("/delete-user");
     dispatch({ type: LOGOUT });
@@ -310,5 +246,5 @@ export const deleteAccount = () => async (dispatch) => {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
-  } 
+  }
 };

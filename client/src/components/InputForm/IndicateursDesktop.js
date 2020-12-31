@@ -22,15 +22,20 @@ const Indicateurs = ({
         <i className='fas fa-temperature-high header-i'></i>
         &nbsp;&nbsp;Indicateurs
       </h3>
-      <div className='side-column-box' style={{ padding: width > 1125 ? "20px" : "10px" }}>
+      <div
+        className='side-column-box'
+        style={{ padding: width > 1125 ? "20px" : "10px" }}
+      >
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Coût du projet</h4>
-            <button 
-              id='info-projet' 
+            <button
+              id='info-projet'
               onClick={showModal}
               className='question-mark'
-            >?</button>            
+            >
+              ?
+            </button>
           </div>
           <h4 className='bold color-blue'>
             {netVendeurCheck ? sepSpace(coutProjet).toString() + " €" : "-"}
@@ -39,11 +44,13 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Emprunt</h4>
-            <button 
-              id='info-emprunt' 
+            <button
+              id='info-emprunt'
               onClick={showModal}
               className='question-mark'
-            >?</button>        
+            >
+              ?
+            </button>
           </div>
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck
@@ -54,11 +61,13 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Mensualité</h4>
-            <button 
-              id='info-mensualite' 
+            <button
+              id='info-mensualite'
               onClick={showModal}
               className='question-mark'
-            >?</button>        
+            >
+              ?
+            </button>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck
@@ -69,11 +78,13 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Revenu annuel</h4>
-            <button 
-              id='info-revenu' 
+            <button
+              id='info-revenu'
               onClick={showModal}
               className='question-mark'
-            >?</button>        
+            >
+              ?
+            </button>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck && loyerCheck
@@ -84,11 +95,13 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Rendement annuel brut</h4>
-            <button 
-              id='info-rentabrute' 
+            <button
+              id='info-rentabrute'
               onClick={showModal}
               className='question-mark'
-            >?</button>        
+            >
+              ?
+            </button>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck && loyerCheck
@@ -99,11 +112,9 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Résultat opérationnel</h4>
-            <button 
-              id='info-noi' 
-              onClick={showModal}
-              className='question-mark'
-            >?</button>        
+            <button id='info-noi' onClick={showModal} className='question-mark'>
+              ?
+            </button>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
@@ -114,11 +125,13 @@ const Indicateurs = ({
         <div className='kpi-item'>
           <div className='info-button'>
             <h4>Trésorerie avant impôt</h4>
-            <button 
+            <button
               id='info-treso-av-impot'
               onClick={showModal}
               className='question-mark'
-            >?</button>                    
+            >
+              ?
+            </button>
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck && loyerCheck && chargesCheck

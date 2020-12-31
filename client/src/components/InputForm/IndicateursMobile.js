@@ -3,7 +3,6 @@ import React from "react";
 const IndicateursMobile = ({
   showModal,
   sepSpace,
-  setClick,
   netVendeurCheck,
   apportCheck,
   loyerCheck,
@@ -19,23 +18,22 @@ const IndicateursMobile = ({
 }) => {
   return (
     <section id='indicateurs' className='indicateurs-mobile'>
-      <div style={{display: "flex", justifyContent: "space-between"}}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h3>
           <i className='fas fa-temperature-high header-i'></i>
           &nbsp;&nbsp;Indicateurs
         </h3>
-        <div onClick={() => setClick(false)}>
-          <i className='fa fa-arrow-right fa-2x indicateurs-mobile-button'></i>
-        </div>
       </div>
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Coût du projet</h4>
-          <button 
-            id='info-projet' 
+          <button
+            id='info-projet'
             onClick={showModal}
             className='question-mark'
-            >?</button>
+          >
+            ?
+          </button>
         </div>
         <h4 className='bold color-blue'>
           {netVendeurCheck ? sepSpace(coutProjet).toString() + " €" : "-"}
@@ -44,11 +42,13 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Emprunt</h4>
-          <button 
-            id='info-emprunt' 
+          <button
+            id='info-emprunt'
             onClick={showModal}
             className='question-mark'
-          >?</button>
+          >
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck
@@ -59,11 +59,13 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Mensualité</h4>
-          <button 
-            id='info-mensualite' 
+          <button
+            id='info-mensualite'
             onClick={showModal}
             className='question-mark'
-          >?</button>
+          >
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck
@@ -74,11 +76,13 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Revenu annuel</h4>
-          <button 
-            id='info-revenu' 
+          <button
+            id='info-revenu'
             onClick={showModal}
             className='question-mark'
-          >?</button>
+          >
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck
@@ -89,11 +93,13 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Rendement annuel brut</h4>
-          <button 
-            id='info-rentabrute' 
+          <button
+            id='info-rentabrute'
             onClick={showModal}
             className='question-mark'
-          >?</button>
+          >
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck
@@ -104,11 +110,9 @@ const IndicateursMobile = ({
       <div className='flex-column mb-10'>
         <div className='info-button'>
           <h4>Résultat opérationnel</h4>
-          <button 
-            id='info-noi' 
-            onClick={showModal}
-            className='question-mark'
-          >?</button>
+          <button id='info-noi' onClick={showModal} className='question-mark'>
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck && chargesCheck
@@ -116,14 +120,19 @@ const IndicateursMobile = ({
             : "-"}
         </h4>
       </div>
-      <div className='flex-column mb-10' style={{ marginBottom: formCheck ? "60px" : "0" }}>
+      <div
+        className='flex-column mb-10'
+        style={{ marginBottom: formCheck ? "60px" : "0" }}
+      >
         <div className='info-button'>
           <h4>Trésorerie avant impôt</h4>
-          <button 
-            id='info-treso-av-impot' 
+          <button
+            id='info-treso-av-impot'
             onClick={showModal}
             className='question-mark'
-          >?</button>
+          >
+            ?
+          </button>
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck && loyerCheck && chargesCheck

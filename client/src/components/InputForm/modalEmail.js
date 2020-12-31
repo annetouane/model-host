@@ -11,8 +11,6 @@ const ModalEmail = ({
   return (
     <section className={modal ? "email-modal" : "modal-none"}>
       <div className='modal-input'>
-
-        
         {/* <div style={{display: "flex", justifyContent: "space-between"}}>
           <h3>
             Avant d'aller plus loin

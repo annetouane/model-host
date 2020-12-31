@@ -1,6 +1,6 @@
 import React from "react";
 import MobilePagination from "./MobilePagination";
-import NumberFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
 
 const FoyerMobile = ({
   onChange,
@@ -27,7 +27,10 @@ const FoyerMobile = ({
   }
 
   return (
-    <section id='foyer' style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}>
+    <section
+      id='foyer'
+      style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}
+    >
       <div className='form-box-v mt-10'>
         <div className='info-button'>
           <h4>Investisseur N° 1 :</h4>
@@ -36,31 +39,33 @@ const FoyerMobile = ({
         <div className='type-alt-slider'>
           <div>
             <label>Revenu net avant impôt</label>
-            <button 
-                id='info-investisseur' 
-                onClick={showModal}
-                className='question-mark'
-            >?</button>
+            <button
+              id='info-investisseur'
+              onClick={showModal}
+              className='question-mark'
+            >
+              ?
+            </button>
           </div>
-          <div className="flex-row ai-fs">
+          <div className='flex-row ai-fs'>
             <NumberFormat
-              id="revInvest1-edit"
+              id='revInvest1-edit'
               name='revInvest1'
               value={revInvest1}
-              displayType={'number'}
+              displayType={"number"}
               thousandSeparator={" "}
-              suffix={' €'}
+              suffix={" €"}
               onChange={onChange}
               allowNegative={false}
               isAllowed={(values) => {
-                const {floatValue} = values;
-                return floatValue >= 0 &&  floatValue <= 150000;
+                const { floatValue } = values;
+                return floatValue >= 0 && floatValue <= 150000;
               }}
             />
-            <i 
-              onClick={() => focusMethod("revInvest1-edit")} 
+            <i
+              onClick={() => focusMethod("revInvest1-edit")}
               style={{ fontSize: "14px" }}
-              className="fas fa-pencil-alt"
+              className='fas fa-pencil-alt'
             ></i>
           </div>
         </div>
@@ -95,36 +100,38 @@ const FoyerMobile = ({
       <div className='form-box-v mt-10'>
         <h4>Investisseur N° 2 :</h4>
         <div className='type-alt-slider'>
-        <div>
+          <div>
             <label>Revenu net avant impôt</label>
-            <button 
-                id='info-investisseur' 
-                onClick={showModal}
-                className='question-mark'
-            >?</button>
+            <button
+              id='info-investisseur'
+              onClick={showModal}
+              className='question-mark'
+            >
+              ?
+            </button>
           </div>
-          <div className="flex-row ai-fs">
+          <div className='flex-row ai-fs'>
             <NumberFormat
-              id="revInvest2-edit"
+              id='revInvest2-edit'
               name='revInvest2'
               value={revInvest2}
-              displayType={'number'}
+              displayType={"number"}
               thousandSeparator={" "}
-              suffix={' €'}
+              suffix={" €"}
               onChange={onChange}
               allowNegative={false}
               isAllowed={(values) => {
-                const {floatValue} = values;
-                return floatValue >= 0 &&  floatValue <= 150000;
+                const { floatValue } = values;
+                return floatValue >= 0 && floatValue <= 150000;
               }}
             />
-            <i 
-              onClick={() => focusMethod("revInvest2-edit")} 
-              style={{ fontSize: "14px" }} 
-              className="fas fa-pencil-alt"
+            <i
+              onClick={() => focusMethod("revInvest2-edit")}
+              style={{ fontSize: "14px" }}
+              className='fas fa-pencil-alt'
             ></i>
           </div>
-        </div> 
+        </div>
 
         <input
           type='range'
@@ -154,7 +161,9 @@ const FoyerMobile = ({
         {revInvest2 !== 0 ? (
           <p className='fs-12 orange'>
             <i class='fas fa-exclamation-circle mr-5'></i>
-            Dans sa version actuelle, Simulimo permet uniquement de modéliser un investissement avec un seul investisseur ou deux investisseurs rattachés au même foyer fiscal.
+            Dans sa version actuelle, Simulimo permet uniquement de modéliser un
+            investissement avec un seul investisseur ou deux investisseurs
+            rattachés au même foyer fiscal.
           </p>
         ) : (
           ""
@@ -178,12 +187,14 @@ const FoyerMobile = ({
         <div className='info-button'>
           <div>
             <label className='fs-12'>Part(s) Fiscale(s)</label>
-            <button 
-                  id='info-partfisc' 
-                  onClick={showModal}
-                  className='question-mark'
-            >?</button>
-          </div> 
+            <button
+              id='info-partfisc'
+              onClick={showModal}
+              className='question-mark'
+            >
+              ?
+            </button>
+          </div>
           <select
             type='select'
             name='partFisc'
@@ -197,8 +208,8 @@ const FoyerMobile = ({
         </div>
       </div>
       <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
+        setMobileDisplayTab={setMobileDisplayTab}
+        mobileDisplayTab={mobileDisplayTab}
       />
     </section>
   );

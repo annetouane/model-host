@@ -17,7 +17,7 @@ const Alerte = ({ alerts }) =>
         borderRadius: "5px",
         zIndex: 10000000,
         width: "100%",
-        fontSize: '12px'
+        fontSize: "12px",
       }}
       key={alert.id}
     >
