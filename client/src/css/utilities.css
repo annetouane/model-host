@@ -924,7 +924,6 @@ input::-webkit-inner-spin-button {
   justify-content: space-evenly;
   margin-top: 10px;
   height: 420px;
-  /* width: 300px; changed */
   border: 1px solid #c8c9ca;
   box-shadow: 0.5px 0.5px #c8c9ca;
   background-color: #fff;
@@ -940,110 +939,125 @@ input::-webkit-inner-spin-button {
 }
 
 /* save form */
-.save-box {
-  position: relative;
-  width: 700px;
-  max-height: 500px;
-  margin: auto;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 50px 80px;
-  border: 1px solid #c8c9ca;
-  box-shadow: 0.5px 0.5px #c8c9ca;
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-.save-box h4 {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.save-box p {
-  margin-bottom: 5px;
-}
-
-.save-box button {
-  background-color: #01c96c;
-  color: #333;
-  border: 1px solid #c8c9ca;
-  padding: 10px 30px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.save-box button:hover {
-  color: #fff;
-}
-
-.save-box p {
-  font-size: 12px;
-}
-
-.save-box h5 {
-  margin: 10px 0;
-  color: #333;
-}
-
 .save-form {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-self: center;
   width: 100%;
 }
 
-.save-input {
+.save-group {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 }
 
-.save-input label {
+.save-group label {
   font-size: 12px;
   margin: 0 5px;
 }
 
-.save-input input {
+.save-group input {
   width: 165px;
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
+  box-shadow: 0.5px 0.5px 1px #333;
+  width: 100%;
 }
 
-.save-input select {
+.save-group select {
   width: 165px;
   border-radius: 5px;
   height: 41px;
   border: 1px solid rgb(194, 194, 194);
+  box-shadow: 0.5px 0.5px 1px #333;
+  width: 100%;
+  padding: 7px;
 }
 
-.save-input select:focus {
+.save-group select:focus {
   outline: none;
 }
 
-.no-save-button {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+.save-form button {
+  background-color: #01c96c;
+  margin-top: 15px;
   width: 100%;
-  height: 100%;
-  margin-top: 20px;
-}
-
-.no-save-button button {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  width: 105px;
-  border: 2px solid #333;
-}
-
-.no-save-button button:hover {
-  background-color: #fff;
   color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 15px 0;
+  box-shadow: 1px 1px 3px #333;
+}
+
+.saved-projects-box {
+  width: 100%;
+}
+
+.saved-projects-items {
+  display: flex;
+  border-bottom: 1px #c8c9ca solid;
+  padding: 15px 0;
+  align-items: center;
+  width: 100%;
+}
+
+.saved-projects-items h6 {
+  margin-left: 5px;
+  width: 100%;
+}
+
+.saved-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.saved-button-group button {
+  width: 135px;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#visualiser {
+  background-color: #007be8;
+}
+#visualiser:hover {
+  background-color: #0574d4;
+}
+#sauvegarder {
+  background-color: #01c96c;
+}
+#sauvegarder:hover {
+  background-color: #05bd67;
+}
+#Supprimer {
+  background-color: #f84545;
+}
+#Supprimer:hover {
+  background-color: #f73131;
+}
+
+.city-box-inactive {
+  display: none;
+}
+
+.city-box-active {
+  position: absolute;
+  width: 420px;
+}
+
+.city-box-active span {
+  font-size: 12px;
+  margin-left: 5px;
+  width: 148px;
+  height: 100%;
 }
 
 /* modelisation modal */
@@ -1156,22 +1170,36 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
   width: 100%;
   position: fixed;
   bottom: 0;
   right: 0;
   background-color: #01c96c;
-  z-index: 1000000000;
+  z-index: 1000;
+  height: 50px;
 }
 
-.button-model-mobile button {
+.box-button-model-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.box-button-model-mobile button {
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   border: none;
   background-color: #01c96c;
   margin-right: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.box-button-model-mobile i {
+  margin-left: 10px;
 }
 
 .button-model-mobile button:focus {
@@ -1330,7 +1358,7 @@ input[type="text"] {
   height: 200px;
   width: 0px;
   border-left: 1px solid #fff;
-  top: 25%;
+  top: 35%;
   left: 50%;
 }
 
@@ -1338,7 +1366,6 @@ input[type="text"] {
   display: flex;
   align-items: center;
   margin-top: 30px;
-  width: 280px;
 }
 
 .landing-header img {
@@ -1407,6 +1434,7 @@ input[type="text"] {
   font-size: 12px;
   text-align: left;
   font-weight: bold;
+  max-width: 200px;
 }
 
 .landing-devices {
@@ -1529,9 +1557,28 @@ input[type="email"] {
   align-items: center;
   position: fixed;
   top: 70px;
-  left: 0;
-  background-color: #fff;
+  right: 0;
+  background-color: #fff; /* done */
+  z-index: 30000;
   width: 100%;
+  height: 500px;
+}
+
+.mobile-nav-tablet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #fff; /* done */
+  width: 300px;
+  border-left: 1px solid #c8c9ca;
+  border-top: 1px solid #c8c9ca;
+  height: 500px;
+  border-radius: 5px 0 0 0;
+  box-shadow: -0.5px 0.5px 3px #333;
   z-index: 30000;
 }
 
@@ -1557,6 +1604,7 @@ input[type="email"] {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 
 .mobile-nav-button {
@@ -1568,6 +1616,7 @@ input[type="email"] {
 
 .mobile-nav-button i {
   color: #fff;
+  cursor: pointer;
 }
 
 .mobile-nav-item {
@@ -1578,6 +1627,7 @@ input[type="email"] {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #fff;
+  background-color: #fff; /* done */
 }
 
 .mobile-nav-link {
@@ -1587,24 +1637,24 @@ input[type="email"] {
   border: none;
   cursor: pointer;
   outline: none;
-  background-color: #fff;
+  background-color: #fff; /* done */
   color: #333;
 }
 
 .section-complete {
   color: #007be8;
-  padding-left: 90px;
+  padding-left: 100px;
 }
 
 .section-uncomplete {
   color: #333;
-  padding-left: 90px;
+  padding-left: 100px;
 }
 
 .mobile-nav-dummie {
   background-color: transparent;
-  color: #fff;
-  padding-right: 90px;
+  color: #fff; /* done */
+  padding-right: 100px;
 }
 
 .mobile-side-nav-text {
@@ -1632,6 +1682,7 @@ input[type="email"] {
   font-weight: bold;
   margin-right: 15px;
   color: white;
+  cursor: pointer;
 }
 
 .mobile-kpi-button i {
@@ -1764,6 +1815,50 @@ input[type="email"] {
   z-index: 20000000000000000000;
 }
 
+@media screen and (max-width: 1155px) and (min-width: 770px) {
+  .section-complete {
+    padding-left: 50px;
+  }
+  .section-uncomplete {
+    padding-left: 50px;
+  }
+  .mobile-nav-dummie {
+    padding-right: 50px;
+  }
+  .mobile-side-nav-text {
+    font-size: 16px;
+  }
+  .mobile-kpi-button button {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1155px) {
+  .background {
+    background: url("../img/mobile-wave.svg") no-repeat center center/cover;
+    height: 100vh;
+    color: #fff;
+    padding: 20px 30px;
+  }
+  .landing-page-body {
+    flex-direction: column;
+  }
+  .landing-line {
+    display: none;
+  }
+  .landing-page {
+    overflow-y: scroll;
+    padding: 0;
+    background-color: #fff;
+  }
+  .landing-devices img {
+    padding: 0;
+    width: 80%;
+    margin-top: 70px;
+    margin-bottom: 60px;
+    image-rendering: pixelated;
+  }
+}
+
 @media screen and (max-width: 770px) {
   .landing-nav {
     display: flex;
@@ -1773,29 +1868,15 @@ input[type="email"] {
     width: 100%;
     padding-left: 20px; /* create space on left and right */
   }
-  /* landing page */
-  .landing-page {
-    overflow-y: scroll;
-    padding: 0;
-  }
-  .background {
-    background: url("../img/mobile-wave.svg") no-repeat center center/cover;
-    height: 700px; /* take 100% of the viewport */
-    color: #fff;
-    padding: 20px 30px;
-  }
+
   .landing-header {
     margin-top: 20px;
+    width: 280px;
   }
   .landing-header {
     text-align: center;
   }
-  .landing-line {
-    display: none;
-  }
-  .landing-page-body {
-    flex-direction: column;
-  }
+
   .landing-benefits-group {
     padding: 10px 0;
   }

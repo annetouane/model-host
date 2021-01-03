@@ -1,6 +1,6 @@
 import React from "react";
 
-const ButtonModelMobile = ({ formCheck, onSubmit }) => {
+const ButtonModelMobile = ({ formCheck, onSave, onFisc }) => {
   return (
     <div
       className='button-model-mobile'
@@ -8,11 +8,28 @@ const ButtonModelMobile = ({ formCheck, onSubmit }) => {
         display: !formCheck ? "none" : "",
       }}
     >
-      <button type='submit' onClick={onSubmit}>
-        {" "}
-        Modélisation fiscale
-      </button>
-      <i className='fas fa-forward fa-lg'></i>
+      <div
+        className='box-button-model-mobile'
+        style={{
+          borderRight: "#fff solid 0.5px",
+        }}
+      >
+        <button type='submit' onClick={onSave}>
+          {" "}
+          Sauvegarder<i className='far fa-save'></i>
+        </button>
+      </div>
+      <div
+        className='box-button-model-mobile'
+        style={{
+          borderLeft: "#fff solid 0.5px",
+        }}
+      >
+        <button type='submit' onClick={onFisc}>
+          {" "}
+          Fiscalité<i className='fas fa-balance-scale'></i>
+        </button>
+      </div>
     </div>
   );
 };

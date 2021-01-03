@@ -21,7 +21,7 @@ const Regime = ({
   return (
     <section
       id='regime'
-      style={{ marginBottom: width < 770 && formCheck ? "80px" : "0" }}
+      style={{ marginBottom: width <= 1155 && formCheck ? "80px" : "0" }}
     >
       {width > 770 ? (
         <h3 className='form-header'>

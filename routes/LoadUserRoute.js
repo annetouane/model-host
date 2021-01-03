@@ -13,7 +13,12 @@ router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user.id).select(
       "-password -confirmed -condition -date"
     );
-    res.json(user);
+    console.log(user.id);
+    const projects = await InputForm.find({
+      $and: [{ user: user.id }, { nomProjet: { $ne: "" } }],
+    });
+    console.log(projects);
+    res.json({ user, projects });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

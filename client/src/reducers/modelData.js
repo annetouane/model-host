@@ -1,8 +1,9 @@
-import { MODEL_DATA, STORE_PARAMS } from "../actions/types";
+import { MODEL_DATA, STORE_PARAMS, PROJECT_LIST } from "../actions/types";
 
 const initialState = {
   currentParams: [],
   currentModel: [],
+  projects: [],
 };
 
 export default function (state = initialState, action) {
@@ -13,12 +14,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         currentParams: payload,
-      }
+      };
     case MODEL_DATA:
       return {
         ...state,
         currentModel: payload,
-      }
+      };
+    case PROJECT_LIST:
+      return {
+        ...state,
+        projects: payload,
+      };
     default:
       return state;
   }

@@ -37,6 +37,18 @@ export const postInputForm = (formData, id) => async (dispatch) => {
   }
 };
 
+export const updateExistingProject = (formData, id) => async (dispatch) => {
+  try {
+    console.log();
+  } catch (err) {
+    const error = err.response.data.msg;
+    if (error) {
+      console.log(error);
+      // dispatch(setAlert(error, "red"));
+    }
+  }
+};
+
 export const postEmail = (email) => async (dispatch) => {
   console.log("mail", email);
   try {

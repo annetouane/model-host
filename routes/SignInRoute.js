@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 
 // import model
 const User = require("../models/UserModel");
+const InputForm = require("../models/InputModel");
 
 // @route    POST /signin
 // @desc     Register user
@@ -37,8 +38,8 @@ router.post(
           msg: "Vos identifiants sont incorrects",
           color: "red",
         });
-      };
-      
+      }
+
       // compare the password in plain text from the request
       // to the encrypted password retrieved from the database
       const isMatch = await bcrypt.compare(passwordSignIn, user.password);
@@ -49,16 +50,17 @@ router.post(
           msg: "Vos identifiants sont incorrects",
           color: "red",
         });
-      };
+      }
 
       // check if email not confirmed
       const confirmed = user.confirmed;
       if (!confirmed) {
-        return res.status(401).send({ 
-          msg: "Pour accéder à votre compte, merci de cliquer sur le lien d'activation qui vous a été adressé par email",
-          color: "orange"
+        return res.status(401).send({
+          msg:
+            "Pour accéder à votre compte, merci de cliquer sur le lien d'activation qui vous a été adressé par email",
+          color: "orange",
         });
-      };
+      }
 
       // if password match
       // generate JWT in which the user ID will be inserted
@@ -69,14 +71,14 @@ router.post(
       };
       // sign the token with the secret key
       jwt.sign(
-        payload, 
-        config.get("jwtSecret"), 
+        payload,
+        config.get("jwtSecret"),
         { expiresIn: 3600 },
         // callback to get either an error or the token to be sent back to the client
         (err, token) => {
           // throw deliver error synchronously
           if (err) throw err;
-          // sends the token to the client : user is authentificated
+          // sends the token to the client : user is authenticated
           res.json({ token });
         }
       );
@@ -89,4 +91,3 @@ router.post(
 );
 
 module.exports = router;
-

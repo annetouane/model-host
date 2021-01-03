@@ -143,7 +143,7 @@ Modelisation.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  modelModal: state.auth.modelModal,
+  modelModal: state.modals.modelModal,
 });
 
 export default connect(mapStateToProps, {

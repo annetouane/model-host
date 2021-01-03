@@ -1,7 +1,10 @@
-// components
-import React from "react";
+// packages
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+// component
+import LocationSearchInput from "./CityGoogleApi";
 
 // actions
 import {
@@ -11,13 +14,20 @@ import {
 } from "../../actions/modals";
 
 const SaveModal = ({
-  saveModal,
   onChangeString,
-  isAuthenticated,
+  saveModal,
   saveModalToggle,
   saveModalClic,
   modelModalClic,
+  width,
+  getProjectToUpdate, // get nomProjet to mainform state
+  natureBien, // nature du bien pour condition type d'appartement
+  projects, // liste de projets
+  onSaveProject, // save new project to the database
 }) => {
+  // choix tab : création compte ou connection
+  const [newProject, setNewProject] = useState(true);
+
   const saveClose = () => {
     saveModalToggle(false); // close auth modal
     saveModalClic(false); // save n'est plus actif
@@ -26,87 +36,133 @@ const SaveModal = ({
 
   return (
     <section className={saveModal ? "auth-modal" : "auth-modal-none"}>
-      <div className='save-box' style={{ margin: 0, padding: "40px" }}>
-        <div>
-          <i className='fas fa-times quit-auth-modal' onClick={saveClose}></i>
-        </div>
-        <h4>Sauvergarder mon projet</h4>
-        {!isAuthenticated ? (
-          <div>
-            <p>
-              Vous ne vous êtes pas identifié. Afin de sauvegarder votre projet,
-              il vous sera demandé de connecter à votre compte lors de la
-              prochaine étape.
-            </p>
-            <p>
-              Si vous n'avez pas de compte vous retrouverez votre projet lors
-              lors de votre première connexion.
-            </p>
+      <div className='auth-box' style={{ margin: 0, padding: "40px" }}>
+        {width > 1155 ? (
+          <div onClick={saveClose}>
+            <i className='fas fa-times quit-auth-modal'></i>
           </div>
         ) : (
           ""
         )}
-        <h5>Créer un nouveau projet</h5>
-        <form style={{ width: "100%" }}>
-          <div className='save-form'>
-            <div className='save-input'>
-              {/* <label>Nom du projet</label> */}
-              <input
-                type='text'
-                onChange={onChangeString}
-                name='nomProjet'
-                placeholder='Nom du projet'
-                required
-              />
+        <h4>Sauvergarder mon projet</h4>
+
+        <div className='account-params'>
+          <button
+            onClick={() => {
+              setNewProject(true);
+              getProjectToUpdate("");
+            }}
+            style={{
+              backgroundColor: newProject ? "#007be8" : "",
+              border: newProject ? "1px solid rgb(192, 192, 192)" : "none",
+              borderRadius: newProject ? "5px 5px 0 0" : "0",
+              color: newProject ? "#fff" : "#333",
+              borderBottomStyle: newProject && "none",
+            }}
+          >
+            Créer nouveau projet
+          </button>
+          <button
+            onClick={() => setNewProject(false)}
+            style={{
+              backgroundColor: !newProject ? "#007be8" : "",
+              border: !newProject ? "1px solid rgb(192, 192, 192)" : "none",
+              borderRadius: !newProject ? "5px 5px 0 0" : "0",
+              color: !newProject ? "#fff" : "#333",
+              borderBottomStyle: !newProject && "none",
+            }}
+            className='button-delete-account'
+          >
+            Mes projets sauvegardés
+          </button>
+        </div>
+        {newProject ? (
+          <form style={{ width: "100%" }} onSubmit={onSaveProject}>
+            <div className='save-form'>
+              <div className='save-group'>
+                <label>Nom du projet</label>
+                <input
+                  type='text'
+                  onChange={onChangeString}
+                  name='nomProjet'
+                  placeholder='Nom du projet...'
+                  required
+                />
+              </div>
+
+              <div className='save-group'>
+                <label>Ville</label>
+                <LocationSearchInput onChangeString={onChangeString} />
+              </div>
+
+              <div className='save-group'>
+                <label>Nature du bien</label>
+                <select
+                  type='select'
+                  name='natureBien'
+                  onChange={onChangeString}
+                >
+                  <option>...</option>
+                  <option>Appartement</option>
+                  <option>Maison</option>
+                  <option>Immeuble</option>
+                  <option>Parking</option>
+                  <option>Local commercial</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              {natureBien === "Appartement" ? (
+                <div className='save-group'>
+                  <label>Type d'appartement</label>
+                  <select
+                    type='select'
+                    name='typeAppartement'
+                    onChange={onChangeString}
+                  >
+                    <option>...</option>
+                    <option>Studio</option>
+                    <option>T1</option>
+                    <option>T2</option>
+                    <option>T3</option>
+                    <option>T4</option>
+                    <option>T5</option>
+                    <option>Autres</option>
+                  </select>
+                </div>
+              ) : (
+                ""
+              )}
+              <button>Valider</button>
             </div>
-            <div className='save-input'>
-              {/* <label>Code Postal</label> */}
-              <input
-                type='number'
-                onChange={onChangeString}
-                name='codePostal'
-                max='99999'
-                placeholder='Code postal'
-              />
-            </div>
-            <div className='save-input'>
-              {/* <label>Type de bien</label> */}
-              <select
-                type='select'
-                name='typeBien'
-                onChange={onChangeString}
-                //   value={notaire}
-                //   onChange={onChangeDecimals}
-                //   className='input-box-2 fs-12'
-              >
-                <option>Type de bien...</option>
-                <option>Appartement</option>
-                <option>Maison</option>
-                <option>Immeuble</option>
-                <option>Parking</option>
-                <option>Local commercial</option>
-                <option>Autre</option>
-              </select>
-            </div>
-            <button>Valider</button>
-          </div>
-        </form>
-        {isAuthenticated ? (
-          <div>
-            <h5>Mes projets sauvegardés</h5>
-            <ul>
-              <li className='flex-row'>
-                <input type='checkbox' />
-                <h6>Nom Projet</h6>
-                <h6>Code Postal</h6>
-                <h6>Type de bien</h6>
-                <h6>Mettre à jour un projet</h6>|
-                <h6>Mettre à jour un projet</h6>
-              </li>
-            </ul>
-          </div>
+          </form>
         ) : (
-          ""
+          <div className='saved-projects-box'>
+            <ul>
+              {projects.map((project) => (
+                <li className='saved-projects-items' key={project._id}>
+                  <input
+                    type='radio'
+                    name='projects'
+                    onChange={() => getProjectToUpdate(project._id)}
+                    required
+                  />
+                  <h6>{project.nomProjet}</h6>
+                  <h6>{project.ville}</h6>
+                  <h6>
+                    {project.natureBien}{" "}
+                    {project.typeAppartement ? project.typeAppartement : ""}
+                  </h6>
+                </li>
+              ))}
+            </ul>
+            <div className='saved-button-group'>
+              <button id='visualiser'>Visualiser</button>
+              <button onClick={onSaveProject} id='sauvegarder'>
+                Sauvegarder
+              </button>
+              <button id='Supprimer'>Supprimer</button>
+            </div>
+          </div>
         )}
       </div>
     </section>
@@ -120,11 +176,13 @@ SaveModal.propTypes = {
   modelModalClic: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   saveModal: PropTypes.bool,
+  projects: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  saveModal: state.auth.saveModal,
+  saveModal: state.modals.saveModal,
+  projects: state.modelData.projects,
 });
 
 export default connect(mapStateToProps, {

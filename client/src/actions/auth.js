@@ -18,6 +18,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   AUTH_TOGGLE,
+  PROJECT_LIST,
 } from "./types";
 
 // load the user each time the main app is updated to check authentication
@@ -29,9 +30,16 @@ export const loadUser = () => async (dispatch) => {
   }
   try {
     const res = await api.get("/");
+    console.log(res.data);
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: res.data.user,
+    });
+
+    // insert project list in the payload
+    dispatch({
+      type: PROJECT_LIST,
+      payload: res.data.projects,
     });
   } catch (err) {
     console.log(err.message);
@@ -88,30 +96,30 @@ export const register = (
   }
 };
 
-// Register User modal landing
-export const registerLanding = (registerData) => async (dispatch) => {
-  try {
-    // get the server's response
-    const res = await api.post("/signup", registerData);
+// // Register User modal landing
+// export const registerLanding = (registerData) => async (dispatch) => {
+//   try {
+//     // get the server's response
+//     const res = await api.post("/signup", registerData);
 
-    // if the is a success -> dispatch REGISTER_SUCCESS
-    // attach the response to the playload
-    dispatch({
-      type: REGISTER_SUCCESS,
-    });
+//     // if the is a success -> dispatch REGISTER_SUCCESS
+//     // attach the response to the playload
+//     dispatch({
+//       type: REGISTER_SUCCESS,
+//     });
 
-    // send alert check email
-    dispatch(setAlert(res.data.alert.msg, res.data.alert.color, 5000));
-  } catch (err) {
-    console.log(err.response.data.msg);
-    if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color, 5000));
-    }
-    dispatch({
-      type: REGISTER_FAIL,
-    });
-  }
-};
+//     // send alert check email
+//     dispatch(setAlert(res.data.alert.msg, res.data.alert.color, 5000));
+//   } catch (err) {
+//     console.log(err.response.data.msg);
+//     if (err.response.data.msg) {
+//       dispatch(setAlert(err.response.data.msg, err.response.data.color, 5000));
+//     }
+//     dispatch({
+//       type: REGISTER_FAIL,
+//     });
+//   }
+// };
 
 // Login User + save inputs lorsque clic sur fiscalité et renvoi modal dataviz
 export const login = (loginData, formData, detectSave, detectModel) => async (

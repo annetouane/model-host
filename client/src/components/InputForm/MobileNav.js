@@ -29,6 +29,8 @@ const MobileNav = ({
   isAuthenticated, // bool - redux
   landingModal, // bool - redux
   mobileMenu, // bool - redux
+  width,
+  scrollTo,
 }) => {
   const volver = () => {
     mobileMenuToggle(false); // ferme mobile menu
@@ -47,142 +49,170 @@ const MobileNav = ({
   return (
     <Fragment>
       {mobileMenu ? (
-        <nav
-          className='mobile-nav'
-          style={{ height: landingModal ? "" : "450px" }}
-        >
-          {!landingModal ? (
-            <div className='mobile-nav-box'>
-              {/* projet */}
-              <div className='mobile-nav-item'>
-                {netVendeurCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(0);
-                    volver();
-                  }}
-                >
-                  Projet
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
+        <nav className={width < 770 ? "mobile-nav" : "mobile-nav-tablet"}>
+          {/* {!landingModal ? ( */}
+          <div className='mobile-nav-box'>
+            {/* projet */}
+            <div
+              className='mobile-nav-item'
+              style={{
+                borderRadius: width > 770 && width < 1155 ? "5px 0 0 0" : "0",
+              }}
+            >
+              {netVendeurCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(0);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#projet")
+                }
+              >
+                Projet
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
 
-              {/* financement */}
-              <div className='mobile-nav-item'>
-                {apportCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(1);
-                    volver();
-                  }}
-                >
-                  Financement
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
+            {/* financement */}
+            <div className='mobile-nav-item'>
+              {apportCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(1);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#financement")
+                }
+              >
+                Financement
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
 
-              {/* revenu */}
-              <div className='mobile-nav-item'>
-                {loyerCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(2);
-                    volver();
-                  }}
-                >
-                  Revenu
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
+            {/* revenu */}
+            <div className='mobile-nav-item'>
+              {loyerCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(2);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#revenu")
+                }
+              >
+                Revenu
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
 
-              {/* charges */}
-              <div className='mobile-nav-item'>
-                {chargesCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(3);
-                    volver();
-                  }}
-                >
-                  Charges
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
+            {/* charges */}
+            <div className='mobile-nav-item'>
+              {chargesCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(3);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#charges")
+                }
+              >
+                Charges
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
 
-              {/* foyer */}
-              <div className='mobile-nav-item'>
-                {foyerCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(4);
-                    volver();
-                  }}
-                >
-                  Foyer
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
+            {/* foyer */}
+            <div className='mobile-nav-item'>
+              {foyerCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(4);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#foyer")
+                }
+              >
+                Foyer
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
 
-              {/* régime */}
-              <div className='mobile-nav-item'>
-                {regimeCheck ? (
-                  <i className='far fa-check-circle fa-lg section-complete'></i>
-                ) : (
-                  <i className='far fa-times-circle fa-lg section-uncomplete'></i>
-                )}
-                <button
-                  type='button'
-                  className='mobile-nav-link mobile-side-nav-text'
-                  onClick={() => {
-                    setMobileDisplayTab(5);
-                    volver();
-                  }}
-                >
-                  Régime
-                </button>
-                <i className='far fa-times-circle mobile-nav-dummie'></i>
-              </div>
-              {/* Indicateur button */}
+            {/* régime */}
+            <div className='mobile-nav-item'>
+              {regimeCheck ? (
+                <i className='far fa-check-circle fa-lg section-complete'></i>
+              ) : (
+                <i className='far fa-times-circle fa-lg section-uncomplete'></i>
+              )}
+              <button
+                type='button'
+                className='mobile-nav-link mobile-side-nav-text'
+                onClick={
+                  width < 770
+                    ? () => {
+                        setMobileDisplayTab(2);
+                        volver();
+                      }
+                    : (e) => scrollTo(e, "#regime")
+                }
+              >
+                Régime
+              </button>
+              <i className='far fa-times-circle mobile-nav-dummie'></i>
+            </div>
+
+            {/* Indicateur button */}
+            {width < 770 ? (
               <div className='mobile-kpi-button'>
                 <button type='button' onClick={openIndicateurs}>
                   Voir les indicateurs
                 </button>
                 <i className='fas fa-temperature-high fa-lg' />
               </div>
-            </div>
-          ) : (
-            ""
-          )}
+            ) : (
+              ""
+            )}
+          </div>
 
           {!landingModal ? (
             <div className='mobile-kpi-button'>
@@ -213,7 +243,12 @@ const MobileNav = ({
           )}
 
           {isAuthenticated ? (
-            <div className='mobile-kpi-button'>
+            <div
+              className='mobile-kpi-button'
+              style={{
+                borderBottom: width > 770 && width < 1155 && "none",
+              }}
+            >
               <button
                 onClick={() => {
                   openAccount();
@@ -226,7 +261,12 @@ const MobileNav = ({
               </button>
             </div>
           ) : (
-            <div className='mobile-kpi-button'>
+            <div
+              className='mobile-kpi-button'
+              style={{
+                borderBottom: width > 770 && width < 1155 && "none",
+              }}
+            >
               <button
                 onClick={() => {
                   authToggle(true);
@@ -239,7 +279,6 @@ const MobileNav = ({
               </button>
             </div>
           )}
-          {/* </div> */}
         </nav>
       ) : (
         ""

@@ -23,7 +23,7 @@ const Landing = ({ landingModal, landingToggle, width }) => {
         <div className='landing-header'>
           {width > 770 ? (
             <h3>
-              L’outil pour calculer la rentabilité après impôts de votre
+              L’outil qui calcule la rentabilité après impôts de votre
               investissement locatif
               <img src={title} alt='x' />
             </h3>
@@ -61,7 +61,7 @@ const Landing = ({ landingModal, landingToggle, width }) => {
                 </p>
               </div>
               <div className='landing-benefits-box'>
-                <img style={{ width: "50px" }} src={save} alt='x' />
+                <img src={save} alt='x' />
                 <p>
                   Enregistrer les différents projets étudiés dans votre compte
                   client

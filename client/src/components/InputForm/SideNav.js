@@ -24,7 +24,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc border-bottom'
           style={{
-            backgroundColor: netVendeurCheck && "#016fc9",
+            backgroundColor: netVendeurCheck && "#007be8",
             color: netVendeurCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -34,7 +34,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !netVendeurCheck ? "#fff" : "#016fc9",
+              backgroundColor: !netVendeurCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -54,7 +54,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: netVendeurCheck ? "#016fc9" : "#333",
+              color: netVendeurCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>
@@ -63,7 +63,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc border-bottom'
           style={{
-            backgroundColor: apportCheck && "#016fc9",
+            backgroundColor: apportCheck && "#007be8",
             color: apportCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -72,7 +72,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !apportCheck ? "#fff" : "#016fc9",
+              backgroundColor: !apportCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -92,7 +92,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: apportCheck ? "#016fc9" : "#333",
+              color: apportCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>
@@ -101,7 +101,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc border-bottom'
           style={{
-            backgroundColor: loyerCheck && "#016fc9",
+            backgroundColor: loyerCheck && "#007be8",
             color: loyerCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -110,7 +110,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !loyerCheck ? "#fff" : "#016fc9",
+              backgroundColor: !loyerCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -130,7 +130,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: loyerCheck ? "#016fc9" : "#333",
+              color: loyerCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>
@@ -139,7 +139,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc border-bottom'
           style={{
-            backgroundColor: chargesCheck && "#016fc9",
+            backgroundColor: chargesCheck && "#007be8",
             color: chargesCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -148,7 +148,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !chargesCheck ? "#fff" : "#016fc9",
+              backgroundColor: !chargesCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -168,7 +168,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: chargesCheck ? "#016fc9" : "#333",
+              color: chargesCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>
@@ -177,7 +177,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc border-bottom'
           style={{
-            backgroundColor: foyerCheck && "#016fc9",
+            backgroundColor: foyerCheck && "#007be8",
             color: foyerCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -186,7 +186,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !foyerCheck ? "#fff" : "#016fc9",
+              backgroundColor: !foyerCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -206,7 +206,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: foyerCheck ? "#016fc9" : "#333",
+              color: foyerCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>
@@ -215,7 +215,7 @@ const Indicateurs = ({
         <div
           className='flex-row jc-sb ai-fc'
           style={{
-            backgroundColor: regimeCheck && "#016fc9",
+            backgroundColor: regimeCheck && "#007be8",
             color: regimeCheck && "#fff",
             width: "100%",
             height: "100%",
@@ -225,7 +225,7 @@ const Indicateurs = ({
           <i
             className='far fa-check-circle'
             style={{
-              backgroundColor: !regimeCheck ? "#fff" : "#016fc9",
+              backgroundColor: !regimeCheck ? "#fff" : "#007be8",
               color: "#fff",
               paddingLeft: "20px",
             }}
@@ -245,7 +245,7 @@ const Indicateurs = ({
             className='far fa-times-circle'
             style={{
               backgroundColor: "transparent",
-              color: regimeCheck ? "#016fc9" : "#333",
+              color: regimeCheck ? "#007be8" : "#333",
               paddingRight: "20px",
             }}
           ></i>

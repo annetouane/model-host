@@ -5,15 +5,22 @@ const Schema = mongoose.Schema;
 const InputFormSchema = Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",  
+    ref: "users",
+    required: true,
+  },
+  idProjet: {
+    type: String,
   },
   nomProjet: {
     type: String,
   },
-  codePostal: {
+  ville: {
     type: String,
   },
-  typeBien: {
+  natureBien: {
+    type: String,
+  },
+  typeAppartement: {
     type: String,
   },
   netVendeur: {
@@ -44,7 +51,7 @@ const InputFormSchema = Schema({
   },
   assurance: {
     type: Number,
-  },  
+  },
   fraisBancaires: {
     type: Number,
   },
@@ -113,7 +120,7 @@ const InputFormSchema = Schema({
   },
 });
 
-// InputFormSchema.index({ 
+// InputFormSchema.index({
 //   type: 1,
 //   codePostal: 1,
 //   netVendeur: 1,
@@ -146,8 +153,8 @@ const InputFormSchema = Schema({
 //   nueReel: 1,
 //   nueMicro: 1,
 //   irl: 1,
-//     }, 
-//   { unique: true } 
+//     },
+//   { unique: true }
 //   );
 
 module.exports = InputForm = mongoose.model("inputform", InputFormSchema);

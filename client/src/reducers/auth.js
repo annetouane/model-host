@@ -27,7 +27,7 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true, // user is logged in, the token is valid
         loading: false,
-        user: payload, // the user (email + token)
+        user: payload, // the user (email + id)
       };
     case REGISTER_SUCCESS:
       return {

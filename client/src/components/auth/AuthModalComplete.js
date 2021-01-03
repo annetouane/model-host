@@ -51,8 +51,8 @@ const AuthModalComplete = ({
       condition: false,
     });
     setSignIn({
-      emailSignIn: "",
-      passwordSignIn: "",
+      emailSignIn: "antoine.chardigny@essec.edu",
+      passwordSignIn: "Tonio@8624",
     });
   };
 
@@ -67,7 +67,7 @@ const AuthModalComplete = ({
   return (
     <section className={authModal ? "auth-modal" : "auth-modal-none"}>
       <div className='auth-box' style={{ margin: 0 }}>
-        {width > 770 ? (
+        {width > 1155 ? (
           <div onClick={authClose}>
             <i className='fas fa-times quit-auth-modal'></i>
           </div>

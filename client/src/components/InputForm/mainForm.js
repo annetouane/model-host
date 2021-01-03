@@ -36,6 +36,8 @@ import {
   saveModalToggle,
   modelModalClic,
   modelModalToggle,
+  mobileMenuToggle,
+  landingToggle,
 } from "../../actions/modals";
 
 export const MainForm = ({
@@ -55,6 +57,8 @@ export const MainForm = ({
   userInfo,
   kpiMobile,
   landingModal,
+  mobileMenuToggle,
+  landingToggle,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -67,10 +71,12 @@ export const MainForm = ({
 
   // init form state
   const [formData, setFormData] = useState({
+    idProjet: "",
     user: "",
     nomProjet: "",
-    codePostal: "",
-    typeBien: "",
+    ville: "",
+    natureBien: "",
+    typeAppartement: "",
     netVendeur: 300000,
     travaux: 0,
     ammeublement: 0,
@@ -104,6 +110,9 @@ export const MainForm = ({
 
   // destructure form
   const {
+    idProjet,
+    ville,
+    natureBien,
     netVendeur,
     travaux,
     ammeublement,
@@ -169,9 +178,15 @@ export const MainForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const getProjectToUpdate = (id) => {
+    setFormData({ ...formData, idProjet: id });
+  };
+
   // side navigation -----------------------------------------------------------------------------------------
   const scrollTo = (e, id) => {
     e.preventDefault();
+    landingToggle(false);
+    mobileMenuToggle(false);
     const anchor = document.querySelector(id);
     anchor.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -316,6 +331,7 @@ export const MainForm = ({
 
   const onSave = (e) => {
     e.preventDefault();
+    mobileMenuToggle(false);
     saveModalClic(true); // detect clic sur save
     if (isAuthenticated) {
       // if user logged
@@ -325,11 +341,14 @@ export const MainForm = ({
     }
   };
 
-  // modélisation fiscale *******************************************************************************
+  const onSaveProject = () => {
+    postInputForm(formData, userInfo._id); // post input to db
+  };
 
+  // modélisation fiscale *******************************************************************************
   const onFisc = (e) => {
     e.preventDefault();
-    console.log("test");
+    mobileMenuToggle(false);
     modelModalClic(true); // detect clic sur model
     if (isAuthenticated) {
       // if user logged
@@ -377,6 +396,7 @@ export const MainForm = ({
   };
 
   // Submit functions ---------------------------------------------------------------------------------
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (isAuthenticated) {
@@ -425,7 +445,10 @@ export const MainForm = ({
       {/* save window */}
       <SaveModal
         onChangeString={onChangeString}
-        // switchToSave={switchToSave}
+        onSaveProject={onSaveProject}
+        getProjectToUpdate={getProjectToUpdate}
+        ville={ville}
+        natureBien={natureBien}
       />
 
       {/* Modélisation fiscale */}
@@ -450,32 +473,39 @@ export const MainForm = ({
         ""
       )}
 
-      {width < 770 ? <MobileNavButton /> : ""}
+      {width <= 1155 ? <MobileNavButton /> : ""}
 
-      {width < 770 ? (
+      {width <= 1155 ? (
         <MobileNav
           setMobileDisplayTab={setMobileDisplayTab}
           setDisplayInfoModal={setDisplayInfoModal}
+          scrollTo={scrollTo}
           netVendeurCheck={netVendeurCheck}
           apportCheck={apportCheck}
           loyerCheck={loyerCheck}
           chargesCheck={chargesCheck}
           foyerCheck={foyerCheck}
           regimeCheck={regimeCheck}
+          width={width}
         />
       ) : (
         ""
       )}
 
-      {width < 770 && !landingModal ? (
-        <ButtonModelMobile onSubmit={onSubmit} formCheck={formCheck} />
+      {width <= 1155 && !landingModal ? (
+        <ButtonModelMobile
+          onSubmit={onSubmit}
+          formCheck={formCheck}
+          onSave={onSave}
+          onFisc={onFisc}
+        />
       ) : (
         ""
       )}
 
       {/* main page */}
       <div className='form-container'>
-        {width < 1100 ? (
+        {width <= 950 ? (
           ""
         ) : (
           <IndicateursDesktop
@@ -496,7 +526,7 @@ export const MainForm = ({
           />
         )}
 
-        {width < 1100 && kpiMobile ? (
+        {width < 770 && kpiMobile ? (
           <IndicateursMobile
             showModal={showModal}
             sepSpace={sepSpace}
@@ -669,7 +699,7 @@ export const MainForm = ({
           )}
         </div>
 
-        {width <= 770 ? (
+        {width <= 1155 ? (
           ""
         ) : (
           <SideNav
@@ -688,7 +718,7 @@ export const MainForm = ({
           />
         )}
       </div>
-      {width >= 770 ? (
+      {width >= 1155 ? (
         <Footer
           onSubmitEmail={onSubmitEmail}
           onChangeEmailFooter={onChangeEmailFooter}
@@ -713,6 +743,7 @@ MainForm.propTypes = {
   saveModalToggle: PropTypes.func.isRequired,
   modelModalClic: PropTypes.func.isRequired,
   modelModalToggle: PropTypes.func.isRequired,
+  landingToggle: PropTypes.func.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
 };
@@ -737,4 +768,6 @@ export default connect(mapStateToProps, {
   saveModalToggle,
   modelModalClic,
   modelModalToggle,
+  mobileMenuToggle,
+  landingToggle,
 })(MainForm);
