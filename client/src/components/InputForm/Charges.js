@@ -108,9 +108,7 @@ const Charges = ({
                   ?
                 </button>
               </div>
-              <small
-              // style={{ visibility: revAnnuel !== 0 ? 'visible' : 'hidden' }}
-              >
+              <small>
                 {Math.round(
                   ((gestion / (revAnnuel - chargesLoc)) * 100 +
                     Number.EPSILON) *
@@ -264,7 +262,7 @@ const Charges = ({
           </div>
         </div>
       </div>
-      {width < 700 ? (
+      {width < 770 ? (
         <MobilePagination
           setMobileDisplayTab={setMobileDisplayTab}
           mobileDisplayTab={mobileDisplayTab}

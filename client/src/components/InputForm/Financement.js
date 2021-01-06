@@ -129,7 +129,7 @@ const Financement = ({
                   marginRight: "5px",
                   color: "#007be8",
                 }}
-                class='fas fa-exclamation-circle'
+                className='fas fa-exclamation-circle'
               ></i>
               Apport supérieur au coût du projet. L'investisseur finance le
               projet à 100% sans contracter d'emprunt.

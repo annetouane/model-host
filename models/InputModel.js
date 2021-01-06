@@ -74,7 +74,7 @@ const InputFormSchema = Schema({
   gestion: {
     type: Number,
   },
-  chargesLoc: {
+  charges: {
     type: Number,
   },
   pno: {
@@ -97,19 +97,19 @@ const InputFormSchema = Schema({
     type: Number,
   },
   sciIs: {
-    type: String,
+    type: Boolean,
   },
   lmnpReel: {
-    type: String,
+    type: Boolean,
   },
   lmnpMicro: {
-    type: String,
+    type: Boolean,
   },
   nueReel: {
-    type: String,
+    type: Boolean,
   },
   nueMicro: {
-    type: String,
+    type: Boolean,
   },
   irl: {
     type: Number,

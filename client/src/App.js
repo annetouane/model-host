@@ -34,15 +34,21 @@ const App = () => {
     store.dispatch(loadUser());
     // [] argument makes sure it only run ones instead of an infinite nbr of times
   }, []);
-  
+
   return (
     <Provider store={store}>
       <Fragment>
         <Router>
-        <Helmet>
-          <title>Simulimo</title>
-          <link rel="icon" type="image/png" href={favicon} sizes="256x256" style={{ borderRadius: "100px" }}/>
-        </Helmet>
+          <Helmet>
+            <title>Simulimo</title>
+            <link
+              rel='icon'
+              type='image/png'
+              href={favicon}
+              sizes='256x256'
+              style={{ borderRadius: "100px" }}
+            />
+          </Helmet>
           <NavBar />
           <Switch>
             <Route exact path='/' component={MainForm} />

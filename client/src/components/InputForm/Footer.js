@@ -27,7 +27,7 @@ const Footer = ({
               disabled
               style={{ cursor: "auto", backgroundColor: "#007be8" }}
             >
-              Merci&nbsp;<i class='fas fa-check'></i>
+              Merci&nbsp;<i className='fas fa-check'></i>
             </button>
           )}
         </form>

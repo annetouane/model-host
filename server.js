@@ -17,6 +17,10 @@ const ChangePasswordRoute = require("./routes/ChangePasswordRoute");
 const LoadUserRoute = require("./routes/LoadUserRoute");
 const DeleteAccount = require("./routes/DeleteAccount");
 
+// delete
+// const config = require("config");
+// const db = config.get("mongoURI");
+
 // init server
 const app = express();
 
@@ -37,7 +41,6 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 //   res.render("contact");
 // });
 
-// db configuration
 connectDB();
 
 app.use("/input", InputRoute);

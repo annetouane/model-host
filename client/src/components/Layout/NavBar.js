@@ -44,7 +44,29 @@ export const NavBar = ({
     accountModalToggle(true);
   };
 
-  const volver = () => {
+  const resetClickAuth = () => {
+    mobileMenuToggle(false); // ferme le menu mobile
+    accountModalToggle(false); // ferme la fenetre mon compte
+    kpiMobileToggle(false); // ferme la fenetre indicateurs
+    modelModalToggle(false); // ferme la fenetre model
+    saveModalToggle(false); // ferme la fenetre save
+  };
+  const resetClickAccueil = () => {
+    mobileMenuToggle(false); // ferme le menu mobile
+    authToggle(false); // ferme la fenetre authentification
+    accountModalToggle(false); // ferme la fenetre mon compte
+    kpiMobileToggle(false); // ferme la fenetre indicateurs
+    modelModalToggle(false); // ferme la fenetre model
+    saveModalToggle(false); // ferme la fenetre save
+  };
+  const resetClickAccount = () => {
+    mobileMenuToggle(false); // ferme le menu mobile
+    authToggle(false); // ferme la fenetre authentification
+    kpiMobileToggle(false); // ferme la fenetre indicateurs
+    modelModalToggle(false); // ferme la fenetre model
+    saveModalToggle(false); // ferme la fenetre save
+  };
+  const resetClickSimulateur = () => {
     mobileMenuToggle(false); // ferme le menu mobile
     authToggle(false); // ferme la fenetre authentification
     accountModalToggle(false); // ferme la fenetre mon compte
@@ -60,7 +82,7 @@ export const NavBar = ({
           style={{ fontSize: "24px", fontWeight: "bold" }}
           onClick={() => {
             landingToggle(true);
-            volver();
+            resetClickAccueil();
           }}
         >
           SIMULIMO
@@ -71,21 +93,36 @@ export const NavBar = ({
           <ul>
             <li>
               {landingModal ? (
-                <button onClick={() => landingToggle(false)}>
+                <button
+                  onClick={() => {
+                    landingToggle(false);
+                    resetClickSimulateur();
+                  }}
+                >
                   <span className='link'>
                     Simulateur&nbsp;<i className='fas fa-chart-bar'></i>
                   </span>
                 </button>
               ) : (
-                <button onClick={() => landingToggle(true)}>
+                <button
+                  onClick={() => {
+                    landingToggle(true);
+                    resetClickAccueil();
+                  }}
+                >
                   <span className='link'>
-                    Accueil&nbsp;<i class='fas fa-home'></i>
+                    Accueil&nbsp;<i className='fas fa-home'></i>
                   </span>
                 </button>
               )}
             </li>
             <li>
-              <button onClick={openAccount}>
+              <button
+                onClick={() => {
+                  openAccount();
+                  resetClickAccount();
+                }}
+              >
                 <span className='link'>
                   Mon Compte&nbsp;<i className='far fa-user-circle'></i>
                 </span>
@@ -98,21 +135,36 @@ export const NavBar = ({
           <ul>
             <li>
               {landingModal ? (
-                <button onClick={() => landingToggle(false)}>
+                <button
+                  onClick={() => {
+                    landingToggle(false);
+                    resetClickSimulateur();
+                  }}
+                >
                   <span className='link'>
                     Simulateur&nbsp;<i className='fas fa-chart-bar'></i>
                   </span>
                 </button>
               ) : (
-                <button onClick={() => landingToggle(true)}>
+                <button
+                  onClick={() => {
+                    landingToggle(true);
+                    resetClickAccueil();
+                  }}
+                >
                   <span className='link'>
-                    Accueil&nbsp;<i class='fas fa-home'></i>
+                    Accueil&nbsp;<i className='fas fa-home'></i>
                   </span>
                 </button>
               )}
             </li>
             <li>
-              <button onClick={() => authToggle(true)}>
+              <button
+                onClick={() => {
+                  authToggle(true);
+                  resetClickAuth();
+                }}
+              >
                 <span className='link'>
                   S'identifier&nbsp;<i className='far fa-user-circle'></i>
                 </span>

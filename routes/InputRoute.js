@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const LoanJS = require("loanjs");
 
+// middleware
+const auth = require("../middleware/auth");
+
 // models
 const InputForm = require("../models/InputModel");
 
@@ -10,6 +13,7 @@ const InputForm = require("../models/InputModel");
 // @description : post new project
 // @ access : authentication (Public)
 router.post("/", async (req, res) => {
+  console.log(req.body);
   try {
     // create new input object
     const inputs = {
@@ -639,19 +643,20 @@ router.post("/", async (req, res) => {
       );
     });
 
-    console.log(inputs);
-    console.log(req.body.idProjet);
-    // si un ID reçue dans req -> cherche si le projet existe pour checker l'ID reçue
-    if (req.body.idProjet) {
-      // const checkProjet = await InputForm.find({ _id: req.body.idProjet });
-      // // return res.status(400).send({ msg: "Utilisateur introuvable" });
-      // // si projet existe (array not empty) -> update
-      // if (checkProjet.lenght > 0) {
-      //   console.log(checkProjet);
+    // si nom du projet est null : lorsque click fiscalité button
+    if (nomProjet === "") {
+      // assign inputs to the model
+      newInputs = InputForm(inputs);
+      // create new project
+      await newInputs.save();
+      res.json(array);
+      console.log("model insert");
+      // si un ID reçue dans req -> cherche le projet par ID pour l'update
+    } else if (req.body.idProjet) {
+      // retire la description du projet de inputs pour ne pas updater ces champs par ""
       ["nomProjet", "ville", "natureBien", "typeAppartement"].forEach(
         (e) => delete inputs[e]
       );
-      console.log(inputs);
       await InputForm.findByIdAndUpdate(
         { _id: req.body.idProjet },
         {
@@ -660,24 +665,55 @@ router.post("/", async (req, res) => {
       );
       console.log("update");
       res.json(array);
-      // } else {
-      // // assign inputs to the model
-      // newInputs = InputForm(inputs);
-      // // create new project
-      // await newInputs.save();
-      // res.json(array);
-      // console.log("create 1");
+      // si creation nouveau projet via save window
     } else {
-      // assign inputs to the model
-      newInputs = InputForm(inputs);
-      // create new project
-      await newInputs.save();
-      res.json(array);
-      console.log("create");
+      console.log(inputs);
+      // cherche si nom projet existe pour cet utilisateur
+      const projectName = await InputForm.find({
+        $and: [{ user: user }, { nomProjet: nomProjet }],
+      });
+      console.log(projectName);
+      // si projet exist return error
+      if (projectName.length > 0) {
+        return res
+          .status(400)
+          .send({ msg: "Ce nom de projet existe déjà", color: "red" });
+        // insert to database
+      } else {
+        // assign inputs to the model
+        newInputs = InputForm(inputs);
+        // create new project
+        await newInputs.save();
+        res.json(array);
+        console.log("save new");
+      }
     }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+// @route : DELETE /
+// @description : delete project according to ID
+// @ access : Private
+router.delete("/:id", auth, async (req, res) => {
+  // console.log(req.params.id);
+  if (req.params.id === "") {
+    return res.status(400).json({
+      msg: "Merci de sélectionner un projet à supprimer",
+      color: "orange",
+    });
+  }
+  try {
+    const project = await InputForm.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ msg: "Projet introuvable", color: "red" });
+    }
+    await InputForm.findByIdAndRemove(req.params.id);
+    res.send(req.params.id);
+  } catch (err) {
+    return res.status(500).json({ msg: "server error" });
   }
 });
 

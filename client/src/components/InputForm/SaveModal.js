@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 // component
 import LocationSearchInput from "./CityGoogleApi";
+import Alert from "../Layout/Alert";
 
 // actions
 import {
@@ -23,7 +24,8 @@ const SaveModal = ({
   getProjectToUpdate, // get nomProjet to mainform state
   natureBien, // nature du bien pour condition type d'appartement
   projects, // liste de projets
-  onSaveProject, // save new project to the database
+  onCreateProject, // save new project to the database
+  onUpdateProject, // save new project to the database
 }) => {
   // choix tab : création compte ou connection
   const [newProject, setNewProject] = useState(true);
@@ -32,6 +34,7 @@ const SaveModal = ({
     saveModalToggle(false); // close auth modal
     saveModalClic(false); // save n'est plus actif
     modelModalClic(false); // model n'est plus actif
+    getProjectToUpdate("");
   };
 
   return (
@@ -77,7 +80,7 @@ const SaveModal = ({
           </button>
         </div>
         {newProject ? (
-          <form style={{ width: "100%" }} onSubmit={onSaveProject}>
+          <form style={{ width: "100%" }} onSubmit={onCreateProject}>
             <div className='save-form'>
               <div className='save-group'>
                 <label>Nom du projet</label>
@@ -132,11 +135,11 @@ const SaveModal = ({
               ) : (
                 ""
               )}
-              <button>Valider</button>
+              <button>Sauvegarder</button>
             </div>
           </form>
         ) : (
-          <div className='saved-projects-box'>
+          <form className='saved-projects-box' onSubmit={onUpdateProject}>
             <ul>
               {projects.map((project) => (
                 <li className='saved-projects-items' key={project._id}>
@@ -155,15 +158,22 @@ const SaveModal = ({
                 </li>
               ))}
             </ul>
-            <div className='saved-button-group'>
-              <button id='visualiser'>Visualiser</button>
-              <button onClick={onSaveProject} id='sauvegarder'>
-                Sauvegarder
-              </button>
-              <button id='Supprimer'>Supprimer</button>
-            </div>
-          </div>
+            {projects.length > 0 ? (
+              <div className='saved-button-group'>
+                <button id='sauvegarder'>Mettre à jour</button>
+              </div>
+            ) : (
+              <div className='no-project-saved'>
+                <p>
+                  Vous n'avez pas encore de projet sauvegardé. <br /> Créer un
+                  projet dans l'onglet dédié puis vous pourrez le mettre à jour
+                  ici lorsque vous changerez ses paramètres.
+                </p>
+              </div>
+            )}
+          </form>
         )}
+        <Alert />
       </div>
     </section>
   );

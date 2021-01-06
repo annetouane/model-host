@@ -1,5 +1,12 @@
 // action type
-import { MODEL_DATA, STORE_PARAMS } from "./types";
+import {
+  MODEL_DATA,
+  STORE_PARAMS,
+  DELETE_PROJECT,
+  NEW_PROJECT,
+  UPDATE_PROJECT,
+} from "./types";
+import { setAlert } from "./alert";
 
 // utilities
 import api from "../utilities/api";
@@ -12,7 +19,6 @@ export const storeParams = (formData) => (dispatch) => {
 };
 
 export const postInputForm = (formData, id) => async (dispatch) => {
-  console.log("input");
   // insert the form into a new variable
   const postInput = formData;
   // insert the user ID in the form data
@@ -29,22 +35,8 @@ export const postInputForm = (formData, id) => async (dispatch) => {
       payload: formData,
     });
   } catch (err) {
-    const error = err.response.data.msg;
-    if (error) {
-      console.log(error);
-      // dispatch(setAlert(error, "red"));
-    }
-  }
-};
-
-export const updateExistingProject = (formData, id) => async (dispatch) => {
-  try {
-    console.log();
-  } catch (err) {
-    const error = err.response.data.msg;
-    if (error) {
-      console.log(error);
-      // dispatch(setAlert(error, "red"));
+    if (err.response.data.msg) {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
   }
 };
@@ -62,10 +54,37 @@ export const postEmail = (email) => async (dispatch) => {
       console.log("local");
     }
   } catch (err) {
-    const error = err.response.data.msg;
-    if (error) {
-      console.log(error);
-      // dispatch(setAlert(error, "red"));
+    if (err.response.data.msg) {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
   }
+};
+
+export const deleteProject = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/input/${id}`);
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: { idProjet: res.data },
+    });
+  } catch (err) {
+    console.log(err);
+    if (err.response.data.msg) {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
+    }
+  }
+};
+
+export const saveToReducer = (formData) => async (dispatch) => {
+  dispatch({
+    type: NEW_PROJECT,
+    payload: { idProjet: formData },
+  });
+};
+
+export const updateToReducer = (formData) => async (dispatch) => {
+  dispatch({
+    type: UPDATE_PROJECT,
+    payload: { idProjet: formData },
+  });
 };

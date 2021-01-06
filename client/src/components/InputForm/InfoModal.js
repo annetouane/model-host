@@ -10,7 +10,7 @@ const InfoModal = ({ idContent, setDisplayInfoModal }) => {
             <div className='info-modal-header'>
               <h3>{filteredInfo.titre}</h3>
               <button onClick={() => setDisplayInfoModal(false)}>
-                <i class='far fa-times-circle fa-2x'></i>
+                <i className='far fa-times-circle fa-2x'></i>
               </button>
             </div>
             <div

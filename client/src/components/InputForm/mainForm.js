@@ -28,7 +28,14 @@ import AccountModal from "../auth/AccountModal";
 import Landing from "../Layout/Landing";
 
 // actions
-import { storeParams, postInputForm, postEmail } from "../../actions/formData";
+import {
+  storeParams,
+  postInputForm,
+  postEmail,
+  deleteProject,
+  saveToReducer,
+  updateToReducer,
+} from "../../actions/formData";
 import { register, login } from "../../actions/auth";
 import {
   authToggle,
@@ -38,7 +45,9 @@ import {
   modelModalToggle,
   mobileMenuToggle,
   landingToggle,
+  accountModalToggle,
 } from "../../actions/modals";
+import { setAlert } from "../../actions/alert";
 
 export const MainForm = ({
   storeParams,
@@ -59,6 +68,10 @@ export const MainForm = ({
   landingModal,
   mobileMenuToggle,
   landingToggle,
+  deleteProject,
+  setAlert,
+  projects,
+  accountModalToggle,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -67,7 +80,11 @@ export const MainForm = ({
 
   // const [inputSaved, setIinputSaved ] = useState(false);
 
+  // pagination mobile
   const [mobileDisplayTab, setMobileDisplayTab] = useState(0);
+
+  // pagination project
+  const [projectDisplayTab, setProjectDisplayTab] = useState(0);
 
   // init form state
   const [formData, setFormData] = useState({
@@ -341,8 +358,31 @@ export const MainForm = ({
     }
   };
 
-  const onSaveProject = () => {
+  const onCreateProject = (e) => {
+    e.preventDefault();
     postInputForm(formData, userInfo._id); // post input to db
+    saveToReducer(formData);
+    getProjectToUpdate(""); // set "" for project id
+    // to do : dispatch to reducer list of projects
+  };
+
+  const onUpdateProject = (e) => {
+    e.preventDefault();
+    postInputForm(formData, userInfo._id); // post input to db
+    updateToReducer(formData);
+    getProjectToUpdate(""); // set "" for project id
+    // to do : dispatch to reducer list of projects
+  };
+
+  const onDeleteProject = (e) => {
+    e.preventDefault();
+    // si authentifié et projet a été sélectionné dans le formulaire :
+    if (isAuthenticated && idProjet !== "") {
+      deleteProject(idProjet);
+      getProjectToUpdate(""); // reset selected project ID
+    } else {
+      setAlert("Merci de sélectionner un projet à supprimer", "orange", 3000);
+    }
   };
 
   // modélisation fiscale *******************************************************************************
@@ -395,17 +435,7 @@ export const MainForm = ({
     login(signIn, formData, detectSave, detectModel);
   };
 
-  // Submit functions ---------------------------------------------------------------------------------
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (isAuthenticated) {
-      postInputForm(formData); // post input to db
-    } else {
-      console.log("else on submit");
-    }
-  };
-
+  // Submit email ---------------------------------------------------------------------------------
   const onSubmitEmail = async (e) => {
     e.preventDefault();
     if (eFooter) {
@@ -415,6 +445,51 @@ export const MainForm = ({
       console.log("nada");
     }
     setEmailFooter({ eFooter: "" });
+  };
+
+  // visualise model sauvegardé
+  const onVisualise = (e) => {
+    e.preventDefault();
+    const project = projects.find((x) => x._id === idProjet);
+    setFormData({
+      ...formData,
+      nomProjet: project.nomProjet,
+      ville: project.ville,
+      natureBien: project.natureBien,
+      typeAppartement: project.typeAppartement,
+      netVendeur: project.netVendeur,
+      travaux: project.travaux,
+      ammeublement: project.ammeublement,
+      notaire: project.notaire,
+      agence: project.agence,
+      duree: project.duree,
+      apport: project.apport,
+      interet: project.interet * 100,
+      assurance: project.assurance * 100,
+      fraisBancaires: project.fraisBancaires,
+      fraisCourtier: project.fraisCourtier,
+      loyer: project.loyer,
+      chargesLoc: project.chargesLoc,
+      occupation: project.occupation,
+      fonciere: project.fonciere,
+      gestion: project.gestion,
+      charges: project.charges,
+      pno: project.pno,
+      revInvest1: project.revInvest1,
+      augInvest1: project.augInvest1,
+      revInvest2: project.revInvest2,
+      augInvest2: project.augInvest2,
+      partFisc: project.partFisc,
+      sciIs: project.sciIs,
+      lmnpReel: project.lmnpReel,
+      lmnpMicro: project.lmnpMicro,
+      nueReel: project.nueReel,
+      nueMicro: project.nueMicro,
+      irl: project.irl * 100,
+    });
+    accountModalToggle(false); // ferme la fenetre account
+    landingToggle(false); // va au simulateur
+    getProjectToUpdate(""); // reset selected project ID
   };
 
   return (
@@ -440,15 +515,23 @@ export const MainForm = ({
       />
 
       {/* account window */}
-      <AccountModal />
+      <AccountModal
+        projectDisplayTab={projectDisplayTab}
+        setProjectDisplayTab={setProjectDisplayTab}
+        getProjectToUpdate={getProjectToUpdate}
+        onDeleteProject={onDeleteProject}
+        onVisualise={onVisualise}
+      />
 
       {/* save window */}
       <SaveModal
         onChangeString={onChangeString}
-        onSaveProject={onSaveProject}
+        onCreateProject={onCreateProject}
+        onUpdateProject={onUpdateProject}
         getProjectToUpdate={getProjectToUpdate}
         ville={ville}
         natureBien={natureBien}
+        width={width}
       />
 
       {/* Modélisation fiscale */}
@@ -494,7 +577,6 @@ export const MainForm = ({
 
       {width <= 1155 && !landingModal ? (
         <ButtonModelMobile
-          onSubmit={onSubmit}
           formCheck={formCheck}
           onSave={onSave}
           onFisc={onFisc}
@@ -703,7 +785,6 @@ export const MainForm = ({
           ""
         ) : (
           <SideNav
-            onSubmit={onSubmit}
             showModal={showModal}
             scrollTo={scrollTo}
             onSave={onSave}
@@ -744,6 +825,8 @@ MainForm.propTypes = {
   modelModalClic: PropTypes.func.isRequired,
   modelModalToggle: PropTypes.func.isRequired,
   landingToggle: PropTypes.func.isRequired,
+  accountModalToggle: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
 };
@@ -755,6 +838,7 @@ const mapStateToProps = (state) => ({
   detectModel: state.modals.detectModel,
   kpiMobile: state.modals.kpiMobile,
   landingModal: state.modals.landingModal,
+  projects: state.modelData.projects,
 });
 
 export default connect(mapStateToProps, {
@@ -770,4 +854,7 @@ export default connect(mapStateToProps, {
   modelModalToggle,
   mobileMenuToggle,
   landingToggle,
+  deleteProject,
+  setAlert,
+  accountModalToggle,
 })(MainForm);

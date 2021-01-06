@@ -154,7 +154,7 @@ const FoyerDesktop = ({
         </div>
         {revInvest2 !== 0 ? (
           <p className='fs-12 orange'>
-            <i class='fas fa-exclamation-circle mr-5'></i>
+            <i className='fas fa-exclamation-circle mr-5'></i>
             Dans sa version actuelle, Simulimo permet uniquement de modéliser un
             investissement avec un seul investisseur ou deux investisseurs
             rattachés au même foyer fiscal.
