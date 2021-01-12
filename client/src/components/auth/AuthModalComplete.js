@@ -51,8 +51,8 @@ const AuthModalComplete = ({
       condition: false,
     });
     setSignIn({
-      emailSignIn: "antoine.chardigny@essec.edu",
-      passwordSignIn: "Tonio@8624",
+      emailSignIn: "",
+      passwordSignIn: "",
     });
   };
 

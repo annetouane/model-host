@@ -26,15 +26,16 @@ import SaveModal from "./SaveModal";
 import Modelisation from "../dashboards/Modelisation";
 import AccountModal from "../auth/AccountModal";
 import Landing from "../Layout/Landing";
+// import Spinner from "../Layout/Spinner";
 
 // actions
 import {
   storeParams,
-  postInputForm,
+  getModelData,
+  createProject,
+  updateProject,
   postEmail,
   deleteProject,
-  saveToReducer,
-  updateToReducer,
 } from "../../actions/formData";
 import { register, login } from "../../actions/auth";
 import {
@@ -51,7 +52,9 @@ import { setAlert } from "../../actions/alert";
 
 export const MainForm = ({
   storeParams,
-  postInputForm,
+  getModelData,
+  createProject,
+  updateProject,
   postEmail,
   isAuthenticated,
   register,
@@ -60,7 +63,6 @@ export const MainForm = ({
   saveModalClic,
   saveModalToggle,
   modelModalClic,
-  modelModalToggle,
   detectSave,
   detectModel,
   userInfo,
@@ -72,6 +74,10 @@ export const MainForm = ({
   setAlert,
   projects,
   accountModalToggle,
+  modelModal,
+  saveModal,
+  accountModal,
+  currentModel,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -108,7 +114,7 @@ export const MainForm = ({
     loyer: 2000,
     chargesLoc: 0,
     occupation: 11,
-    fonciere: 30000,
+    fonciere: 3000,
     gestion: 0,
     charges: 0,
     pno: 0,
@@ -128,8 +134,9 @@ export const MainForm = ({
   // destructure form
   const {
     idProjet,
-    ville,
+    nomProjet,
     natureBien,
+    typeAppartement,
     netVendeur,
     travaux,
     ammeublement,
@@ -195,8 +202,21 @@ export const MainForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const getProjectToUpdate = (id) => {
-    setFormData({ ...formData, idProjet: id });
+  // get id and project name du composant dans la fenetre accountModal
+  const getProjectToUpdate = (id, projectName) => {
+    setFormData({ ...formData, idProjet: id, nomProjet: projectName });
+  };
+
+  // une fois un projet sauvegardé / effacé / mis à jour
+  const cleanSaveForm = () => {
+    setFormData({
+      ...formData,
+      idProjet: "",
+      nomProjet: "",
+      ville: "",
+      natureBien: "",
+      typeAppartement: "",
+    });
   };
 
   // side navigation -----------------------------------------------------------------------------------------
@@ -309,7 +329,7 @@ export const MainForm = ({
       }
     };
     // update the reducer asynchronously with the new values of the form
-    storeParams(formData);
+    // storeParams(formData);
 
     // // alert user before leaving the page
     // if (inputSaved) {
@@ -360,18 +380,14 @@ export const MainForm = ({
 
   const onCreateProject = (e) => {
     e.preventDefault();
-    postInputForm(formData, userInfo._id); // post input to db
-    saveToReducer(formData);
-    getProjectToUpdate(""); // set "" for project id
-    // to do : dispatch to reducer list of projects
+    createProject(formData, userInfo._id); // post input to db
+    cleanSaveForm(); // reset les champs du formulaire de sauvegarde
   };
 
   const onUpdateProject = (e) => {
     e.preventDefault();
-    postInputForm(formData, userInfo._id); // post input to db
-    updateToReducer(formData);
-    getProjectToUpdate(""); // set "" for project id
-    // to do : dispatch to reducer list of projects
+    updateProject(formData); // post input to db
+    cleanSaveForm(); // reset les champs du formulaire de sauvegarde
   };
 
   const onDeleteProject = (e) => {
@@ -379,7 +395,7 @@ export const MainForm = ({
     // si authentifié et projet a été sélectionné dans le formulaire :
     if (isAuthenticated && idProjet !== "") {
       deleteProject(idProjet);
-      getProjectToUpdate(""); // reset selected project ID
+      cleanSaveForm(); // reset les champs du formulaire de sauvegarde
     } else {
       setAlert("Merci de sélectionner un projet à supprimer", "orange", 3000);
     }
@@ -392,8 +408,7 @@ export const MainForm = ({
     modelModalClic(true); // detect clic sur model
     if (isAuthenticated) {
       // if user logged
-      postInputForm(formData, userInfo._id); // submit input to db
-      modelModalToggle(true); // open modelisation fiscale
+      getModelData(formData); // submit input to db
     } else {
       authToggle(true); // sinon ouvre auth modal
     }
@@ -449,47 +464,52 @@ export const MainForm = ({
 
   // visualise model sauvegardé
   const onVisualise = (e) => {
-    e.preventDefault();
-    const project = projects.find((x) => x._id === idProjet);
-    setFormData({
-      ...formData,
-      nomProjet: project.nomProjet,
-      ville: project.ville,
-      natureBien: project.natureBien,
-      typeAppartement: project.typeAppartement,
-      netVendeur: project.netVendeur,
-      travaux: project.travaux,
-      ammeublement: project.ammeublement,
-      notaire: project.notaire,
-      agence: project.agence,
-      duree: project.duree,
-      apport: project.apport,
-      interet: project.interet * 100,
-      assurance: project.assurance * 100,
-      fraisBancaires: project.fraisBancaires,
-      fraisCourtier: project.fraisCourtier,
-      loyer: project.loyer,
-      chargesLoc: project.chargesLoc,
-      occupation: project.occupation,
-      fonciere: project.fonciere,
-      gestion: project.gestion,
-      charges: project.charges,
-      pno: project.pno,
-      revInvest1: project.revInvest1,
-      augInvest1: project.augInvest1,
-      revInvest2: project.revInvest2,
-      augInvest2: project.augInvest2,
-      partFisc: project.partFisc,
-      sciIs: project.sciIs,
-      lmnpReel: project.lmnpReel,
-      lmnpMicro: project.lmnpMicro,
-      nueReel: project.nueReel,
-      nueMicro: project.nueMicro,
-      irl: project.irl * 100,
-    });
-    accountModalToggle(false); // ferme la fenetre account
-    landingToggle(false); // va au simulateur
-    getProjectToUpdate(""); // reset selected project ID
+    if (nomProjet === "") {
+      setAlert("Merci de sélectionner un projet à visualiser", "orange", 3000);
+    } else {
+      e.preventDefault();
+      const project = projects.find((x) => x._id === idProjet);
+      setFormData({
+        ...formData,
+        idProjet: "",
+        nomProjet: "",
+        ville: "",
+        natureBien: "",
+        typeAppartement: "",
+        netVendeur: project.netVendeur,
+        travaux: project.travaux,
+        ammeublement: project.ammeublement,
+        notaire: project.notaire,
+        agence: project.agence,
+        duree: project.duree,
+        apport: project.apport,
+        interet: project.interet * 100,
+        assurance: project.assurance * 100,
+        fraisBancaires: project.fraisBancaires,
+        fraisCourtier: project.fraisCourtier,
+        loyer: project.loyer,
+        chargesLoc: project.chargesLoc,
+        occupation: project.occupation,
+        fonciere: project.fonciere,
+        gestion: project.gestion,
+        charges: project.charges,
+        pno: project.pno,
+        revInvest1: project.revInvest1,
+        augInvest1: project.augInvest1,
+        revInvest2: project.revInvest2,
+        augInvest2: project.augInvest2,
+        partFisc: project.partFisc,
+        sciIs: project.sciIs,
+        lmnpReel: project.lmnpReel,
+        lmnpMicro: project.lmnpMicro,
+        nueReel: project.nueReel,
+        nueMicro: project.nueMicro,
+        irl: project.irl * 100,
+      });
+      accountModalToggle(false); // ferme la fenetre account
+      landingToggle(false); // va au simulateur
+      storeParams(project);
+    }
   };
 
   return (
@@ -515,27 +535,49 @@ export const MainForm = ({
       />
 
       {/* account window */}
-      <AccountModal
-        projectDisplayTab={projectDisplayTab}
-        setProjectDisplayTab={setProjectDisplayTab}
-        getProjectToUpdate={getProjectToUpdate}
-        onDeleteProject={onDeleteProject}
-        onVisualise={onVisualise}
-      />
+      {accountModal ? (
+        <AccountModal
+          projectDisplayTab={projectDisplayTab}
+          setProjectDisplayTab={setProjectDisplayTab}
+          getProjectToUpdate={getProjectToUpdate}
+          onDeleteProject={onDeleteProject}
+          onVisualise={onVisualise}
+        />
+      ) : (
+        ""
+      )}
 
       {/* save window */}
-      <SaveModal
-        onChangeString={onChangeString}
-        onCreateProject={onCreateProject}
-        onUpdateProject={onUpdateProject}
-        getProjectToUpdate={getProjectToUpdate}
-        ville={ville}
-        natureBien={natureBien}
-        width={width}
-      />
+      {saveModal ? (
+        <SaveModal
+          onChangeString={onChangeString}
+          onCreateProject={onCreateProject}
+          onUpdateProject={onUpdateProject}
+          getProjectToUpdate={getProjectToUpdate}
+          cleanSaveForm={cleanSaveForm}
+          nomProjet={nomProjet}
+          natureBien={natureBien}
+          typeAppartement={typeAppartement}
+          width={width}
+        />
+      ) : (
+        ""
+      )}
 
       {/* Modélisation fiscale */}
-      <Modelisation />
+      {currentModel.length > 0 ? (
+        <Modelisation
+          sepSpace={sepSpace}
+          sciIs={sciIs}
+          lmnpReel={lmnpReel}
+          lmnpMicro={lmnpMicro}
+          nueReel={nueReel}
+          nueMicro={nueMicro}
+          duree={duree}
+        />
+      ) : (
+        ""
+      )}
 
       {/* information windows */}
       {displayInfoModal ? (
@@ -815,7 +857,9 @@ export const MainForm = ({
 
 MainForm.propTypes = {
   storeParams: PropTypes.func.isRequired,
-  postInputForm: PropTypes.func.isRequired,
+  getModelData: PropTypes.func.isRequired,
+  createProject: PropTypes.func.isRequired,
+  updateProject: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   postEmail: PropTypes.func.isRequired,
@@ -829,6 +873,10 @@ MainForm.propTypes = {
   setAlert: PropTypes.func.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
+  modelModal: PropTypes.bool.isRequired,
+  saveModal: PropTypes.bool.isRequired,
+  accountModal: PropTypes.bool.isRequired,
+  currentModel: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
@@ -838,12 +886,18 @@ const mapStateToProps = (state) => ({
   detectModel: state.modals.detectModel,
   kpiMobile: state.modals.kpiMobile,
   landingModal: state.modals.landingModal,
+  modelModal: state.modals.landingModal,
+  saveModal: state.modals.saveModal,
+  accountModal: state.modals.accountModal,
   projects: state.modelData.projects,
+  currentModel: state.modelData.currentModel,
 });
 
 export default connect(mapStateToProps, {
   storeParams,
-  postInputForm,
+  getModelData,
+  createProject,
+  updateProject,
   postEmail,
   register,
   login,

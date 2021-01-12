@@ -41,12 +41,12 @@ const AccountModal = ({
 
   // ferme fenetre et reset clic detect
   const accountClose = () => {
-    resetStates(); // effecace le contenu des inputs
-    accountModalToggle(false); // close account modal
-    setParamAccount({ toggleParamAccount: true }); // réinitialise l'onglet Projet sauvegardé
-    setPwdChange({ togglePwdChange: false }); // ferme l'onglet changement de mdp
-    setDeleteButton({ toggleDelete: false }); // ferme l'onglet delete account
-    getProjectToUpdate(""); // remet à zéro l'id projet à manipuler
+    resetStates(); // effecace le contenu des inputs - local
+    accountModalToggle(false); // close account modal - redux
+    setParamAccount({ toggleParamAccount: true }); // réinitialise l'onglet Projet sauvegardé - local
+    setPwdChange({ togglePwdChange: false }); // ferme l'onglet changement de mdp - local
+    setDeleteButton({ toggleDelete: false }); // ferme l'onglet delete account - local
+    getProjectToUpdate("", ""); // reset l'id et nom projet à manipuler - mainform
   };
 
   // change tab *****************************************************************************************
@@ -115,6 +115,7 @@ const AccountModal = ({
   // lorsque click sur boutton paramètre du compte
   const onClickAccountParams = () => {
     setParamAccount({ toggleParamAccount: false });
+    getProjectToUpdate("", "");
   };
 
   // fonction suppression du compte
@@ -123,6 +124,7 @@ const AccountModal = ({
     if (deleteText === "supprimer") {
       deleteAccount();
       history.push("/"); // reload app sur page d'accueil
+      getProjectToUpdate("", ""); // reset id et nom projet
     } else {
       setAlert(
         'Merci de saisir "supprimer" pour supprimer votre compte',
@@ -137,11 +139,11 @@ const AccountModal = ({
     getProjectToUpdate(""); // réinitialise l'id projet
     logout(); // déconnect et efface le token
     accountModalToggle(false); // ferme la modal
-    getProjectToUpdate(""); // reset selected project ID
+    getProjectToUpdate("", ""); // reset selected project ID
   };
 
   return (
-    <section className={accountModal ? "auth-modal" : "auth-modal-none"}>
+    <section className='auth-modal'>
       <div className='account-box' style={{ margin: 0 }}>
         <div className='account-box-bis'>
           <div onClick={accountClose}>
@@ -178,13 +180,15 @@ const AccountModal = ({
           /> */}
           {toggleParamAccount ? (
             <form className='saved-projects-box'>
-              <ul>
+              <ul style={{ maxHeight: "200px" }}>
                 {projects.map((project) => (
                   <li className='saved-projects-items' key={project._id}>
                     <input
                       type='radio'
                       name='projects'
-                      onChange={() => getProjectToUpdate(project._id)}
+                      onChange={() =>
+                        getProjectToUpdate(project._id, project.nomProjet)
+                      }
                       required
                     />
                     <h6>{project.nomProjet}</h6>

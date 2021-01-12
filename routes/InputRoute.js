@@ -12,16 +12,16 @@ const InputForm = require("../models/InputModel");
 // @route : POST /
 // @description : post new project
 // @ access : authentication (Public)
-router.post("/", async (req, res) => {
-  console.log(req.body);
+router.post("/", auth, async (req, res) => {
+  console.log("model", req.body);
   try {
-    // create new input object
+    // create new input object sans description projet
     const inputs = {
-      user: req.body.user,
-      nomProjet: req.body.nomProjet,
-      ville: req.body.ville,
-      natureBien: req.body.natureBien,
-      typeAppartement: req.body.typeAppartement,
+      user: req.user.id,
+      nomProjet: "",
+      ville: "",
+      natureBien: "",
+      typeAppartement: "",
       netVendeur: parseInt(req.body.netVendeur),
       travaux: parseInt(req.body.travaux),
       ammeublement: parseInt(req.body.ammeublement),
@@ -100,7 +100,7 @@ router.post("/", async (req, res) => {
       fraisCourtier;
     const emprunt = coutProjet > apport ? coutProjet - apport : 0;
 
-    let array = [];
+    let currentModel = [];
 
     if (emprunt === 0) {
       for (let i = 1; i <= duree; i++) {
@@ -110,7 +110,7 @@ router.post("/", async (req, res) => {
           assurance: 0,
           chargesFi: 0,
         };
-        array.push(emptyObject);
+        currentModel.push(emptyObject);
       }
     } else {
       const loan = new LoanJS.Loan(
@@ -137,7 +137,7 @@ router.post("/", async (req, res) => {
           assurance: acc.assurance + val.assurance,
           chargesFi: acc.interet + val.interet + acc.assurance + val.assurance,
         }));
-        array.push(transformToYear);
+        currentModel.push(transformToYear);
         loan1.splice(0, 12);
       }
     }
@@ -150,7 +150,7 @@ router.post("/", async (req, res) => {
     // taxe foncière, assurance PNO, amortissement : immeuble, travaux, ammeublement frais d'acquisition
     // frais de courtage : https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/
     // tronc commun à tous les régimes
-    array.forEach((item, i) => {
+    currentModel.forEach((item, i) => {
       return (
         (item.annee = i + 1), // à mettre au début de chaque objet
         // cumul capital remboursé n-1
@@ -643,51 +643,11 @@ router.post("/", async (req, res) => {
       );
     });
 
-    // si nom du projet est null : lorsque click fiscalité button
-    if (nomProjet === "") {
-      // assign inputs to the model
-      newInputs = InputForm(inputs);
-      // create new project
-      await newInputs.save();
-      res.json(array);
-      console.log("model insert");
-      // si un ID reçue dans req -> cherche le projet par ID pour l'update
-    } else if (req.body.idProjet) {
-      // retire la description du projet de inputs pour ne pas updater ces champs par ""
-      ["nomProjet", "ville", "natureBien", "typeAppartement"].forEach(
-        (e) => delete inputs[e]
-      );
-      await InputForm.findByIdAndUpdate(
-        { _id: req.body.idProjet },
-        {
-          $set: inputs,
-        }
-      );
-      console.log("update");
-      res.json(array);
-      // si creation nouveau projet via save window
-    } else {
-      console.log(inputs);
-      // cherche si nom projet existe pour cet utilisateur
-      const projectName = await InputForm.find({
-        $and: [{ user: user }, { nomProjet: nomProjet }],
-      });
-      console.log(projectName);
-      // si projet exist return error
-      if (projectName.length > 0) {
-        return res
-          .status(400)
-          .send({ msg: "Ce nom de projet existe déjà", color: "red" });
-        // insert to database
-      } else {
-        // assign inputs to the model
-        newInputs = InputForm(inputs);
-        // create new project
-        await newInputs.save();
-        res.json(array);
-        console.log("save new");
-      }
-    }
+    // assign inputs to the model
+    newInputs = InputForm(inputs);
+    // create new project
+    await newInputs.save();
+    res.json({ currentModel });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -698,7 +658,6 @@ router.post("/", async (req, res) => {
 // @description : delete project according to ID
 // @ access : Private
 router.delete("/:id", auth, async (req, res) => {
-  // console.log(req.params.id);
   if (req.params.id === "") {
     return res.status(400).json({
       msg: "Merci de sélectionner un projet à supprimer",

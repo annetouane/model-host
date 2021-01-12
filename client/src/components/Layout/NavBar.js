@@ -17,8 +17,6 @@ export const NavBar = ({
   accountModalToggle,
   mobileMenuToggle,
   kpiMobileToggle,
-  modelModalToggle,
-  saveModalToggle,
   landingToggle,
   landingModal,
 }) => {
@@ -46,33 +44,22 @@ export const NavBar = ({
 
   const resetClickAuth = () => {
     mobileMenuToggle(false); // ferme le menu mobile
-    accountModalToggle(false); // ferme la fenetre mon compte
-    kpiMobileToggle(false); // ferme la fenetre indicateurs
-    modelModalToggle(false); // ferme la fenetre model
-    saveModalToggle(false); // ferme la fenetre save
+    // kpiMobileToggle(false); // ferme la fenetre indicateurs
   };
   const resetClickAccueil = () => {
     mobileMenuToggle(false); // ferme le menu mobile
-    authToggle(false); // ferme la fenetre authentification
-    accountModalToggle(false); // ferme la fenetre mon compte
-    kpiMobileToggle(false); // ferme la fenetre indicateurs
-    modelModalToggle(false); // ferme la fenetre model
-    saveModalToggle(false); // ferme la fenetre save
+    // kpiMobileToggle(false); // ferme la fenetre indicateurs
   };
   const resetClickAccount = () => {
     mobileMenuToggle(false); // ferme le menu mobile
-    authToggle(false); // ferme la fenetre authentification
-    kpiMobileToggle(false); // ferme la fenetre indicateurs
-    modelModalToggle(false); // ferme la fenetre model
-    saveModalToggle(false); // ferme la fenetre save
+    // authToggle(false); // ferme la fenetre authentification
+    // kpiMobileToggle(false); // ferme la fenetre indicateurs
+    // modelModalToggle(false); // ferme la fenetre model
+    // saveModalToggle(false); // ferme la fenetre save
   };
   const resetClickSimulateur = () => {
     mobileMenuToggle(false); // ferme le menu mobile
-    authToggle(false); // ferme la fenetre authentification
-    accountModalToggle(false); // ferme la fenetre mon compte
-    kpiMobileToggle(false); // ferme la fenetre indicateurs
-    modelModalToggle(false); // ferme la fenetre model
-    saveModalToggle(false); // ferme la fenetre save
+    // kpiMobileToggle(false); // ferme la fenetre indicateurs
   };
 
   return (

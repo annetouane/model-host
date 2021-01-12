@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
 
   // check if there is a token, if not, sends 401
   if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).json({ msg: "token" });
   }
 
   // verify token's validity
@@ -22,6 +22,6 @@ module.exports = function (req, res, next) {
     req.user = decoded.user;
     next();
   } catch {
-    res.status(401).json({ msg: "token is not valid" });
+    return res.status(401).send({ msg: "token" });
   }
 };

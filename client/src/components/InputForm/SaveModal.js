@@ -16,16 +16,20 @@ import {
 
 const SaveModal = ({
   onChangeString,
+  cleanSaveForm,
   saveModal,
   saveModalToggle,
   saveModalClic,
   modelModalClic,
   width,
-  getProjectToUpdate, // get nomProjet to mainform state
+  nomProjet,
+  ville,
   natureBien, // nature du bien pour condition type d'appartement
-  projects, // liste de projets
-  onCreateProject, // save new project to the database
-  onUpdateProject, // save new project to the database
+  typeAppartement,
+  getProjectToUpdate, // get nomProjet to mainform state
+  projects, // liste de projets - redux
+  onCreateProject, // create new project to the database - mainform
+  onUpdateProject, // update new project to the database - mainform
 }) => {
   // choix tab : création compte ou connection
   const [newProject, setNewProject] = useState(true);
@@ -34,11 +38,12 @@ const SaveModal = ({
     saveModalToggle(false); // close auth modal
     saveModalClic(false); // save n'est plus actif
     modelModalClic(false); // model n'est plus actif
-    getProjectToUpdate("");
+    cleanSaveForm(); // nettoie les formulaires de sauvegarde
+    setNewProject(true); // retour tab 1
   };
 
   return (
-    <section className={saveModal ? "auth-modal" : "auth-modal-none"}>
+    <section className='auth-modal'>
       <div className='auth-box' style={{ margin: 0, padding: "40px" }}>
         {width > 1155 ? (
           <div onClick={saveClose}>
@@ -88,6 +93,7 @@ const SaveModal = ({
                   type='text'
                   onChange={onChangeString}
                   name='nomProjet'
+                  value={nomProjet}
                   placeholder='Nom du projet...'
                   required
                 />
@@ -95,7 +101,10 @@ const SaveModal = ({
 
               <div className='save-group'>
                 <label>Ville</label>
-                <LocationSearchInput onChangeString={onChangeString} />
+                <LocationSearchInput
+                  onChangeString={onChangeString}
+                  ville={ville}
+                />
               </div>
 
               <div className='save-group'>
@@ -103,6 +112,7 @@ const SaveModal = ({
                 <select
                   type='select'
                   name='natureBien'
+                  value={natureBien}
                   onChange={onChangeString}
                 >
                   <option>...</option>
@@ -120,6 +130,7 @@ const SaveModal = ({
                   <select
                     type='select'
                     name='typeAppartement'
+                    value={typeAppartement}
                     onChange={onChangeString}
                   >
                     <option>...</option>
@@ -146,7 +157,9 @@ const SaveModal = ({
                   <input
                     type='radio'
                     name='projects'
-                    onChange={() => getProjectToUpdate(project._id)}
+                    onChange={() =>
+                      getProjectToUpdate(project._id, project.nomProjet)
+                    }
                     required
                   />
                   <h6>{project.nomProjet}</h6>

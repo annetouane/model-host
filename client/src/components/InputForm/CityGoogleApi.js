@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
 
 const LocationSearchInput = ({ onChangeString }) => {
   const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    return setAddress("");
+  }, [setAddress]);
 
   return (
     <PlacesAutocomplete value={address} onChange={setAddress}>

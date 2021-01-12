@@ -7,6 +7,8 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 
 // routes
+const CreateProjectRoute = require("./routes/CreateProjectRoute");
+const UpdateProjectRoute = require("./routes/UpdateProjectRoute");
 const InputRoute = require("./routes/InputRoute");
 const EmailRoute = require("./routes/EmailRoute");
 const SignUpRoute = require("./routes/SignUpRoute");
@@ -15,11 +17,6 @@ const SignInRoute = require("./routes/SignInRoute");
 const ForgottenRoute = require("./routes/ForgottenRoute");
 const ChangePasswordRoute = require("./routes/ChangePasswordRoute");
 const LoadUserRoute = require("./routes/LoadUserRoute");
-const DeleteAccount = require("./routes/DeleteAccount");
-
-// delete
-// const config = require("config");
-// const db = config.get("mongoURI");
 
 // init server
 const app = express();
@@ -43,6 +40,8 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 connectDB();
 
+app.use("/create", CreateProjectRoute);
+app.use("/update", UpdateProjectRoute);
 app.use("/input", InputRoute);
 app.use("/user-email", EmailRoute);
 app.use("/signup", SignUpRoute);
@@ -51,7 +50,6 @@ app.use("/signin", SignInRoute);
 app.use("/forgotten-pwd", ForgottenRoute);
 app.use("/change-pwd", ChangePasswordRoute);
 app.use("/", LoadUserRoute);
-app.use("/delete-user", DeleteAccount);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

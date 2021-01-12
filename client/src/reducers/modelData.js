@@ -5,6 +5,7 @@ import {
   NEW_PROJECT,
   UPDATE_PROJECT,
   DELETE_PROJECT,
+  REMOVE_USER_PARAMS,
 } from "../actions/types";
 
 const initialState = {
@@ -33,20 +34,14 @@ export default function (state = initialState, action) {
         projects: payload,
       };
     case NEW_PROJECT:
-      console.log(payload);
       return {
         ...state,
-        projects: [...state.projects.push(payload)], // retire le projet supprimé selon son ID
+        projects: payload,
       };
     case UPDATE_PROJECT:
-      console.log(payload);
       return {
         ...state,
-        projects: [
-          ...state.projects.filter(
-            (project) => project._id !== payload.idProjet
-          ),
-        ], // retire le projet supprimé selon son ID
+        projects: payload,
       };
     case DELETE_PROJECT:
       console.log(payload);
@@ -57,6 +52,14 @@ export default function (state = initialState, action) {
             (project) => project._id !== payload.idProjet
           ),
         ], // retire le projet supprimé selon son ID
+      };
+    case REMOVE_USER_PARAMS:
+      // retire toutes les données utilisateurs
+      return {
+        ...state,
+        currentParams: [],
+        currentModel: [],
+        projects: [],
       };
     default:
       return state;
