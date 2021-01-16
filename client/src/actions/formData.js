@@ -52,12 +52,11 @@ export const getModelData = (formData) => async (dispatch) => {
   }
 };
 
-export const createProject = (formData, id) => async (dispatch) => {
+export const createProject = (formData) => async (dispatch) => {
   console.log("create");
   // insert the form into a new variable
   const postInput = formData;
   // insert the user ID in the form data
-  postInput.user = id;
   try {
     // console.log("create", postInput);
     const res = await api.post("/create", postInput);
@@ -65,6 +64,24 @@ export const createProject = (formData, id) => async (dispatch) => {
       type: NEW_PROJECT,
       payload: res.data.newProjectList,
     });
+  } catch (err) {
+    console.log(err);
+    if (err.response.data.msg) {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
+    }
+  }
+};
+
+export const createFirstProject = (formData, id) => async (dispatch) => {
+  console.log("create");
+  // insert the form into a new variable
+  const postInput = formData;
+  // insert the user ID in the form data
+  postInput.user = id;
+  try {
+    // console.log("create", postInput);
+    const res = await api.post("/create/first", postInput);
+    console.log(res.data);
   } catch (err) {
     console.log(err);
     if (err.response.data.msg) {
@@ -151,5 +168,11 @@ export const updateToReducer = (formData) => async (dispatch) => {
   dispatch({
     type: UPDATE_PROJECT,
     payload: { idProjet: formData },
+  });
+};
+
+export const removeUserParams = () => async (dispatch) => {
+  dispatch({
+    type: REMOVE_USER_PARAMS,
   });
 };

@@ -16,7 +16,6 @@ import { setAlert } from "../../actions/alert";
 const AccountModal = ({
   setAlert,
   accountModalToggle,
-  accountModal,
   logout,
   updPassword,
   deleteAccount,
@@ -25,8 +24,6 @@ const AccountModal = ({
   getProjectToUpdate,
   onDeleteProject,
   onVisualise,
-  // projectDisplayTab,
-  // setProjectDisplayTab,
 }) => {
   const resetStates = () => {
     setPasswords({

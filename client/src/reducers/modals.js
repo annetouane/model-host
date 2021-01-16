@@ -8,6 +8,8 @@ import {
   LANDING_TOGGLE,
   MOBILE_MENU_TOGGLE,
   KPI_MOBILE_TOGGLE,
+  PWD_CHANGE_PAGE,
+  MOBILE_VERIF_TOGGLE,
 } from "../actions/types";
 
 // init state : token stored in localStorage : look for an item called token
@@ -79,6 +81,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         kpiMobile: payload,
+      };
+    // kpi mobile
+    case PWD_CHANGE_PAGE:
+      return {
+        ...state,
+        passwordChange: payload,
+      };
+    // kpi mobile
+    case MOBILE_VERIF_TOGGLE:
+      return {
+        ...state,
+        modalMobileVerif: payload,
       };
     default:
       return state;

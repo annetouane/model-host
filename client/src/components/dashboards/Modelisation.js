@@ -121,21 +121,21 @@ export const Modelisation = ({
     });
   }, [duree, currentModel]);
 
-  //
+  // met à jour l'année sélectionné par modèle
   const onChange = (e, id) => {
     setCashFlowYear({
       ...cashFlowYear,
       [e.target.name]: parseInt(e.target.value),
     });
-    // lors de l'actualisation des dropdown, identifie celui que a été actualisé
+    // lors de l'actualisation des dropdowns, identifie celui que a été actualisé
     // via l'id et update le state correspondant
     if (id === "sciIs") {
       const sciIs = currentModel
         .filter((x) => x.annee <= parseInt(e.target.value))
         .reduce((acc, curr) => acc + curr.sciIsCashFlowAfterFlatTax, 0);
-      console.log("1", sciIs);
+      // console.log("1", sciIs);
       setCashFlowCash({ ...cashFlow, sciIsCash: Math.round(sciIs) });
-      console.log("2", sciIsCash);
+      // console.log("2", sciIsCash);
     } else if (id === "lmnpReel") {
       const lmnpReel = currentModel
         .filter((x) => x.annee <= parseInt(e.target.value))
@@ -311,6 +311,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
+                        width={30}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -339,20 +340,22 @@ export const Modelisation = ({
                 </div>
                 <div className='cash-flow-box'>
                   <h5>Cash-flow cumulé</h5>
-                  <select
-                    type='select'
-                    name='sciIsYear'
-                    value={sciIsYear}
-                    onChange={(e) => onChange(e, "sciIs")}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsDetention.map((option) => (
-                      <option key={option} value={option}>
-                        {option} ans
-                      </option>
-                    ))}
-                  </select>
-                  <h6>{sepSpace(Math.round(sciIsCash))} €</h6>
+                  <div className='cash-flow-group'>
+                    <select
+                      type='select'
+                      name='sciIsYear'
+                      value={sciIsYear}
+                      onChange={(e) => onChange(e, "sciIs")}
+                      className='input-box-2 fs-12'
+                    >
+                      {optionsDetention.map((option) => (
+                        <option key={option} value={option}>
+                          {option} ans
+                        </option>
+                      ))}
+                    </select>
+                    <h6>{sepSpace(Math.round(sciIsCash))} €</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -376,6 +379,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
+                        width={30}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -402,20 +406,22 @@ export const Modelisation = ({
                 </div>
                 <div className='cash-flow-box'>
                   <h5>Cash-flow cumulé</h5>
-                  <select
-                    type='select'
-                    name='lmnpReelYear'
-                    value={lmnpReelYear}
-                    onChange={(e) => onChange(e, "lmnpReel")}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsDetention.map((option) => (
-                      <option key={option} value={option}>
-                        {option} ans
-                      </option>
-                    ))}
-                  </select>
-                  <h6>{sepSpace(Math.round(lmnpReelCash))} €</h6>
+                  <div className='cash-flow-group'>
+                    <select
+                      type='select'
+                      name='lmnpReelYear'
+                      value={lmnpReelYear}
+                      onChange={(e) => onChange(e, "lmnpReel")}
+                      className='input-box-2 fs-12'
+                    >
+                      {optionsDetention.map((option) => (
+                        <option key={option} value={option}>
+                          {option} ans
+                        </option>
+                      ))}
+                    </select>
+                    <h6>{sepSpace(Math.round(lmnpReelCash))} €</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -439,6 +445,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
+                        width={30}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -465,21 +472,22 @@ export const Modelisation = ({
                 </div>
                 <div className='cash-flow-box'>
                   <h5>Cash-flow cumulé</h5>
-                  <select
-                    type='select'
-                    name='lmnpMicroYear'
-                    value={lmnpMicroYear}
-                    onChange={(e) => onChange(e, "lmnpMicro")}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsDetention.map((option) => (
-                      <option key={option} value={option}>
-                        {option} ans
-                      </option>
-                    ))}
-                  </select>
-
-                  <h6>{sepSpace(Math.round(lmnpMicroCash))} €</h6>
+                  <div className='cash-flow-group'>
+                    <select
+                      type='select'
+                      name='lmnpMicroYear'
+                      value={lmnpMicroYear}
+                      onChange={(e) => onChange(e, "lmnpMicro")}
+                      className='input-box-2 fs-12'
+                    >
+                      {optionsDetention.map((option) => (
+                        <option key={option} value={option}>
+                          {option} ans
+                        </option>
+                      ))}
+                    </select>
+                    <h6>{sepSpace(Math.round(lmnpMicroCash))} €</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -502,6 +510,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
+                        width={30}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -528,20 +537,22 @@ export const Modelisation = ({
                 </div>
                 <div className='cash-flow-box'>
                   <h5>Cash-flow cumulé</h5>
-                  <select
-                    type='select'
-                    name='nueReelYear'
-                    value={nueReelYear}
-                    onChange={(e) => onChange(e, "nueReel")}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsDetention.map((option) => (
-                      <option key={option} value={option}>
-                        {option} ans
-                      </option>
-                    ))}
-                  </select>
-                  <h6>{sepSpace(Math.round(nueReelCash))} €</h6>
+                  <div className='cash-flow-group'>
+                    <select
+                      type='select'
+                      name='nueReelYear'
+                      value={nueReelYear}
+                      onChange={(e) => onChange(e, "nueReel")}
+                      className='input-box-2 fs-12'
+                    >
+                      {optionsDetention.map((option) => (
+                        <option key={option} value={option}>
+                          {option} ans
+                        </option>
+                      ))}
+                    </select>
+                    <h6>{sepSpace(Math.round(nueReelCash))} €</h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -564,6 +575,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
+                        width={30}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -590,21 +602,22 @@ export const Modelisation = ({
                 </div>
                 <div className='cash-flow-box'>
                   <h5>Cash-flow cumulé</h5>
-                  <select
-                    type='select'
-                    name='nueMicroYear'
-                    value={nueMicroYear}
-                    onChange={(e) => onChange(e, "nueMicro")}
-                    className='input-box-2 fs-12'
-                  >
-                    {optionsDetention.map((option) => (
-                      <option key={option} value={option}>
-                        {option} ans
-                      </option>
-                    ))}
-                  </select>
-
-                  <h6>{sepSpace(Math.round(nueMicroCash))} €</h6>
+                  <div className='cash-flow-group'>
+                    <select
+                      type='select'
+                      name='nueMicroYear'
+                      value={nueMicroYear}
+                      onChange={(e) => onChange(e, "nueMicro")}
+                      className='input-box-2 fs-12'
+                    >
+                      {optionsDetention.map((option) => (
+                        <option key={option} value={option}>
+                          {option} ans
+                        </option>
+                      ))}
+                    </select>
+                    <h6>{sepSpace(Math.round(nueMicroCash))} €</h6>
+                  </div>
                 </div>
               </div>
             </div>

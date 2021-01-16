@@ -11,12 +11,11 @@ const User = require("../models/UserModel");
 // @desc     Forgotten password
 // @access   Public
 router.post("/", async (req, res) => {
-  // destructure req.body
-  const { email } = req.body;
+  console.log(req.body);
   try {
     // check if user exists (value or null)
-    let user = await User.findOne({ email });
-    console.log({ user });
+    const user = await User.findOne({ email: req.body.email });
+    console.log(user);
     // if user isn't found : sends 400 and array with error message
     if (!user) {
       return res.status(400).json({ msg: "Utilisateur introuvable" });
@@ -40,7 +39,10 @@ router.post("/", async (req, res) => {
       sgMail
         .send(msg)
         .then(() => {
-          res.json({ msg: "Message sent" });
+          res.json({
+            msg: `Un lien de réinitialisation a été envoyé à : ${user.email}`,
+            color: "green",
+          });
         })
         .catch((error) => {
           console.log(error.response.body);
@@ -53,27 +55,27 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
-
 // @route    POST /forgotten/:id
 // @desc     New password
 // @access   Public
 router.post("/:id", async (req, res) => {
-  console.log(req.body);
+  // check that id has a mongoDB format
+  const id = req.params.id;
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res
+      .status(400)
+      .send({ msg: "Utilisateur introuvable", color: "red" });
+  }
+
   const stringifiedArray = {
     newPassword: String(req.body.newPassword),
-    confirmNewPassword: String(req.body.confirmNewPassword),
   };
-  const { newPassword, confirmNewPassword } = stringifiedArray;
+  const { newPassword } = stringifiedArray;
 
-  if (newPassword !== confirmNewPassword) {
-    return res.status(400).send({
-      msg: "Les mots de passe ne correspondent pas",
-      color: "red",
-    });
-  }
   // check if user exists (true false)
-  let user = await User.findOne({ _id: req.params.id });
+  let user = await User.findOne({ _id: id });
+
+  console.log(user);
 
   // if user not found (matching email) : sends 400 and array with error message
   if (!user) {
@@ -87,15 +89,15 @@ router.post("/:id", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     // hash the password
     const password = await bcrypt.hash(newPassword, salt);
-    await User.findByIdAndUpdate(
-      { _id: req.user.id },
-      { $set: { password: password } }
-    );
+    await User.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
     res.send({
       msg: "Votre mot de passe a été modifié avec succès",
+      color: "green",
     });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server error");
   }
 });
+
+module.exports = router;

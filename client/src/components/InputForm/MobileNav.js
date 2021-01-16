@@ -35,6 +35,7 @@ const MobileNav = ({
   const volver = () => {
     mobileMenuToggle(false); // ferme mobile menu
     setDisplayInfoModal(false); // ferme modal informations
+    landingToggle(false); // ferme modal landing
   };
 
   const openAccount = () => {
@@ -190,7 +191,7 @@ const MobileNav = ({
                 onClick={
                   width < 770
                     ? () => {
-                        setMobileDisplayTab(2);
+                        setMobileDisplayTab(5);
                         volver();
                       }
                     : (e) => scrollTo(e, "#regime")
@@ -218,8 +219,8 @@ const MobileNav = ({
             <div className='mobile-kpi-button'>
               <button
                 onClick={() => {
-                  landingToggle(true);
                   volver();
+                  landingToggle(true);
                 }}
               >
                 <span className='link'>

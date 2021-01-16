@@ -7,13 +7,15 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   ACCOUNT_DELETED,
+  // LOADING,
+  // LOADED,
 } from "../actions/types";
 
 // init state : token stored in localStorage : look for an item called token
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false, // when successful response from login -> set to true
-  loading: true, // set it to false when loaded
+  // loading: true, // set it to false when loaded
   user: null, // insert user id & email
 };
 
@@ -22,18 +24,28 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    // case LOADING:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case LOADED:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //   };
     case USER_LOADED:
       return {
         ...state,
         isAuthenticated: true, // user is logged in, the token is valid
-        loading: false,
+        // loading: false,
         user: payload, // the user (email + id)
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
-        loading: false,
+        // loading: false,
         user: null,
       };
     case LOGIN_SUCCESS:
@@ -43,14 +55,14 @@ export default function (state = initialState, action) {
         ...state,
         ...payload, // adds the token to the reducer
         isAuthenticated: true,
-        loading: false,
+        // loading: false,
       };
     case ACCOUNT_DELETED:
       return {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
+        // loading: false,
         user: null,
       };
     case AUTH_ERROR:
@@ -64,7 +76,7 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
+        // loading: false,
         user: null,
       };
     default:

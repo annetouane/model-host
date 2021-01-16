@@ -9,6 +9,8 @@ import {
   LANDING_TOGGLE,
   MOBILE_MENU_TOGGLE,
   KPI_MOBILE_TOGGLE,
+  PWD_CHANGE_PAGE,
+  MOBILE_VERIF_TOGGLE,
 } from "./types";
 
 // Open Auth Window
@@ -76,6 +78,22 @@ export const mobileMenuToggle = (bool) => (dispatch) => {
 export const kpiMobileToggle = (bool) => (dispatch) => {
   dispatch({
     type: KPI_MOBILE_TOGGLE,
+    payload: bool,
+  });
+};
+
+// ouvre vérification mobile
+export const mobileVerificationToggle = (bool) => (dispatch) => {
+  dispatch({
+    type: MOBILE_VERIF_TOGGLE,
+    payload: bool,
+  });
+};
+
+// detect si url pwd-change ou racine
+export const passwordChangePage = (bool) => (dispatch) => {
+  dispatch({
+    type: PWD_CHANGE_PAGE,
     payload: bool,
   });
 };

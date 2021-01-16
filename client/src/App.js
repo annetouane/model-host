@@ -1,6 +1,11 @@
 // packages
 import React, { Fragment, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import Helmet from "react-helmet";
@@ -8,10 +13,12 @@ import favicon from "./img/favicon.ico";
 
 // components
 import NavBar from "./components/Layout/NavBar";
+import Page404Redirect from "./components/Layout/Page404Redirect";
 // import AlerteStrip from "./components/Layout/AlerteStrip";
 import MainForm from "./components/InputForm/mainForm";
 // import Spinner from "./components/Layout/Spinner";
 import ChangePasswordLanding from "./components/auth/ChangePasswordLanding";
+import ForgottenPassword from "./components/auth/ForgottenPassword";
 
 // actions
 import { loadUser } from "./actions/auth";
@@ -27,15 +34,12 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-// // useEffect will execute each time the app is updated
-// // this sets the token in local storage
+// useEffect will execute each time the app is updated
+// this sets the token in local storage
 const App = () => {
   useEffect(() => {
     // dispatch is a method on the store, dispatch load user which will dispatch the action to the reducer
-    // console.log("app2.js");
-    // console.log(localStorage.token);
     store.dispatch(loadUser());
-    // [] argument makes sure it only run ones instead of an infinite nbr of times
   }, []);
 
   return (
@@ -61,6 +65,9 @@ const App = () => {
               path='/change-pwd/:id'
               component={ChangePasswordLanding}
             />
+            <Route exact path='/forgotten-pwd' component={ForgottenPassword} />
+            <Route path='/404' component={Page404Redirect} />
+            <Redirect to='/404' />
           </Switch>
         </Router>
       </Fragment>

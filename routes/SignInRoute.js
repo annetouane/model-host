@@ -73,7 +73,7 @@ router.post(
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3 },
+        { expiresIn: 3600 },
         // callback to get either an error or the token to be sent back to the client
         (err, token) => {
           // throw deliver error synchronously

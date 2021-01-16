@@ -3,6 +3,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Finance from "financejs";
+import { withRouter } from "react-router";
+import jwt from "jwt-decode";
 
 // components
 import Projet from "./Projet";
@@ -36,8 +38,9 @@ import {
   updateProject,
   postEmail,
   deleteProject,
+  removeUserParams,
 } from "../../actions/formData";
-import { register, login } from "../../actions/auth";
+import { register, login, loadUser } from "../../actions/auth";
 import {
   authToggle,
   saveModalClic,
@@ -47,11 +50,13 @@ import {
   mobileMenuToggle,
   landingToggle,
   accountModalToggle,
+  passwordChangePage,
 } from "../../actions/modals";
 import { setAlert } from "../../actions/alert";
 
 export const MainForm = ({
   storeParams,
+  passwordChangePage, // a voir
   getModelData,
   createProject,
   updateProject,
@@ -65,7 +70,6 @@ export const MainForm = ({
   modelModalClic,
   detectSave,
   detectModel,
-  userInfo,
   kpiMobile,
   landingModal,
   mobileMenuToggle,
@@ -74,17 +78,17 @@ export const MainForm = ({
   setAlert,
   projects,
   accountModalToggle,
-  modelModal,
   saveModal,
   accountModal,
   currentModel,
+  loadUser,
+  history,
+  // loading,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   });
   const { width } = dimensions;
-
-  // const [inputSaved, setIinputSaved ] = useState(false);
 
   // pagination mobile
   const [mobileDisplayTab, setMobileDisplayTab] = useState(0);
@@ -319,6 +323,24 @@ export const MainForm = ({
   const [scrollTop, setScrollTop] = useState(true);
 
   useEffect(() => {
+    // inform the reducer about the current page
+    const url = history.location.pathname;
+    if (
+      !url.includes("change-pwd") ||
+      !url.includes("forgotten-pwd") ||
+      !url.includes("404")
+    ) {
+      passwordChangePage(false);
+    }
+  }, [history, passwordChangePage]);
+
+  // open alert window
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  useEffect(() => {
     // detect scroll
     window.onscroll = function () {
       if (window.pageYOffset !== 0) {
@@ -328,13 +350,8 @@ export const MainForm = ({
         setScrollTop(true);
       }
     };
-    // update the reducer asynchronously with the new values of the form
-    // storeParams(formData);
 
-    // // alert user before leaving the page
-    // if (inputSaved) {
-    //   window.addEventListener('beforeunload',  alertUser)
-    // };
+    // window.addEventListener("beforeunload", alertUser);
 
     // set the windows dimensions on render
     // prevent function execution more than once per minute
@@ -349,7 +366,7 @@ export const MainForm = ({
     return (_) => {
       // remove event to avoid app freeze and allows f° exec max once per second
       window.removeEventListener("resize", debouncedHandleResize);
-      // window.removeEventListener('beforeunload', alertUser)
+      // window.removeEventListener("beforeunload", alertUser);
     };
   });
 
@@ -359,12 +376,6 @@ export const MainForm = ({
   };
 
   // saving form *******************************************************************************
-
-  // open alert window
-  // const alertUser = e => {
-  //   e.preventDefault()
-  //   e.returnValue = ''
-  // }
 
   const onSave = (e) => {
     e.preventDefault();
@@ -380,14 +391,52 @@ export const MainForm = ({
 
   const onCreateProject = (e) => {
     e.preventDefault();
-    createProject(formData, userInfo._id); // post input to db
-    cleanSaveForm(); // reset les champs du formulaire de sauvegarde
+    // si absence de token
+    if (localStorage.length === 1) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
+    }
+    let token = localStorage.getItem("token");
+    const { exp } = jwt(token);
+    console.log(exp);
+    // Refresh the token a minute early to avoid latency issues
+    const expirationTime = exp * 1000 - 60000;
+    console.log(expirationTime);
+    // si token expiré
+    if (Date.now() >= expirationTime) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
+    } else {
+      createProject(formData); // post input to db
+      cleanSaveForm(); // reset les champs du formulaire de sauvegarde
+    }
   };
 
   const onUpdateProject = (e) => {
     e.preventDefault();
-    updateProject(formData); // post input to db
-    cleanSaveForm(); // reset les champs du formulaire de sauvegarde
+    // si absence de token
+    if (localStorage.length === 1) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
+    }
+    let token = localStorage.getItem("token");
+    const { exp } = jwt(token);
+    console.log(exp);
+    // Refresh the token a minute early to avoid latency issues
+    const expirationTime = exp * 1000 - 60000;
+    console.log(expirationTime);
+    // si token expiré
+    if (Date.now() >= expirationTime) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
+    } else {
+      updateProject(formData); // post input to db
+      cleanSaveForm(); // reset les champs du formulaire de sauvegarde
+    }
   };
 
   const onDeleteProject = (e) => {
@@ -417,10 +466,18 @@ export const MainForm = ({
   // sign up *******************************************************************************
   const [signUp, setSignUp] = useState({
     emailSignUp: "",
+    mobileSignUp: "",
     passwordSignUp: "",
+    confirmPassword: "",
     condition: false,
   });
-  const { emailSignUp, passwordSignUp, condition } = signUp;
+  const {
+    emailSignUp,
+    mobileSignUp,
+    passwordSignUp,
+    confirmPassword,
+    condition,
+  } = signUp;
 
   const onChangeSignUp = (e) => {
     setSignUp({ ...signUp, [e.target.name]: e.target.value });
@@ -464,56 +521,82 @@ export const MainForm = ({
 
   // visualise model sauvegardé
   const onVisualise = (e) => {
-    if (nomProjet === "") {
-      setAlert("Merci de sélectionner un projet à visualiser", "orange", 3000);
+    e.preventDefault();
+    // si absence de token
+    if (localStorage.length === 1) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
+    }
+    let token = localStorage.getItem("token");
+    const { exp } = jwt(token);
+    console.log(exp);
+    // Refresh the token a minute early to avoid latency issues
+    const expirationTime = exp * 1000 - 60000;
+    console.log(expirationTime);
+    // si token expiré
+    if (Date.now() >= expirationTime) {
+      loadUser(); // efface les paramètres auth et model data
+      window.location.reload(); // recharge l'app avec auth window
+      // authToggle(true); // ouvre modal auth
     } else {
-      e.preventDefault();
-      const project = projects.find((x) => x._id === idProjet);
-      setFormData({
-        ...formData,
-        idProjet: "",
-        nomProjet: "",
-        ville: "",
-        natureBien: "",
-        typeAppartement: "",
-        netVendeur: project.netVendeur,
-        travaux: project.travaux,
-        ammeublement: project.ammeublement,
-        notaire: project.notaire,
-        agence: project.agence,
-        duree: project.duree,
-        apport: project.apport,
-        interet: project.interet * 100,
-        assurance: project.assurance * 100,
-        fraisBancaires: project.fraisBancaires,
-        fraisCourtier: project.fraisCourtier,
-        loyer: project.loyer,
-        chargesLoc: project.chargesLoc,
-        occupation: project.occupation,
-        fonciere: project.fonciere,
-        gestion: project.gestion,
-        charges: project.charges,
-        pno: project.pno,
-        revInvest1: project.revInvest1,
-        augInvest1: project.augInvest1,
-        revInvest2: project.revInvest2,
-        augInvest2: project.augInvest2,
-        partFisc: project.partFisc,
-        sciIs: project.sciIs,
-        lmnpReel: project.lmnpReel,
-        lmnpMicro: project.lmnpMicro,
-        nueReel: project.nueReel,
-        nueMicro: project.nueMicro,
-        irl: project.irl * 100,
-      });
-      accountModalToggle(false); // ferme la fenetre account
-      landingToggle(false); // va au simulateur
-      storeParams(project);
+      console.log("token valid");
+      if (nomProjet === "") {
+        setAlert(
+          "Merci de sélectionner un projet à visualiser",
+          "orange",
+          3000
+        );
+        // sinon, update le local state avec le reducer
+      } else {
+        const project = projects.find((x) => x._id === idProjet);
+        setFormData({
+          ...formData,
+          idProjet: "",
+          nomProjet: "",
+          ville: "",
+          natureBien: "",
+          typeAppartement: "",
+          netVendeur: project.netVendeur,
+          travaux: project.travaux,
+          ammeublement: project.ammeublement,
+          notaire: project.notaire,
+          agence: project.agence,
+          duree: project.duree,
+          apport: project.apport,
+          interet: project.interet * 100,
+          assurance: project.assurance * 100,
+          fraisBancaires: project.fraisBancaires,
+          fraisCourtier: project.fraisCourtier,
+          loyer: project.loyer,
+          chargesLoc: project.chargesLoc,
+          occupation: project.occupation,
+          fonciere: project.fonciere,
+          gestion: project.gestion,
+          charges: project.charges,
+          pno: project.pno,
+          revInvest1: project.revInvest1,
+          augInvest1: project.augInvest1,
+          revInvest2: project.revInvest2,
+          augInvest2: project.augInvest2,
+          partFisc: project.partFisc,
+          sciIs: project.sciIs,
+          lmnpReel: project.lmnpReel,
+          lmnpMicro: project.lmnpMicro,
+          nueReel: project.nueReel,
+          nueMicro: project.nueMicro,
+          irl: project.irl * 100,
+        });
+        accountModalToggle(false); // ferme la fenetre account
+        landingToggle(false); // va au simulateur
+        storeParams(project);
+      }
     }
   };
 
   return (
     <Fragment>
+      {/* {loading ? <Spinner /> : ""} */}
       {/* landing window */}
       <Landing width={width} />
 
@@ -527,7 +610,9 @@ export const MainForm = ({
         setSignUp={setSignUp}
         setSignIn={setSignIn}
         emailSignUp={emailSignUp}
+        mobileSignUp={mobileSignUp}
         passwordSignUp={passwordSignUp}
+        confirmPassword={confirmPassword}
         condition={condition}
         emailSignIn={emailSignIn}
         passwordSignIn={passwordSignIn}
@@ -857,7 +942,9 @@ export const MainForm = ({
 
 MainForm.propTypes = {
   storeParams: PropTypes.func.isRequired,
+  removeUserParams: PropTypes.func.isRequired,
   getModelData: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
   createProject: PropTypes.func.isRequired,
   updateProject: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
@@ -873,7 +960,6 @@ MainForm.propTypes = {
   setAlert: PropTypes.func.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
-  modelModal: PropTypes.bool.isRequired,
   saveModal: PropTypes.bool.isRequired,
   accountModal: PropTypes.bool.isRequired,
   currentModel: PropTypes.array,
@@ -881,34 +967,38 @@ MainForm.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  userInfo: state.auth.user,
+  // loading: state.auth.loading,
   detectSave: state.modals.detectSave,
   detectModel: state.modals.detectModel,
   kpiMobile: state.modals.kpiMobile,
   landingModal: state.modals.landingModal,
-  modelModal: state.modals.landingModal,
   saveModal: state.modals.saveModal,
   accountModal: state.modals.accountModal,
   projects: state.modelData.projects,
   currentModel: state.modelData.currentModel,
 });
 
-export default connect(mapStateToProps, {
-  storeParams,
-  getModelData,
-  createProject,
-  updateProject,
-  postEmail,
-  register,
-  login,
-  authToggle,
-  saveModalClic,
-  saveModalToggle,
-  modelModalClic,
-  modelModalToggle,
-  mobileMenuToggle,
-  landingToggle,
-  deleteProject,
-  setAlert,
-  accountModalToggle,
-})(MainForm);
+export default withRouter(
+  connect(mapStateToProps, {
+    passwordChangePage,
+    storeParams,
+    getModelData,
+    createProject,
+    updateProject,
+    postEmail,
+    register,
+    login,
+    authToggle,
+    saveModalClic,
+    saveModalToggle,
+    modelModalClic,
+    modelModalToggle,
+    mobileMenuToggle,
+    landingToggle,
+    deleteProject,
+    setAlert,
+    accountModalToggle,
+    loadUser,
+    removeUserParams,
+  })(MainForm)
+);

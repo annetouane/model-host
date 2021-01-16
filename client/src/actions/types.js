@@ -24,3 +24,7 @@ export const DELETE_PROJECT = "DELETE_PROJECT";
 export const NEW_PROJECT = "NEW_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const REMOVE_USER_PARAMS = "REMOVE_USER_PARAMS";
+export const MOBILE_VERIF_TOGGLE = "MOBILE_VERIF_TOGGLE";
+export const PWD_CHANGE_PAGE = "PWD_CHANGE_PAGE";
+// export const LOADING = "LOADING";
+// export const LOADED = "LOADED";

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // component
 import Alerte from "../Layout/Alert";
@@ -22,7 +23,9 @@ const AuthModalComplete = ({
   setSignUp,
   setSignIn,
   emailSignUp,
+  mobileSignUp,
   passwordSignUp,
+  confirmPassword,
   condition,
   emailSignIn,
   passwordSignIn,
@@ -33,6 +36,7 @@ const AuthModalComplete = ({
   authToggle, // action open close auth - redux
   saveModalClic, // detect clic save - redux
   modelModalClic, // detect clic model - redux
+  modalMobileVerif, // si compte peut-être créé, ouvre vérification mobile - redux
 }) => {
   // choix tab : création compte ou connection
   const [signUpTab, setSignUpTab] = useState(true);
@@ -47,7 +51,9 @@ const AuthModalComplete = ({
   const resetStates = () => {
     setSignUp({
       emailSignUp: "",
+      mobile: "",
       passwordSignUp: "",
+      confirmPassword: "",
       condition: false,
     });
     setSignIn({
@@ -64,6 +70,11 @@ const AuthModalComplete = ({
     resetStates();
   };
 
+  const onCreate = (e) => {
+    e.preventDefault();
+    console.log("stuff");
+  };
+
   return (
     <section className={authModal ? "auth-modal" : "auth-modal-none"}>
       <div className='auth-box' style={{ margin: 0 }}>
@@ -74,103 +85,122 @@ const AuthModalComplete = ({
         ) : (
           ""
         )}
-
-        <div className='account-params'>
-          <button
-            onClick={() => setSignUpTab(true)}
-            style={{
-              backgroundColor: signUpTab ? "#007be8" : "",
-              border: signUpTab ? "1px solid rgb(192, 192, 192)" : "none",
-              borderRadius: signUpTab ? "5px 5px 0 0" : "0",
-              color: signUpTab ? "#fff" : "#333",
-              borderBottomStyle: signUpTab && "none",
-            }}
-          >
-            Créer un compte
-          </button>
-          <button
-            onClick={() => setSignUpTab(false)}
-            style={{
-              backgroundColor: !signUpTab ? "#007be8" : "",
-              border: !signUpTab ? "1px solid rgb(192, 192, 192)" : "none",
-              borderRadius: !signUpTab ? "5px 5px 0 0" : "0",
-              color: !signUpTab ? "#fff" : "#333",
-              borderBottomStyle: !signUpTab && "none",
-            }}
-            className='button-delete-account'
-          >
-            Se connecter
-          </button>
-        </div>
-        {signUpTab && detectSave ? (
-          <p>
-            Créer un compte pour sauvegarder ce projet. Une fois votre email
-            vérifier, vous pourrez vous connecter et retrouver dans votre compte
-            votre projet sauvegardé.
-          </p>
-        ) : !signUpTab && detectSave ? (
-          <p>Connectez-vous à votre compte pour sauvegarder ce projet.</p>
-        ) : signUpTab && detectModel ? (
-          <p>
-            Créer un compte pour visualiser le cash-flow annuel net d'impôt de
-            ce projet sur toute la durée de l'emprunt. Les paramètres saisis
-            seront automatiquement sauvegardés. Une fois votre email vérifier,
-            vous pourrez vous connecter à votre compte et consulter le cash-flow
-            annuel net d'impôt de votre projet.
-          </p>
-        ) : !signUpTab && detectModel ? (
-          <p>
-            Connectez-vous à votre compte pour visualiser la rentabilité après
-            impôt de ce projet sur toute la durée de l'emprunt.
-          </p>
-        ) : signUpTab && !detectModel && !detectSave ? (
-          <p>
-            Créer un compte pour visualiser le cash-flow annuel net d'impôt d'un
-            projet sur toute la durée de l'emprunt et sauvegarder les paramètres
-            de tous vos projets à l'étude.
-          </p>
-        ) : !signUpTab && !detectModel && !detectSave ? (
-          <p>
-            Connectez-vous à votre compte pour visualiser le cash-flow annuel
-            net d'impôt d'un projet sur toute la durée de l'emprunt et
-            sauvegarder les paramètres de tous vos projets à l'étude.
-          </p>
-        ) : (
-          ""
-        )}
-        {signUpTab ? (
-          <form className='auth-form' onSubmit={onSignUp}>
-            <input
-              name='emailSignUp'
-              value={emailSignUp}
-              type='email'
-              onChange={onChangeSignUp}
-              placeholder='Email'
-              autoComplete='email'
-              required
-            />
-            <input
-              name='passwordSignUp'
-              value={passwordSignUp}
-              type={passwordShown ? "text" : "password"}
-              onChange={onChangeSignUp}
-              placeholder='Mot de passe'
-              autoComplete='new-password'
-              required
-            />
-            <div className='flex-row jc-sb ml-5 mb-5'>
-              <small style={{ fontSize: "9px" }}>
-                Choisir un mot de passe de 8 caractères minimum
-              </small>
-              <div className='pwd-icon' onClick={togglePasswordVisiblity}>
-                {passwordShown ? (
-                  <i className='far fa-eye-slash'>&nbsp;Cacher</i>
-                ) : (
-                  <i className='far fa-eye'>&nbsp;Montrer</i>
-                )}
-              </div>
+        {!modalMobileVerif ? (
+          <div>
+            <div className='account-params'>
+              <button
+                onClick={() => setSignUpTab(true)}
+                style={{
+                  backgroundColor: signUpTab ? "#007be8" : "",
+                  border: signUpTab ? "1px solid rgb(192, 192, 192)" : "none",
+                  borderRadius: signUpTab ? "5px 5px 0 0" : "0",
+                  color: signUpTab ? "#fff" : "#333",
+                  borderBottomStyle: signUpTab && "none",
+                }}
+              >
+                Créer un compte
+              </button>
+              <button
+                onClick={() => setSignUpTab(false)}
+                style={{
+                  backgroundColor: !signUpTab ? "#007be8" : "",
+                  border: !signUpTab ? "1px solid rgb(192, 192, 192)" : "none",
+                  borderRadius: !signUpTab ? "5px 5px 0 0" : "0",
+                  color: !signUpTab ? "#fff" : "#333",
+                  borderBottomStyle: !signUpTab && "none",
+                }}
+                className='button-delete-account'
+              >
+                Se connecter
+              </button>
             </div>
-            {/* <div className='pwd-checks'>
+            {signUpTab && detectSave ? (
+              <p>
+                Créer un compte pour sauvegarder ce projet. Une fois votre email
+                vérifier, vous pourrez vous connecter et retrouver dans votre
+                compte votre projet sauvegardé.
+              </p>
+            ) : !signUpTab && detectSave ? (
+              <p>Connectez-vous à votre compte pour sauvegarder ce projet.</p>
+            ) : signUpTab && detectModel ? (
+              <p>
+                Créer un compte pour visualiser le cash-flow annuel net d'impôt
+                de ce projet sur toute la durée de l'emprunt. Les paramètres
+                saisis seront automatiquement sauvegardés. Une fois votre email
+                vérifier, vous pourrez vous connecter à votre compte et
+                consulter le cash-flow annuel net d'impôt de votre projet.
+              </p>
+            ) : !signUpTab && detectModel ? (
+              <p>
+                Connectez-vous à votre compte pour visualiser la rentabilité
+                après impôt de ce projet sur toute la durée de l'emprunt.
+              </p>
+            ) : signUpTab && !detectModel && !detectSave ? (
+              <p>
+                Créer un compte pour visualiser le cash-flow annuel net d'impôt
+                d'un projet sur toute la durée de l'emprunt et sauvegarder les
+                paramètres de tous vos projets à l'étude.
+              </p>
+            ) : !signUpTab && !detectModel && !detectSave ? (
+              <p>
+                Connectez-vous à votre compte pour visualiser le cash-flow
+                annuel net d'impôt d'un projet sur toute la durée de l'emprunt
+                et sauvegarder les paramètres de tous vos projets à l'étude.
+              </p>
+            ) : (
+              ""
+            )}
+            {signUpTab ? (
+              <form className='auth-form' onSubmit={onCreate}>
+                <input
+                  name='emailSignUp'
+                  value={emailSignUp}
+                  type='email'
+                  onChange={onChangeSignUp}
+                  placeholder='Email'
+                  autoComplete='email'
+                  required
+                />
+                <input
+                  name='mobileSignUp'
+                  value={mobileSignUp}
+                  type='tel'
+                  // pattern='[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}'
+                  onChange={onChangeSignUp}
+                  placeholder='N° de mobile'
+                  required
+                />
+                <input
+                  name='passwordSignUp'
+                  value={passwordSignUp}
+                  type={passwordShown ? "text" : "password"}
+                  onChange={onChangeSignUp}
+                  placeholder='Mot de passe'
+                  autoComplete='new-password'
+                  required
+                />
+                <input
+                  name='confirmPassword'
+                  value={confirmPassword}
+                  type={passwordShown ? "text" : "password"}
+                  onChange={onChangeSignUp}
+                  placeholder='Confirmer mot de passe'
+                  autoComplete='new-password'
+                  required
+                />
+                <div className='flex-row jc-sb ml-5 mb-5'>
+                  <small style={{ fontSize: "9px" }}>
+                    Choisir un mot de passe de 8 caractères minimum
+                  </small>
+                  <div className='pwd-icon' onClick={togglePasswordVisiblity}>
+                    {passwordShown ? (
+                      <i className='far fa-eye-slash'>&nbsp;Cacher</i>
+                    ) : (
+                      <i className='far fa-eye'>&nbsp;Montrer</i>
+                    )}
+                  </div>
+                </div>
+                {/* <div className='pwd-checks'>
             {passwordSignUp === "" || passwordSignUp.length <= 8 ?
               <i className="fas fa-times"></i> :
               <i className="fas fa-check" style={{ color: "#01c96c" }} ></i>}&nbsp;
@@ -194,57 +224,66 @@ const AuthModalComplete = ({
               <i className="fas fa-check" style={{ color: "#01c96c" }} ></i>}&nbsp;
               <h6>1 chiffre</h6>
           </div> */}
-            <div className='auth-box-end'>
-              <input
-                type='checkbox'
-                className='ml-5 mr-5'
-                name='condition'
-                value={condition}
-                onChange={onChangeConditionSignUp}
-                required
-              />
-              <p>
-                Accepter que Simulimo transmette mes informations à ses
-                partenaires à des fins commerciales.{" "}
-                <b>Vous pourrez changer d'avis à tout moment.</b>{" "}
-                <a href='/confidentialite' target='_blank'>
-                  En savoir plus
-                </a>
-              </p>
-            </div>
-            <button>Créer un compte</button>
-          </form>
+                <div className='auth-box-end'>
+                  <input
+                    type='checkbox'
+                    className='ml-5 mr-5'
+                    name='condition'
+                    value={condition}
+                    onChange={onChangeConditionSignUp}
+                    required
+                  />
+                  <p>
+                    Accepter que Simulimo transmette mes informations à ses
+                    partenaires à des fins commerciales.{" "}
+                    <b>Vous pourrez changer d'avis à tout moment.</b>{" "}
+                    <a href='/confidentialite' target='_blank'>
+                      En savoir plus
+                    </a>
+                  </p>
+                </div>
+                <button>Créer un compte</button>
+              </form>
+            ) : (
+              <form className='auth-form' onSubmit={onSignIn}>
+                <input
+                  name='emailSignIn'
+                  value={emailSignIn}
+                  type='email'
+                  onChange={onChangeSignIn}
+                  placeholder='Email'
+                  autoComplete='email'
+                  required
+                />
+                <input
+                  name='passwordSignIn'
+                  value={passwordSignIn}
+                  type={passwordShown ? "text" : "password"}
+                  onChange={onChangeSignIn}
+                  placeholder='Mot de passe'
+                  autoComplete='current-password'
+                  required
+                />
+                <div className='pwd-icon' onClick={togglePasswordVisiblity}>
+                  {passwordShown ? (
+                    <i className='far fa-eye-slash'>&nbsp;Cacher</i>
+                  ) : (
+                    <i className='far fa-eye'>&nbsp;Montrer</i>
+                  )}
+                </div>
+                <button>Se connecter</button>
+                <div className='forgotten-pwd-button'>
+                  <Link to='/forgotten-pwd' target='_blank'>
+                    Mot de pass oublié ?
+                  </Link>
+                </div>
+              </form>
+            )}
+            <Alerte />
+          </div>
         ) : (
-          <form className='auth-form' onSubmit={onSignIn}>
-            <input
-              name='emailSignIn'
-              value={emailSignIn}
-              type='email'
-              onChange={onChangeSignIn}
-              placeholder='Email'
-              autoComplete='email'
-              required
-            />
-            <input
-              name='passwordSignIn'
-              value={passwordSignIn}
-              type={passwordShown ? "text" : "password"}
-              onChange={onChangeSignIn}
-              placeholder='Mot de passe'
-              autoComplete='current-password'
-              required
-            />
-            <div className='pwd-icon' onClick={togglePasswordVisiblity}>
-              {passwordShown ? (
-                <i className='far fa-eye-slash'>&nbsp;Cacher</i>
-              ) : (
-                <i className='far fa-eye'>&nbsp;Montrer</i>
-              )}
-            </div>
-            <button>Se connecter</button>
-          </form>
+          ""
         )}
-        <Alerte />
       </div>
     </section>
   );
@@ -256,6 +295,7 @@ AuthModalComplete.propTypes = {
   detectModel: PropTypes.bool.isRequired,
   authToggle: PropTypes.func.isRequired,
   saveModalClic: PropTypes.func.isRequired,
+  modalMobileVerif: PropTypes.func.isRequired,
   modelModalClic: PropTypes.func.isRequired,
   onSignUp: PropTypes.func.isRequired,
   onSignIn: PropTypes.func.isRequired,
@@ -263,6 +303,7 @@ AuthModalComplete.propTypes = {
 
 const mapStateToProps = (state) => ({
   authModal: state.modals.authModal,
+  modalMobileVerif: state.modals.modalMobileVerif,
   detectSave: state.modals.detectSave,
   detectModel: state.modals.detectModel,
 });

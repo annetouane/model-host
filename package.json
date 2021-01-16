@@ -33,7 +33,8 @@
     "mongoose": "^5.10.7",
     "react-number-format": "^4.4.1",
     "react-numeric": "^1.0.0",
-    "react-numeric-input": "^2.2.3"
+    "react-numeric-input": "^2.2.3",
+    "twilio": "^3.55.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

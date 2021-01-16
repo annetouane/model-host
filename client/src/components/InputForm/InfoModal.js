@@ -6,7 +6,7 @@ const InfoModal = ({ idContent, setDisplayInfoModal }) => {
     <section id='modal-comp' className='info-modal'>
       {ModalObjects.filter((info) => info.id === idContent).map(
         (filteredInfo) => (
-          <div className='info-modal-container'>
+          <div className='info-modal-container' key={filteredInfo.id}>
             <div className='info-modal-header'>
               <h3>{filteredInfo.titre}</h3>
               <button onClick={() => setDisplayInfoModal(false)}>

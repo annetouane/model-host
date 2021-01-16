@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import {
   mobileMenuToggle, // controle fenetre nav mobile - redux
@@ -17,8 +18,10 @@ export const NavBar = ({
   accountModalToggle,
   mobileMenuToggle,
   kpiMobileToggle,
+  passwordChange,
   landingToggle,
   landingModal,
+  history,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -52,14 +55,25 @@ export const NavBar = ({
   };
   const resetClickAccount = () => {
     mobileMenuToggle(false); // ferme le menu mobile
-    // authToggle(false); // ferme la fenetre authentification
     // kpiMobileToggle(false); // ferme la fenetre indicateurs
-    // modelModalToggle(false); // ferme la fenetre model
-    // saveModalToggle(false); // ferme la fenetre save
   };
   const resetClickSimulateur = () => {
     mobileMenuToggle(false); // ferme le menu mobile
     // kpiMobileToggle(false); // ferme la fenetre indicateurs
+  };
+
+  // sur la page de changement de mdp si clic sur simulimo,
+  // retourne a la racine et ouvre auth
+  const onClicSimulimo = () => {
+    if (passwordChange) {
+      history.push("/");
+      if (!isAuthenticated) {
+        authToggle(true);
+      }
+    } else {
+      landingToggle(true);
+      resetClickAccueil();
+    }
   };
 
   return (
@@ -67,10 +81,7 @@ export const NavBar = ({
       <div className='flex-row ai-fc'>
         <button
           style={{ fontSize: "24px", fontWeight: "bold" }}
-          onClick={() => {
-            landingToggle(true);
-            resetClickAccueil();
-          }}
+          onClick={onClicSimulimo}
         >
           SIMULIMO
         </button>
@@ -78,7 +89,23 @@ export const NavBar = ({
       {isAuthenticated && width > 1155 ? (
         <div>
           <ul>
-            <li>
+            <li
+              className={
+                !passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
+              <button onClick={onClicSimulimo}>
+                <span className='link'>
+                  Accueil&nbsp;<i className='fas fa-home'></i>
+                </span>
+              </button>
+            </li>
+
+            <li
+              className={
+                passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
               {landingModal ? (
                 <button
                   onClick={() => {
@@ -103,7 +130,11 @@ export const NavBar = ({
                 </button>
               )}
             </li>
-            <li>
+            <li
+              className={
+                passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
               <button
                 onClick={() => {
                   openAccount();
@@ -120,7 +151,22 @@ export const NavBar = ({
       ) : !isAuthenticated && width > 1155 ? (
         <div>
           <ul>
-            <li>
+            <li
+              className={
+                !passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
+              <button onClick={onClicSimulimo}>
+                <span className='link'>
+                  Accueil&nbsp;<i className='fas fa-home'></i>
+                </span>
+              </button>
+            </li>
+            <li
+              className={
+                passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
               {landingModal ? (
                 <button
                   onClick={() => {
@@ -145,7 +191,11 @@ export const NavBar = ({
                 </button>
               )}
             </li>
-            <li>
+            <li
+              className={
+                passwordChange ? "not-display-buttons" : "display-buttons"
+              }
+            >
               <button
                 onClick={() => {
                   authToggle(true);
@@ -180,14 +230,17 @@ NavBar.propTypes = {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   landingModal: state.modals.landingModal,
+  passwordChange: state.modals.passwordChange,
 });
 
-export default connect(mapStateToProps, {
-  authToggle,
-  landingToggle,
-  accountModalToggle,
-  kpiMobileToggle,
-  mobileMenuToggle,
-  modelModalToggle,
-  saveModalToggle,
-})(NavBar);
+export default withRouter(
+  connect(mapStateToProps, {
+    authToggle,
+    landingToggle,
+    accountModalToggle,
+    kpiMobileToggle,
+    mobileMenuToggle,
+    modelModalToggle,
+    saveModalToggle,
+  })(NavBar)
+);
