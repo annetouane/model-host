@@ -3,9 +3,14 @@ import jwt from "jwt-decode";
 
 // components
 import api from "../utilities/api";
-import { setAlert } from "./alert";
+import { setAlert, setAlertStrip } from "./alert";
 import { getModelData, createFirstProject } from "./formData";
-import { mobileVerificationToggle, forgottenPasswordToggle } from "./modals";
+import {
+  mobileVerificationToggle,
+  forgottenPasswordToggle,
+  authToggle,
+  landingToggle,
+} from "./modals";
 import setAuthToken from "../utilities/setAuthToken";
 
 // actions
@@ -54,23 +59,28 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// checkh if user is registrable
+// check if user is registrable
 export const registerCheck = (registerData) => async (dispatch) => {
-  console.log(registerData);
-  try {
-    // get the server's response
-    const res = await api.post("/signup/check", registerData);
-    if (res.data.msg === "ok") {
-      dispatch(mobileVerificationToggle(true));
+  if (registerData.passwordSignUp !== registerData.confirmPassword) {
+    dispatch(setAlert("Les mots de passe ne correspondent pas", "red", 3000));
+  } else {
+    try {
+      // get the server's response
+      const res = await api.post("/signup/check", registerData);
+      if (res.data.msg === "ok") {
+        dispatch(mobileVerificationToggle(true));
+      }
+    } catch (err) {
+      console.log(err.response.data.msg);
+      if (err.response.data.msg) {
+        dispatch(
+          setAlert(err.response.data.msg, err.response.data.color, 3000)
+        );
+      }
+      dispatch({
+        type: REGISTER_FAIL,
+      });
     }
-  } catch (err) {
-    console.log(err.response.data.msg);
-    if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color, 10000));
-    }
-    dispatch({
-      type: REGISTER_FAIL,
-    });
   }
 };
 
@@ -87,29 +97,41 @@ export const register = (registerData, formData) => async (dispatch) => {
       payload: res.data,
     });
 
-    // decode le token
-    const decodedToken = jwt(res.data.token);
+    // // decode le token
+    // const decodedToken = jwt(res.data.token);
 
-    // sauvegarde le projet en cours projet 1 + date
-    const today = new Date();
-    const date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate(); // why +1 ?
-    formData.nomProjet = `Projet 1 - ${date}`;
-    dispatch(createFirstProject(formData, decodedToken.user.id));
-
-    // ferme la fenetre d'auth
+    // // sauvegarde le projet en cours projet 1 + date
+    // const today = new Date();
+    // const date =
+    //   today.getFullYear() +
+    //   "-" +
+    //   (today.getMonth() + 1) +
+    //   "-" +
+    //   today.getDate(); // why +1 ?
+    // formData.nomProjet = `Projet 1 - ${date}`;
+    // // créé le premier projet on register
+    // dispatch(createFirstProject(formData, decodedToken.user.id));
+    // ferme la fenetre de vérification mobile
     dispatch(mobileVerificationToggle(false));
-
+    // ferme la landing page
+    dispatch(landingToggle(false));
+    // ferme la fenetre d'auth
+    dispatch(authToggle(false));
+    // bandeau de bienvenu
+    dispatch(
+      setAlertStrip(
+        "Bienvenue dans votre compte. Vous pouvez désormais visualiser le cash-flow après impôts de vos projets et les sauvegarder",
+        "green",
+        10000
+      )
+    );
     // load user
     dispatch(loadUser());
+    // end
   } catch (err) {
     console.log(err.response.data.msg);
     if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color, 10000));
+      dispatch(setAlert(err.response.data.msg, err.response.data.color, 3000));
     }
     dispatch({
       type: REGISTER_FAIL,

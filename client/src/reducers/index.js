@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import alert from "./alert";
+import alertStrip from "./alertStrip";
 import auth from "./auth";
 import modelData from "./modelData";
 import modals from "./modals";
@@ -11,4 +12,5 @@ export default combineReducers({
   auth,
   modelData,
   modals,
+  alertStrip,
 });

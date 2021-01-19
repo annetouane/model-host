@@ -28,6 +28,7 @@ import SaveModal from "./SaveModal";
 import Modelisation from "../dashboards/Modelisation";
 import AccountModal from "../auth/AccountModal";
 import Landing from "../Layout/Landing";
+import AlerteStrip from "../Layout/AlerteStrip";
 // import Spinner from "../Layout/Spinner";
 
 // actions
@@ -470,7 +471,7 @@ export const MainForm = ({
     mobileSignUp: "",
     passwordSignUp: "",
     confirmPassword: "",
-    condition: true,
+    condition: false,
     codeSms: "",
   });
   const {
@@ -629,6 +630,9 @@ export const MainForm = ({
       {/* {loading ? <Spinner /> : ""} */}
       {/* landing window */}
       <Landing width={width} />
+
+      {/* bandeau alert */}
+      <AlerteStrip />
 
       {/* authentication window */}
       <AuthModalComplete

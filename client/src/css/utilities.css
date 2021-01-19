@@ -579,6 +579,7 @@ input:focus {
 .alt-validation-mobile {
   display: flex;
   padding: 0 30px;
+  margin-bottom: 5px;
 }
 
 .alt-validation-mobile button {
@@ -1492,7 +1493,7 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
   padding: 5px;
   border: none;
-  box-shadow: 0.5px 0.5px 5px #333;
+  box-shadow: 0.5px 0.5px 3px #333;
   border-radius: 10px;
   background-color: #01c96c;
   font-weight: bold;
@@ -2231,17 +2232,51 @@ input[type="email"] {
   color: #fff;
 }
 
+/* alert strip box */
 .alert-box {
-  position: fixed;
-  top: 0;
-  width: 100%;
   display: flex;
-  border-radius: 5px;
-  height: 50px;
-  width: 200px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  /* border-radius: 5px; */
+  height: 50px;
+  width: 100%;
+  color: #fff;
+  font-size: 12px;
   z-index: 10000000000;
+  background-color: #01c96c;
+}
+
+.alert-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+}
+
+.alert-icon {
+  margin-right: 20px;
+}
+
+.alert-msg {
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-body button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 30px;
+}
+
+.alert-body button i {
+  color: #fff;
+  cursor: pointer;
 }
 
 .page-404 {

@@ -1,5 +1,5 @@
 // centralized action types
-import { SET_ALERT, REMOVE_ALERT } from "../actions/types";
+import { SET_ALERT_STRIP, REMOVE_ALERT_STRIP } from "../actions/types";
 
 // init app level state
 const initialState = [];
@@ -7,9 +7,9 @@ const initialState = [];
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case SET_ALERT:
+    case SET_ALERT_STRIP:
       return [payload];
-    case REMOVE_ALERT:
+    case REMOVE_ALERT_STRIP:
       return state.filter((alert) => alert.id !== payload);
     default:
       return state;

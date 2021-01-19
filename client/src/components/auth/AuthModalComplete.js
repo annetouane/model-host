@@ -37,13 +37,13 @@ const AuthModalComplete = ({
   width,
   onCheckAccountCreation, // ask server if account can be create
   mobileVerificationToggle, // action open close mobile verification - redux
-  // detectSave, // detect clic on sauvegarder - redux
-  // detectModel, // detect clic on model - redux
   authModal, // bool open close auth - redux
   authToggle, // action open close auth - redux
   saveModalClic, // detect clic save - redux
   modelModalClic, // detect clic model - redux
   modalMobileVerif, // si compte peut-être créé, ouvre vérification mobile - redux
+  // detectSave, // detect clic on sauvegarder - redux
+  // detectModel, // detect clic on model - redux
 }) => {
   // choix tab : création compte ou connection
   const [signUpTab, setSignUpTab] = useState(true);
@@ -58,7 +58,7 @@ const AuthModalComplete = ({
   const resetStates = () => {
     setSignUp({
       emailSignUp: "",
-      mobile: "",
+      mobileSignUp: "",
       passwordSignUp: "",
       confirmPassword: "",
       condition: false,
@@ -77,22 +77,6 @@ const AuthModalComplete = ({
     mobileVerificationToggle(false);
     resetStates();
   };
-
-  // // passwords state
-  // const [userMobile, setMobile] = useState({
-  //   mobile: "",
-  // });
-  // const { mobile } = userMobile;
-
-  // const onChangeEmail = (e) => {
-  //   setMobile({ ...userMobile, [e.target.name]: e.target.value });
-  // };
-
-  // const onSubmitEmail = (e) => {
-  //   e.preventDefault();
-  //   forgottenEmail(email);
-  //   resetStates();
-  // };
 
   return (
     <section className={authModal ? "auth-modal" : "auth-modal-none"}>
@@ -198,6 +182,7 @@ const AuthModalComplete = ({
                     onChange={onChangeSignUp}
                     type='tel'
                     placeholder='N° de mobile sur 10 chiffres'
+                    autoComplete='tel'
                     required
                   />
                 </div>
@@ -342,10 +327,11 @@ const AuthModalComplete = ({
               >
                 Ce n° de mobile est incorrect
               </button>
-              <button onClick={onChangeConditionSignUp}>
+              <button onClick={onCheckAccountCreation}>
                 Renvoyer le code d'activation
               </button>
             </div>
+            <Alerte />
           </div>
         )}
       </div>
