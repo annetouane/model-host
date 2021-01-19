@@ -85,7 +85,7 @@
 //   } catch (err) {
 //     // log the error and send to client a server error
 //     console.error(err.message);
-//     res.status(500).send("server error");
+//     res.status(500).send("Service indisponible");
 //   }
 // });
 

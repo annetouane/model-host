@@ -5,7 +5,7 @@ import jwt from "jwt-decode";
 import api from "../utilities/api";
 import { setAlert } from "./alert";
 import { getModelData, createFirstProject } from "./formData";
-import { mobileVerificationToggle } from "./modals";
+import { mobileVerificationToggle, forgottenPasswordToggle } from "./modals";
 import setAuthToken from "../utilities/setAuthToken";
 
 // actions
@@ -21,18 +21,11 @@ import {
   AUTH_TOGGLE,
   PROJECT_LIST,
   REMOVE_USER_PARAMS,
+  RECOVER_PASSWORD,
 } from "./types";
 
 // load the user each time the main app is updated to check authentication
 export const loadUser = () => async (dispatch) => {
-  // if
-  // (localStorage.length === 1) {
-  //   console.log("local empty");
-  //   dispatch({
-  //     type: AUTH_ERROR,
-  //   });
-  // } else
-  //  {
   if (localStorage.token) {
     // if there is a token in local storage,
     // sends the token in global header by calling the function setAuthToken
@@ -61,6 +54,26 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
+// checkh if user is registrable
+export const registerCheck = (registerData) => async (dispatch) => {
+  console.log(registerData);
+  try {
+    // get the server's response
+    const res = await api.post("/signup/check", registerData);
+    if (res.data.msg === "ok") {
+      dispatch(mobileVerificationToggle(true));
+    }
+  } catch (err) {
+    console.log(err.response.data.msg);
+    if (err.response.data.msg) {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color, 10000));
+    }
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
+};
+
 // Register User
 export const register = (registerData, formData) => async (dispatch) => {
   console.log(registerData, formData);
@@ -68,13 +81,14 @@ export const register = (registerData, formData) => async (dispatch) => {
     // get the server's response
     const res = await api.post("/signup", registerData);
 
-    // if the is a success -> dispatch REGISTER_SUCCESS
+    // insert the token in the payload
     dispatch({
       type: REGISTER_SUCCESS,
+      payload: res.data,
     });
 
-    // send alert check email
-    dispatch(setAlert(res.data.alert.msg, res.data.alert.color, 5000));
+    // decode le token
+    const decodedToken = jwt(res.data.token);
 
     // sauvegarde le projet en cours projet 1 + date
     const today = new Date();
@@ -85,8 +99,13 @@ export const register = (registerData, formData) => async (dispatch) => {
       "-" +
       today.getDate(); // why +1 ?
     formData.nomProjet = `Projet 1 - ${date}`;
-    dispatch(createFirstProject(formData, res.data.id));
-    dispatch(mobileVerificationToggle(true));
+    dispatch(createFirstProject(formData, decodedToken.user.id));
+
+    // ferme la fenetre d'auth
+    dispatch(mobileVerificationToggle(false));
+
+    // load user
+    dispatch(loadUser());
   } catch (err) {
     console.log(err.response.data.msg);
     if (err.response.data.msg) {
@@ -118,7 +137,7 @@ export const login = (loginData, formData, detectSave, detectModel) => async (
     // load user
     dispatch(loadUser());
 
-    // 3 scénarios post-login réussi
+    // 2 scénarios post-login réussi
     if (detectModel) {
       // if fiscalité -> post input
       dispatch(getModelData(formData, decodedToken.user.id));
@@ -177,17 +196,17 @@ export const deleteAccount = () => async (dispatch) => {
 };
 
 // Mot de passe oublié : envoi email
-export const forgottenEmail = (email) => async (dispatch) => {
-  console.log(email);
-  const userEmail = { email: email };
-  console.log(userEmail);
+export const forgottenSms = (mobile) => async (dispatch) => {
+  console.log(mobile);
+  const userMobile = { mobile: mobile };
+  console.log(userMobile);
   try {
     // get the server's response
-    const res = await api.post("/forgotten-pwd", userEmail);
+    const res = await api.post("/forgotten-pwd", userMobile);
     console.log(res.data);
-    // if the is a success -> dispatch REGISTER_SUCCESS
-    // attach the response to the playload
-    dispatch(setAlert(res.data.msg, res.data.color, 5000));
+    // insert ID et n° de mobile dans le redcuer
+    dispatch({ type: RECOVER_PASSWORD, payload: res.data });
+    dispatch(forgottenPasswordToggle(true));
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
@@ -195,17 +214,46 @@ export const forgottenEmail = (email) => async (dispatch) => {
   }
 };
 
-// Mot de passe oublié : changement mot de passe
-export const forgottenChange = (newPassword, id) => async (dispatch) => {
-  const body = { newPassword };
+export const forgottenChange = (data) => async (dispatch) => {
   try {
     // get the server's response
-    const res = await api.post(`/forgotten-pwd/${id}`, body);
+    const res = await api.post("/forgotten-pwd/reset", data);
     dispatch(setAlert(res.data.msg, res.data.color));
-    // console.log(res.data);
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
   }
 };
+
+// Mot de passe oublié : envoi email
+// export const forgottenEmail = (email) => async (dispatch) => {
+//   console.log(email);
+//   const userEmail = { email: email };
+//   console.log(userEmail);
+//   try {
+//     // get the server's response
+//     const res = await api.post("/forgotten-pwd", userEmail);
+//     console.log(res.data);
+//     dispatch(setAlert(res.data.msg, res.data.color, 5000));
+//   } catch (err) {
+//     if (err.response.data.msg) {
+//       dispatch(setAlert(err.response.data.msg, err.response.data.color));
+//     }
+//   }
+// };
+
+// // Mot de passe oublié : changement mot de passe
+// export const forgottenChangeEmail = (newPassword, id) => async (dispatch) => {
+//   const body = { newPassword };
+//   try {
+//     // get the server's response
+//     const res = await api.post(`/forgotten-pwd/${id}`, body);
+//     dispatch(setAlert(res.data.msg, res.data.color));
+//     // console.log(res.data);
+//   } catch (err) {
+//     if (err.response.data.msg) {
+//       dispatch(setAlert(err.response.data.msg, err.response.data.color));
+//     }
+//   }
+// };

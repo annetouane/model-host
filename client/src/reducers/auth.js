@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   ACCOUNT_DELETED,
+  RECOVER_PASSWORD,
   // LOADING,
   // LOADED,
 } from "../actions/types";
@@ -39,14 +40,16 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true, // user is logged in, the token is valid
         // loading: false,
-        user: payload, // the user (email + id)
+        user: payload, // the user id
       };
     case REGISTER_SUCCESS:
+      // stores the token in local storage
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
-        isAuthenticated: false,
+        ...payload, // adds the token to the reducer
+        isAuthenticated: true,
         // loading: false,
-        user: null,
       };
     case LOGIN_SUCCESS:
       // stores the token in local storage
@@ -64,6 +67,14 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         // loading: false,
         user: null,
+      };
+    case RECOVER_PASSWORD:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        // loading: false,
+        user: payload,
       };
     case AUTH_ERROR:
     case LOGIN_FAIL:

@@ -672,7 +672,7 @@ router.delete("/:id", auth, async (req, res) => {
     await InputForm.findByIdAndRemove(req.params.id);
     res.send(req.params.id);
   } catch (err) {
-    return res.status(500).json({ msg: "server error" });
+    return res.status(500).json({ msg: "Service indisponible" });
   }
 });
 

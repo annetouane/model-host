@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
     res.json(response);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send("Service indisponible");
   }
 });
 

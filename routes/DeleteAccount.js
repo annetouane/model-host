@@ -14,7 +14,7 @@ router.delete("/", auth, async (req, res) => {
     res.send("Votre compte a bien été supprimé");
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send("Service indisponible");
   }
 });
 

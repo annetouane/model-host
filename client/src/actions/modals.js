@@ -11,6 +11,7 @@ import {
   KPI_MOBILE_TOGGLE,
   PWD_CHANGE_PAGE,
   MOBILE_VERIF_TOGGLE,
+  FORGOTTEN_PASSWORD_TOGGLE,
 } from "./types";
 
 // Open Auth Window
@@ -86,6 +87,14 @@ export const kpiMobileToggle = (bool) => (dispatch) => {
 export const mobileVerificationToggle = (bool) => (dispatch) => {
   dispatch({
     type: MOBILE_VERIF_TOGGLE,
+    payload: bool,
+  });
+};
+
+// ouvre forgotten password
+export const forgottenPasswordToggle = (bool) => (dispatch) => {
+  dispatch({
+    type: FORGOTTEN_PASSWORD_TOGGLE,
     payload: bool,
   });
 };

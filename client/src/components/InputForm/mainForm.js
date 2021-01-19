@@ -40,7 +40,7 @@ import {
   deleteProject,
   removeUserParams,
 } from "../../actions/formData";
-import { register, login, loadUser } from "../../actions/auth";
+import { registerCheck, register, login, loadUser } from "../../actions/auth";
 import {
   authToggle,
   saveModalClic,
@@ -83,6 +83,7 @@ export const MainForm = ({
   currentModel,
   loadUser,
   history,
+  registerCheck,
   // loading,
 }) => {
   const [dimensions, setDimensions] = useState({
@@ -105,34 +106,34 @@ export const MainForm = ({
     natureBien: "",
     typeAppartement: "",
     netVendeur: 300000,
-    travaux: 0,
-    ammeublement: 0,
+    travaux: 50000,
+    ammeublement: 5000,
     notaire: 0.075,
-    agence: 0,
-    duree: 20,
+    agence: 20000,
+    duree: 25,
     apport: 30000,
-    interet: 1.2,
-    assurance: 0.1,
-    fraisBancaires: 0,
-    fraisCourtier: 0,
+    interet: 1.5,
+    assurance: 0.2,
+    fraisBancaires: 3000,
+    fraisCourtier: 3000,
     loyer: 2000,
-    chargesLoc: 0,
+    chargesLoc: 2100,
     occupation: 11,
-    fonciere: 3000,
-    gestion: 0,
-    charges: 0,
-    pno: 0,
+    fonciere: 2130,
+    gestion: 1830,
+    charges: 2200,
+    pno: 500,
     revInvest1: 30000,
-    augInvest1: 0.01,
-    revInvest2: 0,
-    augInvest2: 0.01,
-    partFisc: 1,
+    augInvest1: 0.04,
+    revInvest2: 30000,
+    augInvest2: 0.08,
+    partFisc: 2.5,
     sciIs: true,
     lmnpReel: false,
     lmnpMicro: false,
     nueReel: false,
     nueMicro: false,
-    irl: 1,
+    irl: 1.5,
   });
 
   // destructure form
@@ -469,7 +470,8 @@ export const MainForm = ({
     mobileSignUp: "",
     passwordSignUp: "",
     confirmPassword: "",
-    condition: false,
+    condition: true,
+    codeSms: "",
   });
   const {
     emailSignUp,
@@ -477,6 +479,7 @@ export const MainForm = ({
     passwordSignUp,
     confirmPassword,
     condition,
+    codeSms,
   } = signUp;
 
   const onChangeSignUp = (e) => {
@@ -486,9 +489,36 @@ export const MainForm = ({
     setSignUp({ ...signUp, [e.target.name]: e.target.checked });
   };
 
+  // check if account can be created according to provided credentials
+  const onCheckAccountCreation = (e) => {
+    e.preventDefault();
+    console.log(mobileSignUp);
+    console.log(/^\d+$/.test(mobileSignUp));
+    if (!/^\d+$/.test(mobileSignUp)) {
+      console.log("not number");
+      setAlert("Merci de saisir uniquement des chiffres", "red", 3000);
+    } else if (
+      !mobileSignUp.startsWith("06") &&
+      !mobileSignUp.startsWith("07")
+    ) {
+      console.log("not mobile");
+      setAlert(
+        "Merci d'indiquer un numéro de mobile (06/07xxxxxxxx)",
+        "red",
+        3000
+      );
+    } else if (mobileSignUp.length !== 10) {
+      setAlert("Merci d'indiquer un mobile sur 10 chiffres", "red", 3000);
+    } else {
+      console.log("ok");
+      registerCheck(signUp);
+    }
+  };
+
+  // create account if SMS code is validated
   const onSignUp = (e) => {
     e.preventDefault();
-    register(signUp, formData, detectSave, detectModel);
+    register(signUp, formData);
   };
 
   // sign in *******************************************************************************
@@ -605,6 +635,7 @@ export const MainForm = ({
         onChangeSignUp={onChangeSignUp}
         onChangeConditionSignUp={onChangeConditionSignUp}
         onChangeSignIn={onChangeSignIn}
+        onCheckAccountCreation={onCheckAccountCreation}
         onSignUp={onSignUp}
         onSignIn={onSignIn}
         setSignUp={setSignUp}
@@ -614,6 +645,7 @@ export const MainForm = ({
         passwordSignUp={passwordSignUp}
         confirmPassword={confirmPassword}
         condition={condition}
+        codeSms={codeSms}
         emailSignIn={emailSignIn}
         passwordSignIn={passwordSignIn}
         width={width}
@@ -704,6 +736,7 @@ export const MainForm = ({
 
       {width <= 1155 && !landingModal ? (
         <ButtonModelMobile
+          netVendeur={netVendeur}
           formCheck={formCheck}
           onSave={onSave}
           onFisc={onFisc}
@@ -957,6 +990,7 @@ MainForm.propTypes = {
   modelModalToggle: PropTypes.func.isRequired,
   landingToggle: PropTypes.func.isRequired,
   accountModalToggle: PropTypes.func.isRequired,
+  registerCheck: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   detectSave: PropTypes.bool.isRequired,
   detectModel: PropTypes.bool.isRequired,
@@ -1000,5 +1034,6 @@ export default withRouter(
     accountModalToggle,
     loadUser,
     removeUserParams,
+    registerCheck,
   })(MainForm)
 );

@@ -10,6 +10,7 @@ import {
   KPI_MOBILE_TOGGLE,
   PWD_CHANGE_PAGE,
   MOBILE_VERIF_TOGGLE,
+  FORGOTTEN_PASSWORD_TOGGLE,
 } from "../actions/types";
 
 // init state : token stored in localStorage : look for an item called token
@@ -23,6 +24,8 @@ const initialState = {
   kpiMobile: false,
   detectSave: false,
   detectModel: false,
+  modalMobileVerif: false,
+  passForgotModal: false,
 };
 
 export default function (state = initialState, action) {
@@ -88,11 +91,17 @@ export default function (state = initialState, action) {
         ...state,
         passwordChange: payload,
       };
-    // kpi mobile
+    // vérification mobile
     case MOBILE_VERIF_TOGGLE:
       return {
         ...state,
         modalMobileVerif: payload,
+      };
+    // mot de pass oublier
+    case FORGOTTEN_PASSWORD_TOGGLE:
+      return {
+        ...state,
+        passForgotModal: payload,
       };
     default:
       return state;

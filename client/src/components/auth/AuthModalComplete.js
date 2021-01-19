@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 // component
 import Alerte from "../Layout/Alert";
 
+// image
+import confirmationImg from "../../img/mobile-confirmation-2.svg";
+
 // actions
 import {
   authToggle,
   saveModalClic,
   modelModalClic,
+  mobileVerificationToggle,
 } from "../../actions/modals";
 
 const AuthModalComplete = ({
@@ -27,11 +31,14 @@ const AuthModalComplete = ({
   passwordSignUp,
   confirmPassword,
   condition,
+  codeSms,
   emailSignIn,
   passwordSignIn,
   width,
-  detectSave, // detect clic on sauvegarder - redux
-  detectModel, // detect clic on model - redux
+  onCheckAccountCreation, // ask server if account can be create
+  mobileVerificationToggle, // action open close mobile verification - redux
+  // detectSave, // detect clic on sauvegarder - redux
+  // detectModel, // detect clic on model - redux
   authModal, // bool open close auth - redux
   authToggle, // action open close auth - redux
   saveModalClic, // detect clic save - redux
@@ -67,18 +74,30 @@ const AuthModalComplete = ({
     authToggle(false); // close auth modal
     saveModalClic(false); // save n'est plus actif
     modelModalClic(false); // model n'est plus actif
+    mobileVerificationToggle(false);
     resetStates();
   };
 
-  const onCreate = (e) => {
-    e.preventDefault();
-    console.log("stuff");
-  };
+  // // passwords state
+  // const [userMobile, setMobile] = useState({
+  //   mobile: "",
+  // });
+  // const { mobile } = userMobile;
+
+  // const onChangeEmail = (e) => {
+  //   setMobile({ ...userMobile, [e.target.name]: e.target.value });
+  // };
+
+  // const onSubmitEmail = (e) => {
+  //   e.preventDefault();
+  //   forgottenEmail(email);
+  //   resetStates();
+  // };
 
   return (
     <section className={authModal ? "auth-modal" : "auth-modal-none"}>
       <div className='auth-box' style={{ margin: 0 }}>
-        {width > 1155 ? (
+        {width > 1155 && !modalMobileVerif ? (
           <div onClick={authClose}>
             <i className='fas fa-times quit-auth-modal'></i>
           </div>
@@ -86,7 +105,7 @@ const AuthModalComplete = ({
           ""
         )}
         {!modalMobileVerif ? (
-          <div>
+          <div style={{ width: "100%" }}>
             <div className='account-params'>
               <button
                 onClick={() => setSignUpTab(true)}
@@ -114,7 +133,7 @@ const AuthModalComplete = ({
                 Se connecter
               </button>
             </div>
-            {signUpTab && detectSave ? (
+            {/* {signUpTab && detectSave ? (
               <p>
                 Créer un compte pour sauvegarder ce projet. Une fois votre email
                 vérifier, vous pourrez vous connecter et retrouver dans votre
@@ -149,9 +168,13 @@ const AuthModalComplete = ({
               </p>
             ) : (
               ""
-            )}
+            )} */}
             {signUpTab ? (
-              <form className='auth-form' onSubmit={onCreate}>
+              <form
+                className='auth-form'
+                onSubmit={onCheckAccountCreation}
+                method='post'
+              >
                 <input
                   name='emailSignUp'
                   value={emailSignUp}
@@ -161,15 +184,24 @@ const AuthModalComplete = ({
                   autoComplete='email'
                   required
                 />
-                <input
-                  name='mobileSignUp'
-                  value={mobileSignUp}
-                  type='tel'
-                  // pattern='[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}'
-                  onChange={onChangeSignUp}
-                  placeholder='N° de mobile'
-                  required
-                />
+                <div className='mobile-input'>
+                  <p
+                    style={{
+                      color: mobileSignUp === "" ? "grey" : "#000000",
+                    }}
+                  >
+                    +33
+                  </p>
+                  <input
+                    name='mobileSignUp'
+                    value={mobileSignUp}
+                    onChange={onChangeSignUp}
+                    type='tel'
+                    placeholder='N° de mobile sur 10 chiffres'
+                    required
+                  />
+                </div>
+
                 <input
                   name='passwordSignUp'
                   value={passwordSignUp}
@@ -229,7 +261,7 @@ const AuthModalComplete = ({
                     type='checkbox'
                     className='ml-5 mr-5'
                     name='condition'
-                    value={condition}
+                    checked={condition}
                     onChange={onChangeConditionSignUp}
                     required
                   />
@@ -245,13 +277,15 @@ const AuthModalComplete = ({
                 <button>Créer un compte</button>
               </form>
             ) : (
-              <form className='auth-form' onSubmit={onSignIn}>
+              // <div>
+              //   {passForgotModal ? (
+              <form className='auth-form' onSubmit={onSignIn} method='post'>
                 <input
                   name='emailSignIn'
                   value={emailSignIn}
-                  type='email'
+                  type='text'
                   onChange={onChangeSignIn}
-                  placeholder='Email'
+                  placeholder='Email ou n° de mobile'
                   autoComplete='email'
                   required
                 />
@@ -279,10 +313,40 @@ const AuthModalComplete = ({
                 </div>
               </form>
             )}
+
             <Alerte />
           </div>
         ) : (
-          ""
+          <div className='mobile-auth-page'>
+            <img src={confirmationImg} alt='' />
+            <h3>
+              Un code d'activation à 4 chiffres a<br />
+              été envoyé au : {mobileSignUp}
+            </h3>
+            <form onSubmit={onSignUp} method='post'>
+              <input
+                name='codeSms'
+                value={codeSms}
+                type='number'
+                onChange={onChangeSignUp}
+                placeholder="Code d'activation"
+                required
+              />
+              <button>Confirmer</button>
+            </form>
+            <div className='alt-validation-mobile'>
+              <button
+                onClick={() => mobileVerificationToggle(false)}
+                id='incorrect-mobile'
+                style={{ borderRight: "1px solid #aaa9a9" }}
+              >
+                Ce n° de mobile est incorrect
+              </button>
+              <button onClick={onChangeConditionSignUp}>
+                Renvoyer le code d'activation
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </section>
@@ -295,10 +359,11 @@ AuthModalComplete.propTypes = {
   detectModel: PropTypes.bool.isRequired,
   authToggle: PropTypes.func.isRequired,
   saveModalClic: PropTypes.func.isRequired,
-  modalMobileVerif: PropTypes.func.isRequired,
+  modalMobileVerif: PropTypes.bool.isRequired,
   modelModalClic: PropTypes.func.isRequired,
   onSignUp: PropTypes.func.isRequired,
   onSignIn: PropTypes.func.isRequired,
+  mobileVerificationToggle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -312,4 +377,5 @@ export default connect(mapStateToProps, {
   authToggle,
   saveModalClic,
   modelModalClic,
+  mobileVerificationToggle,
 })(AuthModalComplete);

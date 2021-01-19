@@ -135,7 +135,7 @@ router.post("/first", async (req, res) => {
     res.json({ msg: "premier projet créé" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send("Service indisponible");
   }
 });
 

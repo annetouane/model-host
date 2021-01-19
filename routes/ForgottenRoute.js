@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-// const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const sgMail = require("@sendgrid/mail");
+const config = require("config");
+const authToken = config.get("authToken");
+const accountSid = config.get("accountSid");
+const serviceSid = config.get("serviceSid");
+const client = require("twilio")(accountSid, authToken);
 
 // import model
 const User = require("../models/UserModel");
@@ -12,65 +15,58 @@ const User = require("../models/UserModel");
 // @access   Public
 router.post("/", async (req, res) => {
   console.log(req.body);
+  // format mobile
+  const countryCode = "+33";
+  const mobile = countryCode.concat("", req.body.mobile.slice(1));
+  console.log(mobile);
   try {
     // check if user exists (value or null)
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ mobile: mobile });
     console.log(user);
     // if user isn't found : sends 400 and array with error message
     if (!user) {
-      return res.status(400).json({ msg: "Utilisateur introuvable" });
+      return res
+        .status(400)
+        .json({ msg: "Utilisateur introuvable", color: "red" });
       // if user found (matching email)
     } else {
-      // send confirmation email
-      sgMail.setApiKey(
-        "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"
-      );
-      const msg = {
-        to: user.email,
-        from: "antoine.chardigny@essec.edu",
-        subject: "Simulimo - Réinitialiser mon mot de passe",
-        html: `
-                <h3>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous </h3>
-                <a href=${"http://localhost:3000/change-pwd/" + user.id}>
-                  Réinitialiser mon mot de passe
-                </a>
-                <h3>A bientôt</h3>`,
-      };
-      sgMail
-        .send(msg)
-        .then(() => {
-          res.json({
-            msg: `Un lien de réinitialisation a été envoyé à : ${user.email}`,
-            color: "green",
-          });
-        })
-        .catch((error) => {
-          console.log(error.response.body);
+      // mobile and email don't exist send the code via sms
+      const sms = await client.verify
+        .services(serviceSid) // assign the service id
+        .verifications.create({
+          to: mobile,
+          channel: "sms",
         });
+      console.log(sms);
+      // sends back user id and mobile to the server
+      res.json({
+        id: user._id,
+      });
     }
   } catch (err) {
     // log the error and send to client a server error
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send("Service indisponible");
   }
 });
 
 // @route    POST /forgotten/:id
 // @desc     New password
 // @access   Public
-router.post("/:id", async (req, res) => {
-  // check that id has a mongoDB format
-  const id = req.params.id;
-  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    return res
-      .status(400)
-      .send({ msg: "Utilisateur introuvable", color: "red" });
-  }
+router.post("/reset", async (req, res) => {
+  console.log(req.body);
+  const { id, newPassword, mobileRecover, codeSms } = req.body;
 
+  // transform password en string pour hashage
   const stringifiedArray = {
-    newPassword: String(req.body.newPassword),
+    newPasswordStg: String(newPassword),
   };
-  const { newPassword } = stringifiedArray;
+  const { newPasswordStg } = stringifiedArray;
+
+  // format mobile
+  const countryCode = "+33";
+  const mobile = countryCode.concat("", mobileRecover.slice(1));
+  console.log(mobile);
 
   // check if user exists (true false)
   let user = await User.findOne({ _id: id });
@@ -85,18 +81,37 @@ router.post("/:id", async (req, res) => {
     });
   }
   try {
-    // encrypt the password (bcrypt) : create the salt (object to hash)
-    const salt = await bcrypt.genSalt(10);
-    // hash the password
-    const password = await bcrypt.hash(newPassword, salt);
-    await User.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
-    res.send({
-      msg: "Votre mot de passe a été modifié avec succès",
-      color: "green",
-    });
+    // verifiy the code
+    const sms2 = await client.verify
+      .services(serviceSid)
+      .verificationChecks.create({
+        // create request
+        to: mobile,
+        code: codeSms,
+      });
+    // si le code est validé :
+    if (sms2.valid) {
+      // encrypt the password (bcrypt) : create the salt (object to hash)
+      const salt = await bcrypt.genSalt(10);
+      // hash the password
+      const password = await bcrypt.hash(newPasswordStg, salt);
+      await User.findByIdAndUpdate(
+        { _id: id },
+        { $set: { password: password } }
+      );
+      res.send({
+        msg: "Votre mot de passe a été modifié avec succès",
+        color: "green",
+      });
+    } else {
+      res.status(401).send({
+        msg: "Code non-valide",
+        color: "red",
+      });
+    }
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send("Service indisponible");
   }
 });
 

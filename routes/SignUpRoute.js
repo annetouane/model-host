@@ -2,19 +2,19 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-// const sgMail = require("@sendgrid/mail");
 const config = require("config");
 const authToken = config.get("authToken");
 const accountSid = config.get("accountSid");
 const serviceSid = config.get("serviceSid");
-
 const client = require("twilio")(accountSid, authToken);
+const jwt = require("jsonwebtoken");
+// const sgMail = require("@sendgrid/mail");
 
 // import model
 const User = require("../models/UserModel");
 
-// @route    POST /signup
-// @desc     Register user
+// @route    POST /signup/check
+// @desc     check if registrable user
 // @access   Public
 router.post("/check", async (req, res) => {
   console.log(req.body);
@@ -26,10 +26,16 @@ router.post("/check", async (req, res) => {
       color: "red",
     });
   }
+
+  // format mobile
+  const countryCode = "+33";
+  const mobile = countryCode.concat("", mobileSignUp.slice(1));
+  console.log(mobile);
+
   try {
     // check if email exists
     let userEmail = await User.findOne({ email: emailSignUp });
-    let userMobile = await User.findOne({ mobile: mobileSignUp });
+    let userMobile = await User.findOne({ mobile: mobile });
 
     // if user found : sends 400 and array with error message
     if (userEmail) {
@@ -49,21 +55,19 @@ router.post("/check", async (req, res) => {
       const sms = await client.verify
         .services(serviceSid) // assign the service id
         .verifications.create({
-          // create request
-          to: "+33760585827",
+          to: mobile,
           channel: "sms",
         });
-      console.log(sms); // ok
 
       // sends back validation to the server
       res.json({
-        msg: `Un code d'activation vous a été envoyé au ${mobileSignUp}.`,
+        msg: "ok",
       });
     }
   } catch (err) {
     // log the error and send to client a server error
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send("Service indisponible");
   }
 });
 
@@ -80,22 +84,24 @@ router.post("/", async (req, res) => {
     condition,
     codeSms,
   } = req.body;
+  const countryCode = "+33";
+  const mobile = countryCode.concat("", mobileSignUp.slice(1));
+  console.log(mobile);
   try {
     // verifiy the code
     const sms2 = await client.verify
       .services(serviceSid)
       .verificationChecks.create({
         // create request
-        to: "+33760585827",
+        to: mobile,
         code: codeSms,
       });
-    console.log(sms2);
     // si le code est validé :
-    if ((sms2.statut = "approved")) {
+    if (sms2.valid) {
       // create a new user using the User model
       user = new User({
         email: emailSignUp,
-        mobile: mobileSignUp,
+        mobile: mobile,
         password: "",
         condition: condition,
         code: codeSms,
@@ -108,10 +114,26 @@ router.post("/", async (req, res) => {
 
       // save the user to the DB
       await user.save();
-      // sends back user to the server
-      res.json({
-        id: user._id,
-      });
+
+      // generate JWT in which the user ID will be inserted
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      // sign the token with the secret key
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
+        // callback to get either an error or the token to be sent back to the client
+        (err, token) => {
+          // throw deliver error synchronously
+          if (err) throw err;
+          // sends the token to the client
+          res.json({ token });
+        }
+      );
     } else {
       res.status(401).send({
         msg: "Code non-valide",
@@ -121,7 +143,7 @@ router.post("/", async (req, res) => {
   } catch (err) {
     // log the error and send to client a server error
     console.error(err.message);
-    res.status(500).send("server error");
+    res.status(500).send("Service indisponible");
   }
 });
 

@@ -14,11 +14,11 @@ import favicon from "./img/favicon.ico";
 // components
 import NavBar from "./components/Layout/NavBar";
 import Page404Redirect from "./components/Layout/Page404Redirect";
-// import AlerteStrip from "./components/Layout/AlerteStrip";
 import MainForm from "./components/InputForm/mainForm";
-// import Spinner from "./components/Layout/Spinner";
-import ChangePasswordLanding from "./components/auth/ChangePasswordLanding";
 import ForgottenPassword from "./components/auth/ForgottenPassword";
+// import AlerteStrip from "./components/Layout/AlerteStrip";
+// import Spinner from "./components/Layout/Spinner";
+// import ChangePasswordLanding from "./components/auth/ChangePasswordLanding";
 
 // actions
 import { loadUser } from "./actions/auth";
@@ -60,11 +60,6 @@ const App = () => {
           {/* <AlerteStrip /> */}
           <Switch>
             <Route exact path='/' component={MainForm} />
-            <Route
-              exact
-              path='/change-pwd/:id'
-              component={ChangePasswordLanding}
-            />
             <Route exact path='/forgotten-pwd' component={ForgottenPassword} />
             <Route path='/404' component={Page404Redirect} />
             <Redirect to='/404' />

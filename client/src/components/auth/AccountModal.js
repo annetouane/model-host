@@ -209,15 +209,14 @@ const AccountModal = ({
               ) : (
                 <div className='no-project-saved'>
                   <p style={{ marginTop: "10px" }}>
-                    Vous n'avez pas encore de projet sauvegardé. <br /> Après
-                    avoir saisi les paramètres de votre projet d'investissement,
-                    le boutton{" "}
+                    Vous n'avez pas de projet sauvegardé. Après avoir saisi les
+                    paramètres de votre projet, le boutton{" "}
                     <span>
                       <i className='far fa-save'></i> Sauvegarder
                     </span>{" "}
-                    du simulateur vous permettra d'enregistrer vos différents
-                    projets à l'étude afin de les retrouver dans votre compte
-                    lors de votre prochaine connexion.
+                    vous permettra d'enregistrer vos différents projets à
+                    l'étude afin de les retrouver dans votre compte lors de
+                    votre prochaine connexion.
                   </p>
                 </div>
               )}
@@ -361,9 +360,13 @@ const AccountModal = ({
             </div>
           )}
         </div>
-        <div className='button-disconnect'>
-          <button onClick={functionLogout}>Déconnexion</button>
-        </div>
+        {!toggleParamAccount ? (
+          <div className='button-disconnect'>
+            <button onClick={functionLogout}>Déconnexion</button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </section>
   );
