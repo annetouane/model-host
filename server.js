@@ -56,7 +56,8 @@ app.use("/", LoadUserRoute);
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder -> build folder
-  app.use(express.static("client/build"));
+  app.use(express.static("./client/build"));
+
   // load anything appart the API routes
   app.get("*", (req, res) => {
     // goes to the client/build folder and loads the index.html
