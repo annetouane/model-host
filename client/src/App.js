@@ -37,10 +37,10 @@ if (localStorage.token) {
 // useEffect will execute each time the app is updated
 // this sets the token in local storage
 const App = () => {
-  useEffect(() => {
-    // dispatch is a method on the store, dispatch load user which will dispatch the action to the reducer
-    store.dispatch(loadUser());
-  }, []);
+  // useEffect(() => {
+  //   // dispatch is a method on the store, dispatch load user which will dispatch the action to the reducer
+  //   store.dispatch(loadUser());
+  // }, []);
 
   return (
     <Provider store={store}>
