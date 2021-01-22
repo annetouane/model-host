@@ -89,6 +89,7 @@ router.post("/reset", async (req, res) => {
         to: mobile,
         code: codeSms,
       });
+    console.log(sms2);
     // si le code est validé :
     if (sms2.valid) {
       // encrypt the password (bcrypt) : create the salt (object to hash)
@@ -100,7 +101,8 @@ router.post("/reset", async (req, res) => {
         { $set: { password: password } }
       );
       res.send({
-        msg: "Votre mot de passe a été modifié avec succès",
+        msg:
+          "Votre mot de passe a été modifié. Merci de retourner à l'accueil pour vous identifier",
         color: "green",
       });
     } else {
@@ -111,7 +113,7 @@ router.post("/reset", async (req, res) => {
     }
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Service indisponible");
+    res.status(500).send({ msg: "Service indisponible", color: "red" });
   }
 });
 

@@ -10,22 +10,23 @@ const AlerteStrip = ({ alerts, removeAlertStrip }) =>
   alerts !== null &&
   alerts.length > 0 &&
   // map the different alerts in the state
+
   alerts.map((alert) => (
     // display the different alerts from the state
-    <div className='alert-box' key={alert.id}>
+    <div
+      className='alert-box'
+      key={alert.id}
+      style={{ backgroundColor: alert.color }}
+    >
       <div className='alert-body'>
         <div className='alert-icon'>
-          {
-            (alert.alertType = "green" ? (
-              <i className='fas fa-check-circle fa-2x'></i>
-            ) : (
-              (alert.alertType = "orange" ? (
-                <i className='fas fa-exclamation-circle fa-2x'></i>
-              ) : (
-                <i className='fas fa-times-circle fa-2x'></i>
-              ))
-            ))
-          }
+          {alert.alertType === "green" ? (
+            <i className='fas fa-check-circle fa-2x'></i>
+          ) : alert.alertType === "orange" ? (
+            <i className='fas fa-exclamation-circle fa-2x'></i>
+          ) : (
+            <i className='fas fa-times-circle fa-2x'></i>
+          )}
         </div>
         <div className='alert-msg'>{alert.msg}</div>
         <button onClick={() => removeAlertStrip(alert.id)}>

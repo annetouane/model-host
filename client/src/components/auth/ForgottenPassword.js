@@ -14,6 +14,7 @@ import { setAlert } from "../../actions/alert";
 
 // components
 import Alerte from "../Layout/Alert";
+import AlerteStrip from "../Layout/AlerteStrip";
 
 // image
 import confirmationImg from "../../img/mobile-confirmation-2.svg";
@@ -90,6 +91,12 @@ const ForgottenPassword = ({
     e.preventDefault();
     if (newPassword !== confirmation) {
       setAlert("Les mots de passes ne correspondent pas", "red", 3000);
+    } else if (newPassword.length < 8) {
+      setAlert(
+        "Merci de choisir un mot de passe sur 8 caractère minimum",
+        "red",
+        3000
+      );
     } else {
       const data = {
         id: user.id,
@@ -116,6 +123,7 @@ const ForgottenPassword = ({
 
   return (
     <section className='background'>
+      <AlerteStrip />
       {!passForgotModal ? (
         <div className='pwd-change-email'>
           <form
@@ -136,7 +144,7 @@ const ForgottenPassword = ({
               <button style={{ marginTop: "10px", height: "40px" }}>
                 Confirmer
               </button>
-              <div style={{ maxWidth: "300px" }}>
+              <div>
                 <Alerte style={{ padding: 0 }} />
               </div>
             </div>
@@ -174,16 +182,21 @@ const ForgottenPassword = ({
               placeholder='Confirmer mot de passe'
               required
             />
-            <div
-              className='pwd-icon'
-              onClick={togglePasswordVisiblity}
-              style={{ color: "#333" }}
-            >
-              {passwordShown ? (
-                <i className='far fa-eye-slash'>&nbsp;Cacher</i>
-              ) : (
-                <i className='far fa-eye'>&nbsp;Montrer</i>
-              )}
+            <div className='flex-row jc-sb' style={{ width: "100%" }}>
+              <div>
+                <Alerte style={{ padding: 0 }} />
+              </div>
+              <div
+                className='pwd-icon'
+                onClick={togglePasswordVisiblity}
+                style={{ color: "#333" }}
+              >
+                {passwordShown ? (
+                  <i className='far fa-eye-slash'>&nbsp;Cacher</i>
+                ) : (
+                  <i className='far fa-eye'>&nbsp;Montrer</i>
+                )}
+              </div>
             </div>
             <button style={{ border: "none" }}>Confirmer</button>
           </form>

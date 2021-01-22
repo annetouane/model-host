@@ -143,7 +143,7 @@ router.post("/", async (req, res) => {
   } catch (err) {
     // log the error and send to client a server error
     console.error(err.message);
-    res.status(500).send("Service indisponible");
+    res.status(500).send({ msg: "Service indisponible", color: "red" });
   }
 });
 

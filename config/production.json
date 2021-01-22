@@ -1,5 +1,8 @@
 {
   "mongoURI": "mongodb+srv://dko:ant1@8624@test-cluster-gspq4.gcp.mongodb.net/simulimo-prod?retryWrites=true&w=majority",
   "jwtSecret": "ant1",
-  "apiSendGrid": "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"
+  "apiSendGrid": "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",
+  "authToken": "1dd0087d93e753718b95e801b64e5c7d",
+  "accountSid": "ACe51099d319ac3e9fe7fb5c215b3e46fa",
+  "serviceSid": "VAcb1acd832867291ef6c98d00688ff174"
 }

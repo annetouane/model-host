@@ -19,11 +19,13 @@ const AccountModal = ({
   logout,
   updPassword,
   deleteAccount,
-  history,
   projects,
   getProjectToUpdate,
   onDeleteProject,
   onVisualise,
+  setSignUp,
+  setSignIn,
+  noTokenFound,
 }) => {
   const resetStates = () => {
     setPasswords({
@@ -33,6 +35,17 @@ const AccountModal = ({
     });
     setDeleteInput({
       deleteText: "",
+    });
+    setSignUp({
+      emailSignUp: "",
+      mobileSignUp: "",
+      passwordSignUp: "",
+      confirmPassword: "",
+      condition: false,
+    });
+    setSignIn({
+      emailSignIn: "",
+      passwordSignIn: "",
     });
   };
 
@@ -78,10 +91,17 @@ const AccountModal = ({
 
   const onPasswordChange = (e) => {
     e.preventDefault();
-    if (newPassWord === confirmNewPassword) {
-      updPassword(passwords);
+    resetStates();
+    let token = localStorage.getItem("token");
+    console.log(token);
+    // si absence de token dans local storage
+    if (!token) {
+      accountModalToggle(false); // ferme mon compte
+      noTokenFound();
+    } else if (newPassWord !== confirmNewPassword) {
+      setAlert("Les mots de passes ne sont pas identiques", "red", 3000);
     } else {
-      setAlert("Les mots de passes ne sont pas identiques", "red", 5000);
+      updPassword(passwords);
     }
   };
 
@@ -109,7 +129,7 @@ const AccountModal = ({
     setDeleteInput({ ...deleteInput, [e.target.name]: e.target.value });
   };
 
-  // lorsque click sur boutton paramètre du compte
+  // lorsque click sur boutton paramètre du compte, reset id et nom projet
   const onClickAccountParams = () => {
     setParamAccount({ toggleParamAccount: false });
     getProjectToUpdate("", "");
@@ -118,25 +138,32 @@ const AccountModal = ({
   // fonction suppression du compte
   const onDelete = (e) => {
     e.preventDefault();
-    if (deleteText === "supprimer") {
-      deleteAccount();
-      history.push("/"); // reload app sur page d'accueil
-      getProjectToUpdate("", ""); // reset id et nom projet
-    } else {
+    resetStates();
+    console.log("onDelete");
+    let token = localStorage.getItem("token");
+    console.log(token);
+    // si absence de token dans local storage
+    if (!token) {
+      accountModalToggle(false); // ferme mon compte
+      noTokenFound();
+    } else if (deleteText !== "supprimer") {
       setAlert(
         'Merci de saisir "supprimer" pour supprimer votre compte',
         "orange",
-        5000
+        3000
       );
+    } else {
+      deleteAccount();
+      getProjectToUpdate("", ""); // reset id et nom projet
     }
   };
 
   // logout and close window *****************************************************************************************
   const functionLogout = () => {
-    getProjectToUpdate(""); // réinitialise l'id projet
     logout(); // déconnect et efface le token
     accountModalToggle(false); // ferme la modal
     getProjectToUpdate("", ""); // reset selected project ID
+    resetStates();
   };
 
   return (
@@ -147,7 +174,7 @@ const AccountModal = ({
             <i className='fas fa-times quit-account-modal'></i>
           </div>
           <h3>Mon compte</h3>
-          <div className='account-params'>
+          <div className='account-params' style={{ marginBottom: "0" }}>
             <button
               style={{
                 color: toggleParamAccount ? "#fff" : "#333",

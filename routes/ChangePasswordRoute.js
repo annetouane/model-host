@@ -50,10 +50,11 @@ router.post("/", auth, async (req, res) => {
       );
       res.send({
         msg: "Votre mot de passe a été modifié avec succès",
+        color: "green",
       });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Service indisponible");
+      res.status(500).send({ msg: "Service indisponible", color: "red" });
     }
   }
 });

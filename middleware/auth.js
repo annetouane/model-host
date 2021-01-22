@@ -7,7 +7,7 @@ const config = require("config");
 module.exports = function (req, res, next) {
   // get the token from the header
   const token = req.header("x-auth-token");
-
+  console.log(token);
   // check if there is a token, if not, sends 401
   if (!token) {
     return res.status(401).json({ msg: "token" });

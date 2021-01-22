@@ -9,8 +9,14 @@ import {
   AUTH_ERROR,
   REMOVE_USER_PARAMS,
 } from "./types";
-import { setAlert } from "./alert";
-import { authToggle, accountModalToggle, saveModalToggle } from "./modals";
+import { setAlert, setAlertStrip } from "./alert";
+import {
+  authToggle,
+  accountModalToggle,
+  saveModalToggle,
+  modelModalToggle,
+} from "./modals";
+import setAuthToken from "../utilities/setAuthToken";
 
 // utilities
 import api from "../utilities/api";
@@ -25,6 +31,11 @@ export const storeParams = (formData) => (dispatch) => {
 // get model data
 export const getModelData = (formData) => async (dispatch) => {
   console.log("model");
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
   // insert the form into a new variable
   const postInput = formData;
   // insert the user ID in the form data
@@ -40,12 +51,19 @@ export const getModelData = (formData) => async (dispatch) => {
     });
   } catch (err) {
     // token non-valide, ouvre auth modal ferme save et account
-    if ((err.response.data.msg = "token")) {
-      dispatch(accountModalToggle(false));
-      dispatch(saveModalToggle(false));
+    if (err.response.data.msg === "token") {
+      dispatch(modelModalToggle(false));
       dispatch(authToggle(true));
       dispatch({ type: AUTH_ERROR });
       dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
     } else {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
@@ -54,6 +72,11 @@ export const getModelData = (formData) => async (dispatch) => {
 
 export const createProject = (formData) => async (dispatch) => {
   console.log("create");
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
   // insert the form into a new variable
   const postInput = formData;
   // insert the user ID in the form data
@@ -64,33 +87,36 @@ export const createProject = (formData) => async (dispatch) => {
       type: NEW_PROJECT,
       payload: res.data.newProjectList,
     });
+    dispatch(saveModalToggle(false));
+    dispatch(setAlertStrip(res.data.msg, res.data.color, "#01c96c", 2000));
   } catch (err) {
-    console.log(err);
-    if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color));
+    if (err.response.data.msg !== "Ce nom de projet existe déjà") {
+      dispatch(saveModalToggle(false));
+      dispatch(authToggle(true));
+      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
+    } else {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color, 3000));
     }
   }
 };
 
-export const createFirstProject = (formData, id) => async (dispatch) => {
-  console.log("create");
-  // insert the form into a new variable
-  const postInput = formData;
-  // insert the user ID in the form data
-  postInput.user = id;
-  try {
-    // console.log("create", postInput);
-    const res = await api.post("/create/first", postInput);
-    console.log(res.data);
-  } catch (err) {
-    console.log(err);
-    if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color));
-    }
-  }
-};
-
+// update project
 export const updateProject = (formData) => async (dispatch) => {
+  console.log("create");
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
   console.log("update");
   // insert the form into a new variable
   const postInput = formData;
@@ -98,19 +124,66 @@ export const updateProject = (formData) => async (dispatch) => {
   try {
     // console.log("update", postInput);
     const res = await api.post("/update", postInput);
+    console.log(res.data);
     dispatch({
       type: UPDATE_PROJECT,
       payload: res.data.newProjectList,
     });
-    dispatch(setAlert(res.msg, res.color, 3000));
+    dispatch(saveModalToggle(false));
+    dispatch(setAlertStrip(res.data.msg, res.data.color, "#01c96c", 2000));
   } catch (err) {
+    console.log("err data", err.response.data);
+    console.log("err data", err.response.data.msg);
+    console.log("err data", err.response.data.color);
+    console.log("err data", err.response.data.token);
     // token non-valide, ouvre auth modal ferme save et account
-    if ((err.response.data.msg = "token")) {
-      dispatch(accountModalToggle(false));
+    if (err.response.data.msg === "token") {
       dispatch(saveModalToggle(false));
       dispatch(authToggle(true));
       dispatch({ type: AUTH_ERROR });
       dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
+    } else {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
+    }
+  }
+};
+
+export const deleteProject = (id) => async (dispatch) => {
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
+  try {
+    const res = await api.delete(`/input/${id}`);
+    console.log("delete", res.data);
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: { idProjet: res.data },
+    });
+  } catch (err) {
+    // token non-valide, ouvre auth modal ferme save et account
+    if (err.response.data.msg === "token") {
+      dispatch(accountModalToggle(false));
+      dispatch(authToggle(true));
+      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
     } else {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
@@ -136,27 +209,6 @@ export const postEmail = (email) => async (dispatch) => {
   }
 };
 
-export const deleteProject = (id) => async (dispatch) => {
-  try {
-    const res = await api.delete(`/input/${id}`);
-    dispatch({
-      type: DELETE_PROJECT,
-      payload: { idProjet: res.data },
-    });
-  } catch (err) {
-    // token non-valide, ouvre auth modal ferme save et account
-    if ((err.response.data.msg = "token")) {
-      dispatch(accountModalToggle(false));
-      dispatch(saveModalToggle(false));
-      dispatch(authToggle(true));
-      dispatch({ type: AUTH_ERROR });
-      dispatch({ type: REMOVE_USER_PARAMS });
-    } else {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color));
-    }
-  }
-};
-
 export const saveToReducer = (formData) => async (dispatch) => {
   dispatch({
     type: NEW_PROJECT,
@@ -176,3 +228,47 @@ export const removeUserParams = () => async (dispatch) => {
     type: REMOVE_USER_PARAMS,
   });
 };
+
+// check if token is valid when visualizing new project
+// export const visualiseProject = () => async (dispatch) => {
+//   console.log("visualiseProject");
+//   if (localStorage.token) {
+//     // if there is a token in local storage,
+//     // sends the token in global header by calling the function setAuthToken
+//     setAuthToken(localStorage.token);
+//   }
+//   try {
+//     const res = await api.get("/");
+//     dispatch({
+//       type: USER_LOADED,
+//       payload: res.data.user,
+//     });
+//   } catch (err) {
+//     if ((err.response.data.msg === "token")) {
+//       dispatch(accountModalToggle(false));
+//       dispatch(authToggle(true));
+//       dispatch({ type: AUTH_ERROR });
+//       dispatch({ type: REMOVE_USER_PARAMS });
+//     } else {
+//       dispatch(setAlert(err.response.data.msg, err.response.data.color));
+//     }
+//   }
+// };
+
+// export const createFirstProject = (formData, id) => async (dispatch) => {
+//   console.log("create");
+//   // insert the form into a new variable
+//   const postInput = formData;
+//   // insert the user ID in the form data
+//   postInput.user = id;
+//   try {
+//     // console.log("create", postInput);
+//     const res = await api.post("/create/first", postInput);
+//     console.log(res.data);
+//   } catch (err) {
+//     console.log(err);
+//     if (err.response.data.msg) {
+//       dispatch(setAlert(err.response.data.msg, err.response.data.color));
+//     }
+//   }
+// };

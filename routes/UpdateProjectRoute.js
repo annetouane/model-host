@@ -16,7 +16,7 @@ router.post("/", auth, async (req, res) => {
   try {
     // create new input object
     const inputs = {
-      user: "",
+      user: req.user.id,
       nomProjet: "",
       ville: "",
       natureBien: "",
@@ -52,13 +52,16 @@ router.post("/", auth, async (req, res) => {
       irl: parseFloat(req.body.irl) / 100,
     };
 
-    const { user, nomProjet } = inputs;
+    const { user } = inputs;
+    console.log("projet", req.body.idProjet);
+    console.log("user", user);
 
     // si un ID reçue dans req -> cherche le projet par ID pour l'update, update du reducer avec reponse
     // cherche si id existe pour cet utilisateur
     const projectIdCheck = await InputForm.find({
-      $and: [{ user: user }, { _id: req.body.idProjet }],
+      $and: [{ user: req.user.id }, { _id: req.body.idProjet }],
     });
+    console.log("projectIdCheck", projectIdCheck);
     if (projectIdCheck.length < 0) {
       return res
         .status(400)
@@ -85,13 +88,13 @@ router.post("/", auth, async (req, res) => {
       });
       res.json({
         newProjectList,
-        msg: "Le projet a bien été mis à jour",
+        msg: "Le projet mis à jour",
         color: "green",
       });
     }
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Service indisponible");
+    res.status(500).send({ msg: "Service indisponible", color: "red" });
   }
 });
 

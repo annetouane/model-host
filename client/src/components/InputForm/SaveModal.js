@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 // component
 import LocationSearchInput from "./CityGoogleApi";
-import Alert from "../Layout/Alert";
+import Alerte from "../Layout/Alert";
 
 // actions
 import {
@@ -44,7 +44,10 @@ const SaveModal = ({
 
   return (
     <section className='auth-modal'>
-      <div className='auth-box padding-40 save-box-padding-40'>
+      <div
+        className='auth-box padding-40 save-box-padding-40'
+        style={{ height: "520px" }}
+      >
         {width > 1155 ? (
           <div onClick={saveClose}>
             <i className='fas fa-times quit-auth-modal'></i>
@@ -186,7 +189,7 @@ const SaveModal = ({
             )}
           </form>
         )}
-        <Alert />
+        <Alerte />
       </div>
     </section>
   );

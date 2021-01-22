@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
       }
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Service indisponible");
+      res.status(500).send({ msg: "Service indisponible", color: "red" });
     }
   }
 });

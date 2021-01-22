@@ -17,6 +17,7 @@ const SignInRoute = require("./routes/SignInRoute");
 const ForgottenRoute = require("./routes/ForgottenRoute");
 const ChangePasswordRoute = require("./routes/ChangePasswordRoute");
 const LoadUserRoute = require("./routes/LoadUserRoute");
+const DeleteAccount = require("./routes/DeleteAccount");
 
 // init server
 const app = express();
@@ -49,6 +50,7 @@ app.use("/email-confirmation", AccountConfirmationRoute);
 app.use("/signin", SignInRoute);
 app.use("/forgotten-pwd", ForgottenRoute);
 app.use("/change-pwd", ChangePasswordRoute);
+app.use("/delete-user", DeleteAccount);
 app.use("/", LoadUserRoute);
 
 // Serve static assets in production

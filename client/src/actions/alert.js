@@ -15,12 +15,13 @@ export const setAlert = (msg, alertType, timeout = 3000) => (dispatch) => {
   setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
 };
 
-export const setAlertStrip = (msg, alertType, timeout = 5000) => (dispatch) => {
-  console.log("setAlertStrip");
+export const setAlertStrip = (msg, alertType, color, timeout = 5000) => (
+  dispatch
+) => {
   const id = uuidv4();
   dispatch({
     type: SET_ALERT_STRIP,
-    payload: { msg, alertType, id },
+    payload: { msg, alertType, color, id },
   });
   setTimeout(
     () => dispatch({ type: REMOVE_ALERT_STRIP, payload: id }),

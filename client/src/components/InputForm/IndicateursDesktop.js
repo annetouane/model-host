@@ -60,7 +60,7 @@ const Indicateurs = ({
         </div>
         <div className='kpi-item'>
           <div className='info-button'>
-            <h4>Mensualité</h4>
+            <h4>Mensualité / annuité</h4>
             <button
               id='info-mensualite'
               onClick={showModal}
@@ -71,7 +71,10 @@ const Indicateurs = ({
           </div>{" "}
           <h4 className='bold color-blue'>
             {netVendeurCheck && apportCheck
-              ? sepSpace(mensualite).toString() + " €"
+              ? sepSpace(mensualite).toString() +
+                " € / " +
+                sepSpace(mensualite * 12).toString() +
+                " €"
               : "-"}
           </h4>
         </div>

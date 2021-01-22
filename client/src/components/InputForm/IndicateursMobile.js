@@ -58,7 +58,7 @@ const IndicateursMobile = ({
       </div>
       <div className='flex-column mb-10'>
         <div className='info-button'>
-          <h4>Mensualité</h4>
+          <h4>Mensualité / annuité</h4>
           <button
             id='info-mensualite'
             onClick={showModal}
@@ -69,7 +69,10 @@ const IndicateursMobile = ({
         </div>{" "}
         <h4 className='bold color-blue'>
           {netVendeurCheck && apportCheck
-            ? sepSpace(mensualite).toString() + " €"
+            ? sepSpace(mensualite).toString() +
+              " € / " +
+              sepSpace(mensualite * 12).toString() +
+              " €"
             : "-"}
         </h4>
       </div>

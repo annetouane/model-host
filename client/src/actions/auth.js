@@ -4,12 +4,13 @@ import jwt from "jwt-decode";
 // components
 import api from "../utilities/api";
 import { setAlert, setAlertStrip } from "./alert";
-import { getModelData, createFirstProject } from "./formData";
+import { getModelData } from "./formData";
 import {
   mobileVerificationToggle,
   forgottenPasswordToggle,
   authToggle,
   landingToggle,
+  accountModalToggle,
 } from "./modals";
 import setAuthToken from "../utilities/setAuthToken";
 
@@ -38,7 +39,6 @@ export const loadUser = () => async (dispatch) => {
   }
   try {
     const res = await api.get("/");
-    // console.log(res.data);
     dispatch({
       type: USER_LOADED,
       payload: res.data.user,
@@ -55,8 +55,13 @@ export const loadUser = () => async (dispatch) => {
       type: AUTH_ERROR,
     });
     dispatch({ type: REMOVE_USER_PARAMS });
-    // }
   }
+};
+
+export const authError = () => async (dispatch) => {
+  dispatch({
+    type: AUTH_ERROR,
+  });
 };
 
 // check if user is registrable
@@ -97,20 +102,6 @@ export const register = (registerData, formData) => async (dispatch) => {
       payload: res.data,
     });
 
-    // // decode le token
-    // const decodedToken = jwt(res.data.token);
-
-    // // sauvegarde le projet en cours projet 1 + date
-    // const today = new Date();
-    // const date =
-    //   today.getFullYear() +
-    //   "-" +
-    //   (today.getMonth() + 1) +
-    //   "-" +
-    //   today.getDate(); // why +1 ?
-    // formData.nomProjet = `Projet 1 - ${date}`;
-    // // créé le premier projet on register
-    // dispatch(createFirstProject(formData, decodedToken.user.id));
     // ferme la fenetre de vérification mobile
     dispatch(mobileVerificationToggle(false));
     // ferme la landing page
@@ -122,6 +113,7 @@ export const register = (registerData, formData) => async (dispatch) => {
       setAlertStrip(
         "Bienvenue dans votre compte. Vous pouvez désormais visualiser le cash-flow après impôts de vos projets et les sauvegarder",
         "green",
+        "#01c96c",
         10000
       )
     );
@@ -185,14 +177,71 @@ export const login = (loginData, formData, detectSave, detectModel) => async (
 };
 
 // Mot de passe oublié : update mot de passe
-export const updPassword = (formData) => async (dispatch) => {
+export const updPassword = (passwords) => async (dispatch) => {
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
   try {
     // get the server's response
-    const res = await api.post("/change-pwd", formData);
+    const res = await api.post("/change-pwd", passwords);
     console.log(res.data.msg);
-    // dispatch(setAlert(res.data.msg, res.data.color, 5000));
+    dispatch(setAlertStrip(res.data.msg, "green", "#01c96c", 3000));
+    dispatch(accountModalToggle(false));
   } catch (err) {
-    if (err.response.data.msg) {
+    console.log(err.response.data.msg);
+    if (err.response.data.msg === "token") {
+      dispatch(accountModalToggle(false));
+      dispatch(authToggle(true));
+      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
+    } else {
+      dispatch(setAlert(err.response.data.msg, err.response.data.color));
+    }
+  }
+};
+
+// Delete account
+export const deleteAccount = () => async (dispatch) => {
+  console.log("delete");
+  if (localStorage.token) {
+    // if there is a token in local storage,
+    // sends the token in global header by calling the function setAuthToken
+    setAuthToken(localStorage.token);
+  }
+  try {
+    await api.delete("/delete-user");
+    dispatch({ type: LOGOUT });
+    dispatch(accountModalToggle(false));
+    dispatch(landingToggle(true));
+    dispatch(
+      setAlertStrip("Votre compte a été supprimé", "green", "#01c96c", 3000)
+    );
+  } catch (err) {
+    console.log(err.response.data.msg);
+    if (err.response.data.msg === "token") {
+      dispatch(accountModalToggle(false));
+      dispatch(authToggle(true));
+      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: REMOVE_USER_PARAMS });
+      dispatch(
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
+          3000
+        )
+      );
+    } else {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }
   }
@@ -204,20 +253,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: REMOVE_USER_PARAMS });
 };
 
-// Delete account
-export const deleteAccount = () => async (dispatch) => {
-  console.log("delete");
-  try {
-    await api.delete("/delete-user");
-    dispatch({ type: LOGOUT });
-  } catch (err) {
-    if (err.response.data.msg) {
-      dispatch(setAlert(err.response.data.msg, err.response.data.color));
-    }
-  }
-};
-
-// Mot de passe oublié : envoi email
+// Mot de passe oublié : envoi sms
 export const forgottenSms = (mobile) => async (dispatch) => {
   console.log(mobile);
   const userMobile = { mobile: mobile };
@@ -240,8 +276,9 @@ export const forgottenChange = (data) => async (dispatch) => {
   try {
     // get the server's response
     const res = await api.post("/forgotten-pwd/reset", data);
-    dispatch(setAlert(res.data.msg, res.data.color));
+    dispatch(setAlertStrip(res.data.msg, res.data.color, "#01c96c", 3000));
   } catch (err) {
+    console.log("forgottenChange", err.response.data.msg);
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
     }

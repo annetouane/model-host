@@ -41,7 +41,13 @@ import {
   deleteProject,
   removeUserParams,
 } from "../../actions/formData";
-import { registerCheck, register, login, loadUser } from "../../actions/auth";
+import {
+  registerCheck,
+  register,
+  login,
+  loadUser,
+  authError,
+} from "../../actions/auth";
 import {
   authToggle,
   saveModalClic,
@@ -53,10 +59,12 @@ import {
   accountModalToggle,
   passwordChangePage,
 } from "../../actions/modals";
-import { setAlert } from "../../actions/alert";
+import { setAlert, setAlertStrip } from "../../actions/alert";
 
 export const MainForm = ({
   storeParams,
+  removeUserParams,
+  authError,
   passwordChangePage, // a voir
   getModelData,
   createProject,
@@ -85,6 +93,7 @@ export const MainForm = ({
   loadUser,
   history,
   registerCheck,
+  setAlertStrip,
   // loading,
 }) => {
   const [dimensions, setDimensions] = useState({
@@ -173,11 +182,7 @@ export const MainForm = ({
     nueMicro,
   } = formData;
 
-  // modal user email
-  const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
-  const { eFooter } = emailFooter;
-
-  // onChange functions ---------------------------------------------------------------------------------
+  // main state onChange functions ---------------------------------------------------------------------------------
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -200,10 +205,6 @@ export const MainForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onChangeEmailFooter = (e) => {
-    setEmailFooter({ eFooter: e.target.value });
-  };
-
   const onChangeString = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -223,6 +224,14 @@ export const MainForm = ({
       natureBien: "",
       typeAppartement: "",
     });
+  };
+
+  // modal user email
+  const [emailFooter, setEmailFooter] = useState({ eFooter: "" });
+  const { eFooter } = emailFooter;
+
+  const onChangeEmailFooter = (e) => {
+    setEmailFooter({ eFooter: e.target.value });
   };
 
   // side navigation -----------------------------------------------------------------------------------------
@@ -391,25 +400,28 @@ export const MainForm = ({
     }
   };
 
+  // si pas de token lorsque clic sur bouton d'action
+  // -> alert + remove user information from reducer + auth modal
+  const noTokenFound = () => {
+    setAlertStrip(
+      "Merci de vous identifier de nouveau pour effectuer cette opération",
+      "red",
+      "red",
+      3000
+    );
+    authToggle(true);
+    removeUserParams();
+    authError();
+  };
+
   const onCreateProject = (e) => {
     e.preventDefault();
-    // si absence de token
-    if (localStorage.length === 1) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
-    }
+    resetAuthState();
     let token = localStorage.getItem("token");
-    const { exp } = jwt(token);
-    console.log(exp);
-    // Refresh the token a minute early to avoid latency issues
-    const expirationTime = exp * 1000 - 60000;
-    console.log(expirationTime);
-    // si token expiré
-    if (Date.now() >= expirationTime) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
+    // si absence de token
+    if (!token) {
+      saveModalToggle(false);
+      noTokenFound();
     } else {
       createProject(formData); // post input to db
       cleanSaveForm(); // reset les champs du formulaire de sauvegarde
@@ -418,23 +430,12 @@ export const MainForm = ({
 
   const onUpdateProject = (e) => {
     e.preventDefault();
-    // si absence de token
-    if (localStorage.length === 1) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
-    }
+    resetAuthState();
     let token = localStorage.getItem("token");
-    const { exp } = jwt(token);
-    console.log(exp);
-    // Refresh the token a minute early to avoid latency issues
-    const expirationTime = exp * 1000 - 60000;
-    console.log(expirationTime);
-    // si token expiré
-    if (Date.now() >= expirationTime) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
+    // si absence de token dans local storage
+    if (!token) {
+      saveModalToggle(false);
+      noTokenFound();
     } else {
       updateProject(formData); // post input to db
       cleanSaveForm(); // reset les champs du formulaire de sauvegarde
@@ -443,11 +444,18 @@ export const MainForm = ({
 
   const onDeleteProject = (e) => {
     e.preventDefault();
-    // si authentifié et projet a été sélectionné dans le formulaire :
-    if (isAuthenticated && idProjet !== "") {
-      deleteProject(idProjet);
+    resetAuthState();
+    let token = localStorage.getItem("token");
+    // si absence de token dans local storage
+    if (!token) {
+      accountModalToggle(false); // ferme mon compte
+      noTokenFound();
+      // si un projet a été sélectionné dans le formulaire
+    } else if (idProjet !== "") {
+      deleteProject(idProjet); // passe l'id du projet a supprimer
       cleanSaveForm(); // reset les champs du formulaire de sauvegarde
     } else {
+      // si aucun projet sélectionné dans le formulaire
       setAlert("Merci de sélectionner un projet à supprimer", "orange", 3000);
     }
   };
@@ -455,11 +463,18 @@ export const MainForm = ({
   // modélisation fiscale *******************************************************************************
   const onFisc = (e) => {
     e.preventDefault();
-    mobileMenuToggle(false);
-    modelModalClic(true); // detect clic sur model
-    if (isAuthenticated) {
-      // if user logged
+    resetAuthState();
+    mobileMenuToggle(false); // si mobile, ferme le menu de navigation
+    let token = localStorage.getItem("token");
+    // si absence de token dans local storage
+    if (!token) {
+      modelModalToggle(false);
+      authToggle(true);
+      // si authentifié
+    } else if (isAuthenticated) {
       getModelData(formData); // submit input to db
+      modelModalClic(true); // detect clic sur model
+      modelModalToggle(true); // ouvre modal model
     } else {
       authToggle(true); // sinon ouvre auth modal
     }
@@ -493,16 +508,12 @@ export const MainForm = ({
   // check if account can be created according to provided credentials
   const onCheckAccountCreation = (e) => {
     e.preventDefault();
-    console.log(mobileSignUp);
-    console.log(/^\d+$/.test(mobileSignUp));
     if (!/^\d+$/.test(mobileSignUp)) {
-      console.log("not number");
       setAlert("Merci de saisir uniquement des chiffres", "red", 3000);
     } else if (
       !mobileSignUp.startsWith("06") &&
       !mobileSignUp.startsWith("07")
     ) {
-      console.log("not mobile");
       setAlert(
         "Merci d'indiquer un numéro de mobile (06/07xxxxxxxx)",
         "red",
@@ -511,7 +522,6 @@ export const MainForm = ({
     } else if (mobileSignUp.length !== 10) {
       setAlert("Merci d'indiquer un mobile sur 10 chiffres", "red", 3000);
     } else {
-      console.log("ok");
       registerCheck(signUp);
     }
   };
@@ -537,6 +547,19 @@ export const MainForm = ({
     e.preventDefault();
     login(signIn, formData, detectSave, detectModel);
   };
+  const resetAuthState = () => {
+    setSignUp({
+      emailSignUp: "",
+      mobileSignUp: "",
+      passwordSignUp: "",
+      confirmPassword: "",
+      condition: false,
+    });
+    setSignIn({
+      emailSignIn: "",
+      passwordSignIn: "",
+    });
+  };
 
   // Submit email ---------------------------------------------------------------------------------
   const onSubmitEmail = async (e) => {
@@ -553,74 +576,83 @@ export const MainForm = ({
   // visualise model sauvegardé
   const onVisualise = (e) => {
     e.preventDefault();
-    // si absence de token
-    if (localStorage.length === 1) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
-    }
+    resetAuthState();
     let token = localStorage.getItem("token");
-    const { exp } = jwt(token);
-    console.log(exp);
-    // Refresh the token a minute early to avoid latency issues
-    const expirationTime = exp * 1000 - 60000;
-    console.log(expirationTime);
-    // si token expiré
-    if (Date.now() >= expirationTime) {
-      loadUser(); // efface les paramètres auth et model data
-      window.location.reload(); // recharge l'app avec auth window
-      // authToggle(true); // ouvre modal auth
+    // si absence de token dans local storage
+    if (!token) {
+      accountModalToggle(false); // ferme mon compte window
+      noTokenFound();
     } else {
-      console.log("token valid");
-      if (nomProjet === "") {
-        setAlert(
-          "Merci de sélectionner un projet à visualiser",
-          "orange",
+      let token = localStorage.getItem("token");
+      const { exp } = jwt(token);
+      // Refresh the token a minute early to avoid latency issues
+      const expirationTime = exp * 1000 - 60000;
+      // si token expiré
+      if (Date.now() >= expirationTime) {
+        loadUser(); // efface les paramètres auth et model data
+        setAlertStrip(
+          "Merci de vous identifier de nouveau pour effectuer cette opération",
+          "red",
+          "red",
           3000
         );
-        // sinon, update le local state avec le reducer
+        accountModalToggle(false); // ferme fenetre mon compte
+        authToggle(true); // ouvre modal auth
       } else {
-        const project = projects.find((x) => x._id === idProjet);
-        setFormData({
-          ...formData,
-          idProjet: "",
-          nomProjet: "",
-          ville: "",
-          natureBien: "",
-          typeAppartement: "",
-          netVendeur: project.netVendeur,
-          travaux: project.travaux,
-          ammeublement: project.ammeublement,
-          notaire: project.notaire,
-          agence: project.agence,
-          duree: project.duree,
-          apport: project.apport,
-          interet: project.interet * 100,
-          assurance: project.assurance * 100,
-          fraisBancaires: project.fraisBancaires,
-          fraisCourtier: project.fraisCourtier,
-          loyer: project.loyer,
-          chargesLoc: project.chargesLoc,
-          occupation: project.occupation,
-          fonciere: project.fonciere,
-          gestion: project.gestion,
-          charges: project.charges,
-          pno: project.pno,
-          revInvest1: project.revInvest1,
-          augInvest1: project.augInvest1,
-          revInvest2: project.revInvest2,
-          augInvest2: project.augInvest2,
-          partFisc: project.partFisc,
-          sciIs: project.sciIs,
-          lmnpReel: project.lmnpReel,
-          lmnpMicro: project.lmnpMicro,
-          nueReel: project.nueReel,
-          nueMicro: project.nueMicro,
-          irl: project.irl * 100,
-        });
-        accountModalToggle(false); // ferme la fenetre account
-        landingToggle(false); // va au simulateur
-        storeParams(project);
+        // §§§§§§§§§§§\\\\\\\\\\!!!!!!!!!/////////////§§§§§§§§§§§§
+        // PARTIE A SECURISEE SI ALTERATION TOKEN
+        // ENVOYER ID PROJET AU SERVEUR, AUTH TOKEN, RENVOI PROJET
+        if (nomProjet === "") {
+          setAlert(
+            "Merci de sélectionner un projet à visualiser",
+            "orange",
+            3000
+          );
+          // sinon, update le local state avec le reducer
+        } else {
+          loadUser(); // efface les paramètres auth et model data
+          const project = projects.find((x) => x._id === idProjet);
+          setFormData({
+            ...formData,
+            idProjet: "",
+            nomProjet: "",
+            ville: "",
+            natureBien: "",
+            typeAppartement: "",
+            netVendeur: project.netVendeur,
+            travaux: project.travaux,
+            ammeublement: project.ammeublement,
+            notaire: project.notaire,
+            agence: project.agence,
+            duree: project.duree,
+            apport: project.apport,
+            interet: project.interet * 100,
+            assurance: project.assurance * 100,
+            fraisBancaires: project.fraisBancaires,
+            fraisCourtier: project.fraisCourtier,
+            loyer: project.loyer,
+            chargesLoc: project.chargesLoc,
+            occupation: project.occupation,
+            fonciere: project.fonciere,
+            gestion: project.gestion,
+            charges: project.charges,
+            pno: project.pno,
+            revInvest1: project.revInvest1,
+            augInvest1: project.augInvest1,
+            revInvest2: project.revInvest2,
+            augInvest2: project.augInvest2,
+            partFisc: project.partFisc,
+            sciIs: project.sciIs,
+            lmnpReel: project.lmnpReel,
+            lmnpMicro: project.lmnpMicro,
+            nueReel: project.nueReel,
+            nueMicro: project.nueMicro,
+            irl: project.irl * 100,
+          });
+          accountModalToggle(false); // ferme la fenetre account
+          landingToggle(false); // va au simulateur
+          storeParams(project); // store params to the reducer
+        }
       }
     }
   };
@@ -662,7 +694,10 @@ export const MainForm = ({
           setProjectDisplayTab={setProjectDisplayTab}
           getProjectToUpdate={getProjectToUpdate}
           onDeleteProject={onDeleteProject}
+          noTokenFound={noTokenFound}
           onVisualise={onVisualise}
+          setSignUp={setSignUp}
+          setSignIn={setSignIn}
         />
       ) : (
         ""
@@ -979,6 +1014,8 @@ export const MainForm = ({
 
 MainForm.propTypes = {
   storeParams: PropTypes.func.isRequired,
+  authError: PropTypes.func.isRequired,
+  setAlertStrip: PropTypes.func.isRequired,
   removeUserParams: PropTypes.func.isRequired,
   getModelData: PropTypes.func.isRequired,
   loadUser: PropTypes.func.isRequired,
@@ -1039,5 +1076,7 @@ export default withRouter(
     loadUser,
     removeUserParams,
     registerCheck,
+    setAlertStrip,
+    authError,
   })(MainForm)
 );
