@@ -41,23 +41,23 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 connectDB();
 
-app.use("/create", CreateProjectRoute);
-app.use("/update", UpdateProjectRoute);
-app.use("/input", InputRoute);
-app.use("/user-email", EmailRoute);
-app.use("/signup", SignUpRoute);
-app.use("/email-confirmation", AccountConfirmationRoute);
-app.use("/signin", SignInRoute);
-app.use("/forgotten-pwd", ForgottenRoute);
-app.use("/change-pwd", ChangePasswordRoute);
-app.use("/delete-user", DeleteAccount);
-app.use("/", LoadUserRoute);
+app.use("/api/create", CreateProjectRoute);
+app.use("/api/update", UpdateProjectRoute);
+app.use("/api/input", InputRoute);
+app.use("/api/user-email", EmailRoute);
+app.use("/api/signup", SignUpRoute);
+app.use("/api/email-confirmation", AccountConfirmationRoute);
+app.use("/api/signin", SignInRoute);
+app.use("/api/forgotten-pwd", ForgottenRoute);
+app.use("/api/change-pwd", ChangePasswordRoute);
+app.use("/api/delete-user", DeleteAccount);
+app.use("/api", LoadUserRoute);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder -> build folder
-  app.use(express.static("./client/build"));
-
+  app.use(express.static("client/build"));
+  // app.use("/static", express.static(path.join(__dirname, "client/build")));
   // load anything appart the API routes
   app.get("*", (req, res) => {
     // goes to the client/build folder and loads the index.html

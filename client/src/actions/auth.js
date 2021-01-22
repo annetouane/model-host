@@ -276,7 +276,7 @@ export const forgottenChange = (data) => async (dispatch) => {
   try {
     // get the server's response
     const res = await api.post("/forgotten-pwd/reset", data);
-    dispatch(setAlertStrip(res.data.msg, res.data.color, "#01c96c", 3000));
+    dispatch(setAlertStrip(res.data.msg, res.data.color, "#01c96c"));
   } catch (err) {
     console.log("forgottenChange", err.response.data.msg);
     if (err.response.data.msg) {
