@@ -258,25 +258,24 @@ const AccountModal = ({
                   paddingBottom: togglePwdChange && "5px",
                   borderBottom: togglePwdChange && "1px solid #c8c9ca",
                 }}
+                onClick={
+                  !togglePwdChange
+                    ? () => {
+                        setPwdChange({ togglePwdChange: true });
+                        setDeleteButton({ toggleDelete: false });
+                      }
+                    : () => setPwdChange({ togglePwdChange: false })
+                }
               >
                 {/* changer mot de passe*/}
                 <h6>Changer mot de passe</h6>
                 {!togglePwdChange ? (
                   <button>
-                    <i
-                      onClick={() => {
-                        setPwdChange({ togglePwdChange: true });
-                        setDeleteButton({ toggleDelete: false });
-                      }}
-                      className='far fa-plus-square'
-                    ></i>
+                    <i className='far fa-plus-square'></i>
                   </button>
                 ) : (
                   <button>
-                    <i
-                      onClick={() => setPwdChange({ togglePwdChange: false })}
-                      className='far fa-minus-square'
-                    ></i>
+                    <i className='far fa-minus-square'></i>
                   </button>
                 )}
               </div>
@@ -342,24 +341,23 @@ const AccountModal = ({
                   paddingBottom: toggleDelete && "5px",
                   borderBottom: toggleDelete && "1px solid #c8c9ca",
                 }}
+                onClick={
+                  !toggleDelete
+                    ? () => {
+                        setDeleteButton({ toggleDelete: true });
+                        setPwdChange({ togglePwdChange: false });
+                      }
+                    : () => setDeleteButton({ toggleDelete: false })
+                }
               >
                 <h6>Supprimer mon compte</h6>
                 {!toggleDelete ? (
                   <button>
-                    <i
-                      onClick={() => {
-                        setDeleteButton({ toggleDelete: true });
-                        setPwdChange({ togglePwdChange: false });
-                      }}
-                      className='far fa-plus-square'
-                    ></i>
+                    <i className='far fa-plus-square'></i>
                   </button>
                 ) : (
                   <button>
-                    <i
-                      onClick={() => setDeleteButton({ toggleDelete: false })}
-                      className='far fa-minus-square'
-                    ></i>
+                    <i className='far fa-minus-square'></i>
                   </button>
                 )}
               </div>

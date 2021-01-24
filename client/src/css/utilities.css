@@ -684,16 +684,19 @@ input:focus {
   align-items: center;
   margin-top: 10px;
   width: 100%;
+  cursor: pointer;
 }
 
 .box-change-pwd-delete-account button {
   border: none;
   cursor: pointer;
+  background-color: none;
 }
 
 .box-change-pwd-delete-account i {
   color: #333;
   cursor: pointer;
+  background-color: #fff;
 }
 
 .password-change-form {
@@ -1223,7 +1226,6 @@ input::-webkit-inner-spin-button {
 }
 
 .save-group input {
-  width: 165px;
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   box-shadow: 0.5px 0.5px 0.5px #333;
@@ -1231,13 +1233,13 @@ input::-webkit-inner-spin-button {
 }
 
 .save-group select {
-  width: 165px;
   border-radius: 5px;
   height: 41px;
   border: 1px solid rgb(194, 194, 194);
   box-shadow: 0.5px 0.5px 0.5px #333;
   width: 100%;
   padding: 7px;
+  background-color: #fff;
 }
 
 .save-group select:focus {
@@ -1715,6 +1717,7 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  margin-bottom: 50px;
 }
 
 .landing-devices img {
@@ -2535,7 +2538,7 @@ input[type="email"] {
   }
   .auth-box {
     width: 100%;
-    border-radius: 0;
+    border-radius: 0 0 10px 10px;
     padding: 80px 20px 0 20px;
   }
   .save-box-padding-40 {
@@ -2551,8 +2554,14 @@ input[type="email"] {
   .account-box {
     width: 100%;
     padding: 70px 30px 20px 30px;
-    max-height: 100%;
-    border-radius: 0;
+    height: 560px;
+    border-radius: 0 0 10px 10px;
+  }
+  .account-box-bis {
+    margin-top: 15px;
+  }
+  .bloc-account-param {
+    margin-top: 10px;
   }
   .modal-input {
     position: fixed;

@@ -177,7 +177,7 @@ export const MainForm = ({
     revInvest2: 0,
     augInvest2: 0.01,
     partFisc: 1,
-    sciIs: true,
+    sciIs: false,
     lmnpReel: false,
     lmnpMicro: false,
     nueReel: false,
