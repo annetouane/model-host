@@ -38,23 +38,7 @@ const Revenu = ({
         <div className='form-box-v mt-10'>
           <div className='type-alt-slider'>
             <div>
-              <label>
-                Loyer mensuel&nbsp;
-                <small style={{ marginLeft: 0 }}>
-                  <strong>
-                    (
-                    <i
-                      style={{
-                        marginLeft: 0,
-                        cursor: "auto",
-                        color: "#007be8",
-                      }}
-                      className='fas fa-exclamation-circle'
-                    ></i>{" "}
-                    charges comprises)
-                  </strong>
-                </small>
-              </label>
+              <label>Loyer mensuel&nbsp;</label>
               <button
                 id='info-loyer'
                 onClick={showModal}
@@ -85,7 +69,19 @@ const Revenu = ({
               ></i>
             </div>
           </div>
-
+          <small style={{ marginLeft: 0 }}>
+            <strong>
+              <i
+                style={{
+                  marginLeft: 0,
+                  cursor: "auto",
+                  color: "#007be8",
+                }}
+                className='fas fa-exclamation-circle'
+              ></i>{" "}
+              charges locataires comprises
+            </strong>
+          </small>
           <div className='info-button'>
             <input
               type='range'

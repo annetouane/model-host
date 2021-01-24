@@ -4,7 +4,7 @@ const modalInfo = [
     id: "info-net-vendeur",
     titre: "Net Vendeur",
     texte:
-      "<p>Prix payé au vendeur du bien lors de l’acquisition. Les frais de notaire et d’agence ne doivent pas être inclus dans le net vendeur. <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable de ce dernier liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur du bien pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l’entreprise.</p> <p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans pour le bien.</b> Le montant amortissable correspondra à 90% du prix du bien (les 10% restant correspondent au terrain qui n'est pas amortissable)</p>",
+      "<p>Prix payé au vendeur du bien lors de l’acquisition. Les frais de notaire et d’agence ne doivent pas être inclus dans le net vendeur. <p>En fonction du régime fiscal d’exploitation du bien, il est possible de constater la perte de la valeur comptable de ce dernier liée à l’usure du temps, c'est l'amortissement. L’amortissement permet la répartition de la perte de valeur du bien pour chaque exercice, tout le long de la durée d’usage du bien.</p> <p>L’avantage est que la dotation aux amortissements est qu'elle équivaut à une charge dans le compte de résultat de l’exercice de l'activité locative. La dotation est déductible du résultat imposable et vient baisser le montant de l’impôt à payer par l’entreprise.</p> <p><b>Simulimo applique une durée d'amortissement par défaut de 30 ans sur 90% du prix du bien (net vendeur).</b> Les 10% restant correspondent au prix du terrain qui n'est pas amortissable</p>",
   },
   {
     id: "info-travaux",
@@ -46,13 +46,13 @@ const modalInfo = [
     id: "info-interet",
     titre: "Taux d'intérêt",
     texte:
-      "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p>",
+      "<p>Les intérêts d’emprunt sont l’un des modes de rémunération de la banque. Ils se matérialisent sous la forme du versement d’une somme mensuelle qui est inclue dans la mensualité. </p><p>Les intérêts d’emprunt sont calculés en fonction du taux d'intérêt du prêt et du capital restant dû à la banque. Au début des remboursements le capital restant dû est élevé, le montant des intérêts le sera également. A cause de ce mécanisme, un prêt immobilier coûte cher au début de son remboursement car la banque prélèvera une part plus importe de la mensualité pour se rémunérer plutôt que pour rembourser le capital emprunté.</p> <p>Le site <a href='https://www.pretto.fr/taux-immobilier/' target='_blank' rel='noopener noreferrer'>pretto.fr</a> vous permettra de choisir une hypothèse cohérente pour votre taux d'intérêt</p>",
   },
   {
     id: "info-assurance",
     titre: "Taux d'assurance",
     texte:
-      "<p>Les frais d’assurance sont l’un des modes de rémunération de la banque. L'emprunteur verse chaque année une somme égale au taux d'assurance multiplier par le capital initialement emprunté. Il ne varie pas durant toute la durée de l’emprunt et les versements sont inclus dans la mensualité. Le taux d’assurance est déterminé par le profil de l’emprunteur (âge, fumeur ou non, statut professionnel …). Les frais d’assurance sont des charges déductibles permettant de réduire le revenu imposable.</p>",
+      "<p>Les frais d’assurance sont l’un des modes de rémunération de la banque. L'emprunteur verse chaque année une somme égale au taux d'assurance multiplier par le capital initialement emprunté. Il ne varie pas durant toute la durée de l’emprunt et les versements sont inclus dans la mensualité. Le taux d’assurance est déterminé par le profil de l’emprunteur (âge, fumeur ou non, statut professionnel …). Les frais d’assurance sont des charges déductibles permettant de réduire le revenu imposable.</p> Le site <a href='https://reassurez-moi.fr/guide/assurance-pret-immobilier/cout' target='_blank' rel='noopener noreferrer'>reassurez-moi.fr</a> vous permettra de choisir une hypothèse cohérente pour votre taux d'assurance</p>",
   },
   {
     id: "info-frais-bancaires",
@@ -65,13 +65,13 @@ const modalInfo = [
     id: "info-frais-courtier",
     titre: "Frais de courtier",
     texte:
-      "<p>Le prix payé au courtier rémunère son accompagnement sur toute la durée d'obtention du crédit, la qualité de sa négociation avec la banque qui permet de faire des économies souvent très significatives tout en gagnant du temps.</p> <p>Les frais de courtier ne sont, à priori, pas des charges qui peuvent être utilisées pour réduire le revenu imposable, plus de détails sur le site : <a href='https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/'>corrigetonimpot.fr</a></p>",
+      "<p>Le prix payé au courtier rémunère son accompagnement sur toute la durée d'obtention du crédit, la qualité de sa négociation avec la banque qui permet de faire des économies souvent très significatives tout en gagnant du temps. Les honoraires de courtier s'élève généralement à 1% du capital emprunté. Certains courtiers facture des honoraires fixes quel que soit le montant de l'emprunt.</p> <p>Les frais de courtier ne sont, à priori, pas des charges qui peuvent être utilisées pour réduire le revenu imposable, plus de détails sur le site : <a href='https://www.corrigetonimpot.fr/deduire-frais-courtier-des-loyers/'>corrigetonimpot.fr</a></p>",
   },
   {
     id: "info-loyer",
     titre: "Loyer mensuel",
     texte:
-      "<p>C'est le(s) loyer(s) versé(s) par le locataire(s) du bien. Le revenu annuel est calculé en multipliant le loyer mensuel par le taux d’occupation. C’est sur cette base que sera calculé le revenu imposable.</p>",
+      "<p>C'est le(s) loyer(s) versé(s) par le locataire(s) du bien. Le revenu annuel est calculé en multipliant le loyer mensuel par le taux d’occupation. C’est sur cette base que sera calculé le revenu imposable.</p> <p>Afin d'évaluer le loyer d'un bien, les sites <a href='https://www.meilleursagents.com/prix-immobilier/' target='_blank' rel='noopener noreferrer'>meilleursagents.com</a> et <a href='https://www.locservice.fr/cote-des-loyers/cote-t2-75101.html' target='_blank' rel='noopener noreferrer'>locservice.fr</a> mettent à disposition des données à une maille relativement fine.<p> </p>Si vous souhaitez exploiter votre bien en collocation, le site <a href='https://www.lacartedescolocs.fr/' target='_blank' rel='noopener noreferrer'>lacartedescolocs.fr</a> vous permettra de faire une étude rapide du prix moyen d'une chambres dans le quartier visé.</p>",
   },
   {
     id: "info-locataire",
@@ -89,7 +89,7 @@ const modalInfo = [
     id: "info-fonciere",
     titre: "Taxe foncière",
     texte:
-      "<p>Taxe annuelle s’appliquant à tout propriétaire d'un bien immobilier en France. Elle n'est pas récupérable sur le locataire mais c'est une charge déductible permettant de réduire le revenu imposable.</p> <p>La valeur de la taxe foncière est à demander à au vendeur du bien étudié. Le montant de la taxe foncière dépend de paramètres fixés par chaque ville, plus d'infos sur le site <a href='https://www.tacotax.fr/guides/impots-locaux/taxe-fonciere/methode-de-calcul?utm_source=google&utm_medium=cpl&utm_campaign=DSA&gclid=CjwKCAiA17P9BRB2EiwAMvwNyG7cv892qIcSVWfsvLjRi7UF5sU0G7f_uvYgrlVBnaf1Fd3PV_gfeRoCt3gQAvD_BwE' target='_blank' rel='noopener noreferrer'>tacotax.fr</a></p>",
+      "<p>Taxe annuelle s’appliquant à tout propriétaire d'un bien immobilier en France. Elle n'est pas récupérable sur le locataire mais c'est une charge déductible permettant de réduire le revenu imposable. Enfin, le montant de la taxe foncière dépend de paramètres fixés par chaque ville, plus d'infos sur le site <a href='https://www.tacotax.fr/guides/impots-locaux/taxe-fonciere/methode-de-calcul?utm_source=google&utm_medium=cpl&utm_campaign=DSA&gclid=CjwKCAiA17P9BRB2EiwAMvwNyG7cv892qIcSVWfsvLjRi7UF5sU0G7f_uvYgrlVBnaf1Fd3PV_gfeRoCt3gQAvD_BwE' target='_blank' rel='noopener noreferrer'>tacotax.fr</a></p> <p>Le montant de la taxe foncière se trouve souvent dans l'annonce du bien mis en vente. Sinon, le vendeur / agent immobilier est tenu de vous le commniquer.</p>",
   },
   {
     id: "info-gestion",
@@ -101,7 +101,7 @@ const modalInfo = [
     id: "info-charges",
     titre: "Charges courantes",
     texte:
-      "<p>Dépenses courantes que doivent payer collectivement les co-propriétaires. Ces frais peuvent être très variables d’un bien à un autre et également d’une année à une autre pour un même bien, par exemple lorsque des travaux doivent être effectués (ravalement, toiture ...). Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F2590'>service-publique.fr</a> référence les charges de co-propriété ainsi que les droits et devoirs des co-propriétaires</p> <p>Enfin, certaines charges sont récupérables sur du locataire. La liste des charge récupérables sur le locataire se trouvent également sur le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a>.</p>",
+      "<p>Dépenses courantes que doivent payer collectivement les co-propriétaires. Ces frais peuvent être très variables d’un bien à un autre et également d’une année à une autre pour un même bien, par exemple lorsque des travaux doivent être effectués (ravalement, toiture ...). Les charges courantes sont des charges déductibles permettant de réduire le revenu imposable. Le site <a href='https://www.service-public.fr/particuliers/vosdroits/F2590' target='_blank' rel='noopener noreferrer'>service-publique.fr</a> référence les charges de co-propriété ainsi que les droits et devoirs des co-propriétaires</p> <p>Enfin, certaines charges sont récupérables sur du locataire. La liste des charge récupérables sur le locataire se trouvent également sur le site <a href='https://www.service-public.fr/particuliers/vosdroits/F947' target='_blank' rel='noopener noreferrer'>service-public.fr</a>.</p> <p>Le montant des charges se trouve souvent dans l'annonce du bien mis en vente. Sinon, le vendeur / agent immobilier est tenu de vous le commniquer.</p>",
   },
   {
     id: "info-pno",

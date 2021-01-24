@@ -29,7 +29,7 @@ const FoyerDesktop = ({
       <div className='form-box-v mt-10'>
         <div className='info-button info-button-foyer'>
           <h5>
-            Revenu d'activité imposable & augmentation annuelle moyenne (%)
+            Revenu <u>imposable</u> & augmentation annuelle moyenne (%)
           </h5>
         </div>
         <div className='type-alt-slider border-investisseur pad-top-invest'>

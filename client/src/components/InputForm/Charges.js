@@ -108,7 +108,9 @@ const Charges = ({
                   ?
                 </button>
               </div>
-              <small>
+              <small
+                style={{ visibility: revAnnuel !== 0 ? "visible" : "hidden" }}
+              >
                 {Math.round(
                   ((gestion / (revAnnuel - chargesLoc)) * 100 +
                     Number.EPSILON) *

@@ -3,6 +3,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Heebo", sans-serif;
 }
 
 html {
@@ -11,7 +12,6 @@ html {
 }
 
 body {
-  font-family: "Courrier", sans-serif;
   color: #333;
   line-height: 1.6;
   background-color: #f2f3f5;
@@ -265,17 +265,16 @@ input:focus {
 
 .landing-nav a {
   font-size: 16px;
-  font-family: "Courier New", Courier, monospace;
   color: #fff;
 }
 
 .landing-nav button {
   font-size: 16px;
-  font-family: "Courier New", Courier, monospace;
   color: #fff;
   border: none;
   background-color: #007be8;
   cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .landing-nav ul {
@@ -287,6 +286,7 @@ input:focus {
   padding: 15px 20px;
   color: #fff;
   cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .landing-nav .link:hover {
@@ -1572,19 +1572,16 @@ input::-webkit-inner-spin-button {
 input[type="email"] {
   padding: 12px 10px;
   color: #333;
-  /* font-family: "Quicksand", sans-serif; */
 }
 
 input[type="number"] {
   padding: 12px 10px;
   color: #333;
-  /* font-family: "Quicksand", sans-serif; */
 }
 
 input[type="text"] {
   padding: 12px 10px;
   color: #333;
-  /* font-family: "Quicksand", sans-serif; */
 }
 
 .footer-email button {
@@ -1785,7 +1782,6 @@ input[type="text"] {
 input[type="email"] {
   padding: 12px 10px;
   color: #333;
-  /* font-family: "Quicksand", sans-serif; */
 }
 
 .container-email button {
@@ -2037,6 +2033,8 @@ input[type="email"] {
   margin-left: 5px;
   color: rgb(87, 86, 86);
   cursor: pointer;
+  height: 17px;
+  width: 16px;
 }
 
 .info-modal {
@@ -2384,11 +2382,8 @@ input[type="email"] {
   .landing-header {
     margin-top: 20px;
     width: 280px;
-  }
-  .landing-header {
     text-align: center;
   }
-
   .landing-benefits-group {
     padding: 10px 0;
   }
