@@ -17,7 +17,6 @@ import {
 const SaveModal = ({
   onChangeString,
   cleanSaveForm,
-  saveModal,
   saveModalToggle,
   saveModalClic,
   modelModalClic,

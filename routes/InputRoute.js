@@ -28,7 +28,7 @@ router.post("/", auth, async (req, res) => {
       notaire: parseFloat(req.body.notaire),
       agence: parseInt(req.body.agence),
       duree: parseInt(req.body.duree),
-      apport: parseInt(req.body.apport),
+      apport: parseInt(req.body.apport), // pas d'insert si apport is null
       interet: parseFloat(req.body.interet) / 100,
       assurance: parseFloat(req.body.assurance) / 100,
       fraisBancaires: parseInt(req.body.fraisBancaires),
