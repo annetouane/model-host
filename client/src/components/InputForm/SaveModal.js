@@ -44,10 +44,7 @@ const SaveModal = ({
 
   return (
     <section className='auth-modal'>
-      <div
-        className='auth-box padding-40 save-box-padding-40'
-        style={{ height: "520px" }}
-      >
+      <div className='auth-box padding-40 save-box-padding-40'>
         {width > 1155 ? (
           <div onClick={saveClose}>
             <i className='fas fa-times quit-auth-modal'></i>

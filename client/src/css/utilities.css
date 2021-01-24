@@ -862,6 +862,7 @@ input:focus {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 60px;
 }
 
 .form-group {
@@ -2404,12 +2405,13 @@ input[type="email"] {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    margin-bottom: 150px;
   }
 
   .landing-devices img {
     padding: 0;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 60px;
     margin-bottom: 60px;
     image-rendering: pixelated;
   }
@@ -2538,7 +2540,7 @@ input[type="email"] {
   }
   .save-box-padding-40 {
     padding: 90px 20px 0 20px;
-    height: 550px;
+    height: 600px;
   }
   .account-params button {
     width: 100%;

@@ -204,7 +204,7 @@ const AccountModal = ({
           /> */}
           {toggleParamAccount ? (
             <form className='saved-projects-box'>
-              <ul style={{ maxHeight: "200px" }}>
+              <ul style={{ maxHeight: "250px" }}>
                 {projects.map((project) => (
                   <li className='saved-projects-items' key={project._id}>
                     <input
