@@ -607,7 +607,7 @@ export const MainForm = ({
       postEmail(eFooter);
       setClickFooter(true);
     } else {
-      console.log("nada");
+      console.log("nonono");
     }
     setEmailFooter({ eFooter: "" });
   };
