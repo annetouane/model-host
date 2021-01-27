@@ -5,7 +5,7 @@ import NumberFormat from "react-number-format";
 const FoyerMobile = ({
   onChange,
   showModal,
-  sepSpace,
+  onChangeDecimals,
   setMobileDisplayTab,
   focusMethod,
   mobileDisplayTab,
@@ -85,7 +85,7 @@ const FoyerMobile = ({
             type='select'
             name='augInvest1'
             value={augInvest1}
-            onChange={onChange}
+            onChange={onChangeDecimals}
             className='augmentation fs-12'
           >
             {optionsAugmentation.map((option) => (
@@ -148,7 +148,7 @@ const FoyerMobile = ({
             type='select'
             name='augInvest2'
             value={augInvest2}
-            onChange={onChange}
+            onChange={onChangeDecimals}
             className='augmentation fs-12'
           >
             {optionsAugmentation.map((option) => (
@@ -198,7 +198,7 @@ const FoyerMobile = ({
           <select
             type='select'
             name='partFisc'
-            onChange={onChange}
+            onChange={onChangeDecimals}
             className='input-box-3 fs-12'
           >
             {optionsPartFisc.map((optionPartFisc) => (

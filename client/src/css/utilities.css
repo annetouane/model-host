@@ -1646,6 +1646,7 @@ input[type="text"] {
 }
 
 .landing-page-body {
+  /* lambda */
   display: flex;
   width: 100%;
   justify-content: space-evenly;
@@ -1653,6 +1654,7 @@ input[type="text"] {
 }
 
 .landing-benefits {
+  /* lambda */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1683,6 +1685,7 @@ input[type="text"] {
 }
 
 .landing-benefits-group {
+  /* lambda */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -2133,13 +2136,26 @@ input[type="email"] {
   padding-bottom: 25px;
 }
 
-.model-box h1 {
+.model-header {
+  padding-left: 36px;
+}
+
+.model-header h1 {
   width: 100%;
-  padding-bottom: 20px;
-  padding-left: 30px;
   text-align: left;
   font-weight: bold;
   color: #333;
+}
+
+.model-header button {
+  margin-bottom: 10px;
+  border: none;
+  background-color: transparent;
+}
+
+.model-header a {
+  color: #007be8;
+  font-weight: bold;
 }
 
 .custom-tooltip {
@@ -2345,6 +2361,7 @@ input[type="email"] {
 @media screen and (max-width: 1155px) {
   .landing-page-body {
     flex-direction: column;
+    flex: 1 0 auto;
   }
   .landing-line {
     display: none;
@@ -2384,9 +2401,14 @@ input[type="email"] {
     margin-top: 20px;
     width: 280px;
     text-align: center;
+    flex: 1 0 auto;
+  }
+  .landing-benefits {
+    flex: 1 0 auto;
   }
   .landing-benefits-group {
     padding: 10px 0;
+    flex: 1 0 auto;
   }
   .landing-benefits-box {
     flex-direction: column;

@@ -54,11 +54,6 @@ router.post("/", auth, async (req, res) => {
     };
 
     const {
-      user,
-      nomProjet,
-      ville,
-      natureBien,
-      typeAppartement,
       netVendeur,
       travaux,
       ammeublement,
@@ -82,11 +77,6 @@ router.post("/", auth, async (req, res) => {
       revInvest2,
       augInvest2,
       partFisc,
-      sciIs,
-      lmnpReel,
-      lmnpMicro,
-      nueReel,
-      nueMicro,
       irl,
     } = inputs;
 
@@ -250,9 +240,8 @@ router.post("/", auth, async (req, res) => {
           0.9),
         // A) calcul de l'impôt sur le revenu d'ACTIVITE - SANS part de quotien familial supplémentaires
         // a1 = quotien familial sans part de quotien familial supplémentaire (parts des enfants)
-        // a2 = calcul de l'impôt sur le revenu par part fiscal
-        // a3 = calcul de l'impôt total à payer
         (item.a1 = revInvest2 == 0 ? item.revActImp : item.revActImp / 2),
+        // a2 = calcul de l'impôt sur le revenu par part fiscal
         (item.a2 =
           item.a1 < 10084
             ? 0
@@ -265,6 +254,7 @@ router.post("/", auth, async (req, res) => {
             : item.a1 > 158122
             ? (item.a1 - 158122) * 0.45 + 50751.32
             : 0),
+        // a3 = calcul de l'impôt total à payer
         (item.a3 = revInvest2 == 0 ? item.a2 : item.a2 * 2),
         // plafonnement parts supplémentaires et revenu d'activité imposable
         (item.plafonnement =

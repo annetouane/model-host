@@ -201,20 +201,19 @@ const MobileNav = ({
               </button>
               <i className='far fa-times-circle mobile-nav-dummie'></i>
             </div>
-
-            {/* Indicateur button */}
-            {width < 770 ? (
-              <div className='mobile-kpi-button'>
-                <button type='button' onClick={openIndicateurs}>
-                  Voir les indicateurs
-                </button>
-                <i className='fas fa-temperature-high fa-lg' />
-              </div>
-            ) : (
-              ""
-            )}
           </div>
 
+          {/* Indicateur button */}
+          {width < 770 ? (
+            <div className='mobile-kpi-button'>
+              <button type='button' onClick={openIndicateurs}>
+                Voir les indicateurs
+              </button>
+              <i className='fas fa-temperature-high fa-lg' />
+            </div>
+          ) : (
+            ""
+          )}
           {!landingModal ? (
             <div className='mobile-kpi-button'>
               <button

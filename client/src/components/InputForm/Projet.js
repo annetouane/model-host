@@ -52,19 +52,8 @@ const Projet = ({
       <div className='form-box-v mt-10'>
         <div className='type-alt-slider'>
           <div>
-            <label>
-              Net vendeur&nbsp;
-              <small style={{ marginLeft: 0 }}>
-                <strong>
-                  (
-                  <i
-                    style={{ marginLeft: 0, cursor: "auto", color: "#007be8" }}
-                    className='fas fa-exclamation-circle'
-                  ></i>{" "}
-                  hors frais d'agence)
-                </strong>
-              </small>
-            </label>
+            <label>Net vendeur</label>
+
             <button
               id='info-net-vendeur'
               onClick={showModal}
@@ -95,6 +84,16 @@ const Projet = ({
             ></i>
           </div>
         </div>
+
+        <small style={{ marginLeft: 0 }}>
+          <strong>
+            <i
+              style={{ marginLeft: 0, cursor: "auto", color: "#007be8" }}
+              className='fas fa-exclamation-circle'
+            ></i>{" "}
+            Hors frais d'agence
+          </strong>
+        </small>
 
         <div className='info-button'>
           <input

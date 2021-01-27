@@ -292,7 +292,19 @@ export const Modelisation = ({
         <div onClick={modelClose}>
           <i className='fas fa-times quit-account-modal'></i>
         </div>
-        <h1>Comparaison des cash-flow net d'impôt par régime</h1>
+        <div className='model-header'>
+          <h1>Comparaison des cash-flows net d'impôt par régime</h1>
+          <button>
+            <a
+              href='https://github.com/annetouane/model-host/blob/main/SIMULIMO_MODEL_FISCAL.xlsx?raw=true'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Télécharger la version Excel du simulateur fiscal&nbsp;&nbsp;
+              <i class='fas fa-cloud-download-alt'></i>
+            </a>
+          </button>
+        </div>
         <div className='chart-group'>
           {/* SCI IS *********************************************************************** */}
           {sciIs ? (
@@ -311,7 +323,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
-                        width={30}
+                        width={40}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -379,7 +391,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
-                        width={30}
+                        width={40}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -445,7 +457,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
-                        width={30}
+                        width={40}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -510,7 +522,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
-                        width={30}
+                        width={40}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
@@ -575,7 +587,7 @@ export const Modelisation = ({
                       />
                       <ReferenceLine y={0} stroke='#9c9999' strokeWidth={0.5} />{" "}
                       <YAxis
-                        width={30}
+                        width={40}
                         type='number'
                         domain={[minValue, maxValue]}
                         stroke='#9c9999'
