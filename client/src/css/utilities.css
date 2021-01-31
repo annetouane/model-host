@@ -527,6 +527,7 @@ input:focus {
 
 .save-box-padding-40 {
   padding: 40px;
+  height: 530px;
 }
 
 .mobile-auth-page {
@@ -1593,6 +1594,7 @@ input[type="text"] {
   height: 30px;
   border-radius: 5px;
   margin-left: 5px;
+  margin-right: 80px;
   color: #333;
   font-weight: bold;
   cursor: pointer;
@@ -1800,6 +1802,14 @@ input[type="email"] {
   font-weight: bold;
   cursor: pointer;
 }
+
+@media screen and (max-width: 770px) {
+  #hubspot-messages-iframe-container {
+    display: none;
+    visibility: hidden;
+  }
+}
+
 /*navbar*/
 @media screen and (min-width: 770px) and (max-width: 1000px) {
   .indicateurs-mobile {

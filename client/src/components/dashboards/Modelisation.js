@@ -25,6 +25,7 @@ export const Modelisation = ({
   modelModal,
   modelModalToggle,
   modelModalClic,
+  width,
   saveModalClic,
   currentModel,
   sciIs,
@@ -289,9 +290,13 @@ export const Modelisation = ({
       className={modelModal ? "auth-modal" : "auth-modal-none"}
     >
       <div className='model-box'>
-        <div onClick={modelClose}>
-          <i className='fas fa-times quit-account-modal'></i>
-        </div>
+        {width > 1155 ? (
+          <div onClick={modelClose}>
+            <i className='fas fa-times quit-account-modal'></i>
+          </div>
+        ) : (
+          ""
+        )}
         <div className='model-header'>
           <h1>Comparaison des cash-flows net d'impôt par régime</h1>
           <button>

@@ -3,7 +3,7 @@ import axios from "axios";
 // import { LOGOUT } from "../actions/types";
 
 const api =
-  
+  process.env.NODE_ENV === "production"
     ? axios.create({
         baseURL: "https://simulimo.herokuapp.com/api/",
         headers: {

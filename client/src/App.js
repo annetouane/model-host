@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Helmet from "react-helmet";
 import favicon from "./img/favicon.ico";
+import ReactGA from "react-ga";
+import { createBrowserHistory } from "history";
 
 // components
 import NavBar from "./components/Layout/NavBar";
@@ -28,10 +30,27 @@ import setAuthToken from "./utilities/setAuthToken";
 import "./css/utilities.css";
 import "./css/slider.css";
 
+// place le token dans le global header si présent
 if (localStorage.token) {
-  // console.log("app1.js");
-  // console.log(localStorage.token);
   setAuthToken(localStorage.token);
+}
+
+if (process.env.NODE_ENV === "production") {
+  // initialize GA tracking
+  ReactGA.initialize("UA-156554460-1", {
+    debug: true,
+    titleCase: false,
+    name: "simulimo-prod",
+    gaOptions: {
+      siteSpeedSampleRate: 100,
+      alwaysSendReferrer: true,
+    },
+  });
+  // call pageView on each route change
+  const browserHistory = createBrowserHistory();
+  browserHistory.listen((location, action) => {
+    ReactGA.pageview(location.pathname + location.search);
+  });
 }
 
 // useEffect will execute each time the app is updated
@@ -40,7 +59,22 @@ const App = () => {
   useEffect(() => {
     // dispatch is a method on the store, dispatch load user which will dispatch the action to the reducer
     store.dispatch(loadUser());
+    if (process.env.NODE_ENV === "production") {
+      ReactGA.pageview(window.location.pathname + window.location.search);
+    }
   }, []);
+
+  // if (process.env.NODE_ENV === "production") {
+  //   ReactGA.initialize("UA-156554460-1", {
+  //     debug: true,
+  //     titleCase: false,
+  //     name: "simulimo-prod",
+  //     gaOptions: {
+  //       siteSpeedSampleRate: 100,
+  //       alwaysSendReferrer: true,
+  //     },
+  //   });
+  // }
 
   return (
     <Provider store={store}>
@@ -55,6 +89,16 @@ const App = () => {
               sizes='256x256'
               style={{ borderRadius: "100px" }}
             />
+            {/* <!-- Start of HubSpot Embed Code --> */}
+            <script
+              type='text/javascript'
+              id='hs-script-loader'
+              async
+              defer
+              src='//js.hs-scripts.com/9320762.js'
+            ></script>
+            {/* <!-- End of HubSpot Embed Code --> */}
+            <noscript>You need to enable JavaScript to run this app.</noscript>
           </Helmet>
           <NavBar />
           {/* <AlerteStrip /> */}

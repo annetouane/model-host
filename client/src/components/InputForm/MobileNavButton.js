@@ -11,6 +11,8 @@ import {
   kpiMobileToggle,
   modelModalToggle,
   saveModalToggle,
+  modelModalClic,
+  saveModalClic,
 } from "../../actions/modals";
 
 const mobileNavButton = ({
@@ -20,6 +22,8 @@ const mobileNavButton = ({
   kpiMobileToggle, // controle fenetre indicateurs - redux
   modelModalToggle, // controle fenetre model - redux
   saveModalToggle, // controle fenetre save - redux
+  modelModalClic, // détection clic model window
+  saveModalClic, // détection clic save window
   mobileMenu, // bool - redux
   modelModal, // bool - redux
   saveModal, // bool - redux
@@ -44,6 +48,8 @@ const mobileNavButton = ({
     kpiMobileToggle(false); // ferme la fenetre indicateurs
     modelModalToggle(false); // ferme la fenetre model
     saveModalToggle(false); // ferme la fenetre save
+    modelModalClic(false); // reset détection clic model window
+    saveModalClic(false); // reset détection clic save window
   };
 
   return (
@@ -74,6 +80,8 @@ mobileNavButton.propTypes = {
   mobileMenuToggle: PropTypes.func.isRequired,
   modelModalToggle: PropTypes.func.isRequired,
   saveModalToggle: PropTypes.func.isRequired,
+  modelModalClic: PropTypes.func.isRequired,
+  saveModalClic: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -95,4 +103,6 @@ export default connect(mapStateToProps, {
   mobileMenuToggle,
   modelModalToggle,
   saveModalToggle,
+  modelModalClic,
+  saveModalClic,
 })(mobileNavButton);

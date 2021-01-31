@@ -473,7 +473,8 @@ export const MainForm = ({
     let token = localStorage.getItem("token");
     // si absence de token dans local storage
     if (!token) {
-      saveModalToggle(false);
+      saveModalToggle(false); // ferme la fenetre de sauvegarde
+      saveModalClic(false); // reset clic sur Save a false
       noTokenFound();
     } else {
       updateProject(formData); // post input to db
@@ -505,17 +506,16 @@ export const MainForm = ({
     resetAuthState();
     mobileMenuToggle(false); // si mobile, ferme le menu de navigation
     let token = localStorage.getItem("token");
-    // si absence de token dans local storage
+    // si absence de token dans local storage :
     if (!token) {
-      modelModalToggle(false);
-      authToggle(true);
+      modelModalClic(true); // detect clic sur model
+      authToggle(true); // ouvre auth modal
       // si authentifié
     } else if (isAuthenticated) {
       getModelData(formData); // submit input to db
-      modelModalClic(true); // detect clic sur model
-      modelModalToggle(true); // ouvre modal model
     } else {
-      authToggle(true); // sinon ouvre auth modal
+      modelModalClic(true); // detect clic sur model
+      authToggle(true); // ouvre auth modal
     }
   };
 
@@ -729,7 +729,6 @@ export const MainForm = ({
       {/* account window */}
       {accountModal ? (
         <AccountModal
-          projectDisplayTab={projectDisplayTab}
           setProjectDisplayTab={setProjectDisplayTab}
           getProjectToUpdate={getProjectToUpdate}
           onDeleteProject={onDeleteProject}
@@ -737,6 +736,8 @@ export const MainForm = ({
           onVisualise={onVisualise}
           setSignUp={setSignUp}
           setSignIn={setSignIn}
+          projectDisplayTab={projectDisplayTab}
+          width={width}
         />
       ) : (
         ""
@@ -763,6 +764,7 @@ export const MainForm = ({
       {currentModel.length > 0 ? (
         <Modelisation
           sepSpace={sepSpace}
+          width={width}
           sciIs={sciIs}
           lmnpReel={lmnpReel}
           lmnpMicro={lmnpMicro}

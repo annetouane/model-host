@@ -10,7 +10,11 @@ import Alerte from "./../Layout/Alert";
 
 // actions
 import { logout, updPassword, deleteAccount } from "../../actions/auth";
-import { accountModalToggle } from "../../actions/modals";
+import {
+  accountModalToggle,
+  modelModalClic,
+  saveModalClic,
+} from "../../actions/modals";
 import { setAlert } from "../../actions/alert";
 
 const AccountModal = ({
@@ -26,6 +30,9 @@ const AccountModal = ({
   setSignUp,
   setSignIn,
   noTokenFound,
+  modelModalClic,
+  saveModalClic,
+  width,
 }) => {
   const resetStates = () => {
     setPasswords({
@@ -53,10 +60,12 @@ const AccountModal = ({
   const accountClose = () => {
     resetStates(); // effecace le contenu des inputs - local
     accountModalToggle(false); // close account modal - redux
-    setParamAccount({ toggleParamAccount: true }); // réinitialise l'onglet Projet sauvegardé - local
+    setParamAccount({ toggleParamAccount: true }); // réinitialise suronglet Projets sauvegardés - local
     setPwdChange({ togglePwdChange: false }); // ferme l'onglet changement de mdp - local
     setDeleteButton({ toggleDelete: false }); // ferme l'onglet delete account - local
     getProjectToUpdate("", ""); // reset l'id et nom projet à manipuler - mainform
+    saveModalClic(false); // save n'est plus actif
+    modelModalClic(false); // model n'est plus actif
   };
 
   // change tab *****************************************************************************************
@@ -170,9 +179,13 @@ const AccountModal = ({
     <section className='auth-modal'>
       <div className='account-box' style={{ margin: 0 }}>
         <div className='account-box-bis'>
-          <div onClick={accountClose}>
-            <i className='fas fa-times quit-account-modal'></i>
-          </div>
+          {width > 1155 ? (
+            <div onClick={accountClose}>
+              <i className='fas fa-times quit-account-modal'></i>
+            </div>
+          ) : (
+            ""
+          )}
           <h3>Mon compte</h3>
           <div className='account-params' style={{ marginBottom: "0" }}>
             <button
@@ -405,6 +418,8 @@ AccountModal.propTypes = {
   getProjectToUpdate: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
   updPassword: PropTypes.func.isRequired,
+  saveModalClic: PropTypes.func.isRequired,
+  modelModalClic: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   projects: PropTypes.array,
 };
@@ -422,5 +437,7 @@ export default withRouter(
     setAlert,
     deleteAccount,
     updPassword,
+    modelModalClic,
+    saveModalClic,
   })(AccountModal)
 );
