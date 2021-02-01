@@ -6,7 +6,7 @@ const ButtonModelMobile = ({ netVendeur, formCheck, onSave, onFisc }) => {
       <div
         className='box-button-model-mobile'
         style={{
-          borderRight: "#fff solid 0.5px",
+          borderRight: "#fff solid 2px",
           backgroundColor: netVendeur === 0 && "grey",
         }}
       >

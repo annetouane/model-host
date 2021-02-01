@@ -1,14 +1,11 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 import NumberFormat from "react-number-format";
 
 const FoyerMobile = ({
   onChange,
   showModal,
   onChangeDecimals,
-  setMobileDisplayTab,
   focusMethod,
-  mobileDisplayTab,
   revInvest1,
   augInvest1,
   revInvest2,
@@ -207,10 +204,6 @@ const FoyerMobile = ({
           </select>
         </div>
       </div>
-      <MobilePagination
-        setMobileDisplayTab={setMobileDisplayTab}
-        mobileDisplayTab={mobileDisplayTab}
-      />
     </section>
   );
 };

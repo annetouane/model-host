@@ -1,12 +1,9 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 import NumberFormat from "react-number-format";
 
 const Charges = ({
   onChange,
   showModal,
-  setMobileDisplayTab,
-  mobileDisplayTab,
   focusMethod,
   revAnnuel,
   fonciere,
@@ -264,14 +261,6 @@ const Charges = ({
           </div>
         </div>
       </div>
-      {width < 770 ? (
-        <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
-        />
-      ) : (
-        ""
-      )}
     </section>
   );
 };

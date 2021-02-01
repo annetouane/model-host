@@ -18,9 +18,9 @@ import NavBar from "./components/Layout/NavBar";
 import Page404Redirect from "./components/Layout/Page404Redirect";
 import MainForm from "./components/InputForm/mainForm";
 import ForgottenPassword from "./components/auth/ForgottenPassword";
-// import AlerteStrip from "./components/Layout/AlerteStrip";
-// import Spinner from "./components/Layout/Spinner";
-// import ChangePasswordLanding from "./components/auth/ChangePasswordLanding";
+import Spinner from "./components/Layout/Spinner";
+import InfoPage from "././components/Layout/InfoPage";
+import CondGenUtil from "././components/Layout/CondGenUtil";
 
 // actions
 import { loadUser } from "./actions/auth";
@@ -64,18 +64,6 @@ const App = () => {
     }
   }, []);
 
-  // if (process.env.NODE_ENV === "production") {
-  //   ReactGA.initialize("UA-156554460-1", {
-  //     debug: true,
-  //     titleCase: false,
-  //     name: "simulimo-prod",
-  //     gaOptions: {
-  //       siteSpeedSampleRate: 100,
-  //       alwaysSendReferrer: true,
-  //     },
-  //   });
-  // }
-
   return (
     <Provider store={store}>
       <Fragment>
@@ -100,11 +88,13 @@ const App = () => {
             {/* <!-- End of HubSpot Embed Code --> */}
             <noscript>You need to enable JavaScript to run this app.</noscript>
           </Helmet>
+          <Spinner />
           <NavBar />
-          {/* <AlerteStrip /> */}
           <Switch>
             <Route exact path='/' component={MainForm} />
             <Route exact path='/forgotten-pwd' component={ForgottenPassword} />
+            <Route exact path='/information' component={InfoPage} />
+            <Route exact path='/cgu' component={CondGenUtil} />
             <Route path='/404' component={Page404Redirect} />
             <Redirect to='/404' />
           </Switch>

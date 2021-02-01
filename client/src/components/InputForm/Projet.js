@@ -1,5 +1,4 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 // import ReactTooltip from 'react-tooltip';
 import NumberFormat from "react-number-format";
 
@@ -7,10 +6,8 @@ const Projet = ({
   onChange,
   showModal,
   sepSpace,
-  setMobileDisplayTab,
   focusMethod,
   onChangeDecimals,
-  mobileDisplayTab,
   netVendeur,
   travaux,
   ammeublement,
@@ -308,15 +305,6 @@ const Projet = ({
           </div>
         </div>
       </div>
-
-      {width < 700 ? (
-        <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
-        />
-      ) : (
-        ""
-      )}
     </section>
   );
 };

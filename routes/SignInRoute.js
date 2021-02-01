@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 
 // import model
 const User = require("../models/UserModel");
-const InputForm = require("../models/InputModel");
 
 // @route    POST /signin
 // @desc     Register user
@@ -73,6 +72,12 @@ router.post("/", async (req, res) => {
         if (err) throw err;
         // sends the token to the client : user is authenticated
         res.json({ token });
+      }
+    );
+    await User.findByIdAndUpdate(
+      { _id: user.id },
+      {
+        $set: { date: new Date() },
       }
     );
   } catch (err) {

@@ -24,7 +24,7 @@ const Indicateurs = ({
       </h3>
       <div
         className='side-column-box'
-        style={{ padding: width > 1125 ? "20px" : "10px" }}
+        style={{ padding: width > 980 ? "20px" : "10px" }}
       >
         <div className='kpi-item'>
           <div className='info-button'>

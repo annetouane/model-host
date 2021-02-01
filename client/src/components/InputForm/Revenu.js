@@ -1,13 +1,9 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 import NumberFormat from "react-number-format";
 
 const Revenu = ({
   onChange,
-  sepSpace,
-  setMobileDisplayTab,
   focusMethod,
-  mobileDisplayTab,
   onChangeDecimals,
   loyer,
   chargesLoc,
@@ -186,14 +182,6 @@ const Revenu = ({
           </select>
         </div>
       </div>
-      {width < 700 ? (
-        <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
-        />
-      ) : (
-        ""
-      )}
     </section>
   );
 };

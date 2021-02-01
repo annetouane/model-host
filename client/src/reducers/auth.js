@@ -8,15 +8,15 @@ import {
   LOGOUT,
   ACCOUNT_DELETED,
   RECOVER_PASSWORD,
-  // LOADING,
-  // LOADED,
+  LOADING,
+  LOADED,
 } from "../actions/types";
 
 // init state : token stored in localStorage : look for an item called token
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: false, // when successful response from login -> set to true
-  // loading: true, // set it to false when loaded
+  loading: false, // set it to false when loaded
   user: null, // insert user id & email
 };
 
@@ -25,16 +25,16 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    // case LOADING:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // case LOADED:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //   };
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOADED:
+      return {
+        ...state,
+        loading: false,
+      };
     case USER_LOADED:
       return {
         ...state,
@@ -87,7 +87,7 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
-        // loading: false,
+        loading: false,
         user: null,
       };
     default:

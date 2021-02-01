@@ -1,15 +1,11 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 import NumberFormat from "react-number-format";
 
 const Financement = ({
   onChange,
   showModal,
-  sepSpace,
-  setMobileDisplayTab,
   onChangeDecimals,
   focusMethod,
-  mobileDisplayTab,
   netVendeur,
   duree,
   apport,
@@ -386,14 +382,6 @@ const Financement = ({
           </div>
         </div>
       </div>
-      {width < 700 ? (
-        <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
-        />
-      ) : (
-        ""
-      )}
     </section>
   );
 };

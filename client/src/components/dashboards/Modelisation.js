@@ -302,7 +302,7 @@ export const Modelisation = ({
           <button>
             <a
               href='https://github.com/annetouane/model-host/blob/main/SIMULIMO_MODEL_FISCAL.xlsx?raw=true'
-              target='_blank'
+              // target='_blank'
               rel='noopener noreferrer'
             >
               Télécharger la version Excel du simulateur fiscal&nbsp;&nbsp;

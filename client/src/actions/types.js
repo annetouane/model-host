@@ -30,5 +30,5 @@ export const FORGOTTEN_PASSWORD_TOGGLE = "FORGOTTEN_PASSWORD_TOGGLE";
 export const RECOVER_PASSWORD = "RECOVER_PASSWORD";
 export const SET_ALERT_STRIP = "SET_ALERT_STRIP";
 export const REMOVE_ALERT_STRIP = "REMOVE_ALERT_STRIP";
-// export const LOADING = "LOADING";
-// export const LOADED = "LOADED";
+export const LOADING = "LOADING";
+export const LOADED = "LOADED";

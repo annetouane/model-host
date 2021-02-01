@@ -66,8 +66,6 @@ const mobileNavButton = ({
   );
 };
 mobileNavButton.propTypes = {
-  // detectSave: PropTypes.bool.isRequired,
-  // detectModel: PropTypes.bool.isRequired,
   mobileMenu: PropTypes.bool.isRequired,
   modelModal: PropTypes.bool.isRequired,
   saveModal: PropTypes.bool.isRequired,

@@ -50,7 +50,10 @@ const MobileNav = ({
   return (
     <Fragment>
       {mobileMenu ? (
-        <nav className={width < 770 ? "mobile-nav" : "mobile-nav-tablet"}>
+        <nav
+          className={width < 600 ? "mobile-nav" : "mobile-nav-tablet"}
+          style={{ height: width < 950 && width > 600 && "550px" }}
+        >
           {/* {!landingModal ? ( */}
           <div className='mobile-nav-box'>
             {/* projet */}
@@ -204,7 +207,7 @@ const MobileNav = ({
           </div>
 
           {/* Indicateur button */}
-          {width < 770 ? (
+          {width < 950 ? (
             <div className='mobile-kpi-button'>
               <button type='button' onClick={openIndicateurs}>
                 Voir les indicateurs
@@ -274,11 +277,29 @@ const MobileNav = ({
                 }}
               >
                 <span className='link'>
-                  S'identifier&nbsp;<i className='far fa-user-circle'></i>
+                  Connexion&nbsp;<i className='far fa-user-circle'></i>
                 </span>
               </button>
             </div>
           )}
+          <div
+            className='mobile-kpi-button mobile-info-links'
+            style={{
+              borderBottom: width > 770 && width < 1155 && "none",
+            }}
+          >
+            <a
+              href='/information'
+              style={{ borderRight: "2px solid #fff", fontSize: "16px" }}
+              target='_blank'
+            >
+              Qui sommes <br />
+              nous ?
+            </a>
+            <a href='/cgu' target='_blank'>
+              CGU
+            </a>
+          </div>
         </nav>
       ) : (
         ""

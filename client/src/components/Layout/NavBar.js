@@ -203,7 +203,7 @@ export const NavBar = ({
                 }}
               >
                 <span className='link'>
-                  S'identifier&nbsp;<i className='far fa-user-circle'></i>
+                  Connexion&nbsp;<i className='far fa-user-circle'></i>
                 </span>
               </button>
             </li>

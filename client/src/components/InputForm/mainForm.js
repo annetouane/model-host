@@ -29,7 +29,6 @@ import Modelisation from "../dashboards/Modelisation";
 import AccountModal from "../auth/AccountModal";
 import Landing from "../Layout/Landing";
 import AlerteStrip from "../Layout/AlerteStrip";
-// import Spinner from "../Layout/Spinner";
 
 // actions
 import {
@@ -94,7 +93,6 @@ export const MainForm = ({
   history,
   registerCheck,
   setAlertStrip,
-  // loading,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -108,45 +106,6 @@ export const MainForm = ({
   const [projectDisplayTab, setProjectDisplayTab] = useState(0);
 
   // init form state
-  const [formData, setFormData] = useState({
-    idProjet: "",
-    user: "",
-    nomProjet: "",
-    ville: "",
-    natureBien: "",
-    typeAppartement: "",
-    netVendeur: 300000,
-    travaux: 50000,
-    ammeublement: 5000,
-    notaire: 0.075,
-    agence: 20000,
-    duree: 25,
-    apport: 30000,
-    interet: 1.5,
-    assurance: 0.2,
-    fraisBancaires: 3000,
-    fraisCourtier: 3000,
-    loyer: 2000,
-    chargesLoc: 2100,
-    occupation: 11,
-    fonciere: 2130,
-    gestion: 1830,
-    charges: 2200,
-    pno: 500,
-    revInvest1: 30000,
-    augInvest1: 0.04,
-    revInvest2: 30000,
-    augInvest2: 0.08,
-    partFisc: 2.5,
-    sciIs: true,
-    lmnpReel: true,
-    lmnpMicro: true,
-    nueReel: true,
-    nueMicro: true,
-    irl: 1.5,
-  });
-
-  // // init form state
   // const [formData, setFormData] = useState({
   //   idProjet: "",
   //   user: "",
@@ -154,36 +113,75 @@ export const MainForm = ({
   //   ville: "",
   //   natureBien: "",
   //   typeAppartement: "",
-  //   netVendeur: 0,
-  //   travaux: 0,
-  //   ammeublement: 0,
+  //   netVendeur: 300000,
+  //   travaux: 50000,
+  //   ammeublement: 5000,
   //   notaire: 0.075,
-  //   agence: 0,
-  //   duree: 20,
-  //   apport: "",
-  //   interet: 1.1,
-  //   assurance: 0.1,
-  //   fraisBancaires: 0,
-  //   fraisCourtier: 0,
-  //   loyer: 0,
-  //   chargesLoc: 0,
+  //   agence: 20000,
+  //   duree: 25,
+  //   apport: 30000,
+  //   interet: 1.5,
+  //   assurance: 0.2,
+  //   fraisBancaires: 3000,
+  //   fraisCourtier: 3000,
+  //   loyer: 2000,
+  //   chargesLoc: 2100,
   //   occupation: 11,
-  //   fonciere: 0,
-  //   gestion: 0,
-  //   charges: 0,
-  //   pno: 0,
-  //   revInvest1: 0,
-  //   augInvest1: 0.01,
-  //   revInvest2: 0,
-  //   augInvest2: 0.01,
-  //   partFisc: 1,
-  //   sciIs: false,
-  //   lmnpReel: false,
-  //   lmnpMicro: false,
-  //   nueReel: false,
-  //   nueMicro: false,
-  //   irl: 1,
+  //   fonciere: 2130,
+  //   gestion: 1830,
+  //   charges: 2200,
+  //   pno: 500,
+  //   revInvest1: 30000,
+  //   augInvest1: 0.04,
+  //   revInvest2: 30000,
+  //   augInvest2: 0.08,
+  //   partFisc: 2.5,
+  //   sciIs: true,
+  //   lmnpReel: true,
+  //   lmnpMicro: true,
+  //   nueReel: true,
+  //   nueMicro: true,
+  //   irl: 1.5,
   // });
+
+  // init form state
+  const [formData, setFormData] = useState({
+    idProjet: "",
+    user: "",
+    nomProjet: "",
+    ville: "",
+    natureBien: "",
+    typeAppartement: "",
+    netVendeur: 0,
+    travaux: 0,
+    ammeublement: 0,
+    notaire: 0.075,
+    agence: 0,
+    duree: 20,
+    apport: "",
+    interet: 1.1,
+    assurance: 0.1,
+    fraisBancaires: 0,
+    fraisCourtier: 0,
+    loyer: 0,
+    chargesLoc: 0,
+    occupation: 11,
+    fonciere: 0,
+    gestion: 0,
+    charges: 0,
+    pno: 0,
+    revInvest1: 0,
+    augInvest1: 0.01,
+    revInvest2: 0,
+    augInvest2: 0.01,
+    partFisc: 1,
+    sciIs: false,
+    lmnpReel: false,
+    lmnpMicro: false,
+    nueReel: false,
+    nueMicro: false,
+    irl: 1,
+  });
 
   // destructure form
   const {
@@ -698,7 +696,6 @@ export const MainForm = ({
 
   return (
     <Fragment>
-      {/* {loading ? <Spinner /> : ""} */}
       {/* landing window */}
       <Landing width={width} />
 
@@ -790,6 +787,7 @@ export const MainForm = ({
         <MobileTitle
           mobileDisplayTab={mobileDisplayTab}
           scrollTop={scrollTop}
+          setMobileDisplayTab={setMobileDisplayTab}
         />
       ) : (
         ""
@@ -848,7 +846,7 @@ export const MainForm = ({
           />
         )}
 
-        {width < 770 && kpiMobile ? (
+        {width < 950 && kpiMobile ? (
           <IndicateursMobile
             showModal={showModal}
             sepSpace={sepSpace}
@@ -986,7 +984,6 @@ export const MainForm = ({
               setMobileDisplayTab={setMobileDisplayTab}
               onChangeDecimals={onChangeDecimals}
               focusMethod={focusMethod}
-              onChangeDecimals={onChangeDecimals}
               mobileDisplayTab={mobileDisplayTab}
               revInvest1={revInvest1}
               augInvest1={augInvest1}

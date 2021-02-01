@@ -251,10 +251,14 @@ const AuthModalComplete = ({
                     required
                   />
                   <p>
-                    Accepter que Simulimo transmette mes informations à ses
-                    partenaires à des fins commerciales.{" "}
-                    <b>Vous pourrez changer d'avis à tout moment.</b>{" "}
-                    <a href='/confidentialite' target='_blank'>
+                    En créant mon espace personnel, je reconnais avoir pris
+                    connaissance des conditions générales d'utilisation et je
+                    les accepte.{" "}
+                    <a
+                      href='/cgu'
+                      target='_blank'
+                      style={{ fontWeight: "bold" }}
+                    >
                       En savoir plus
                     </a>
                   </p>

@@ -1,13 +1,10 @@
 import React from "react";
-import MobilePagination from "./MobilePagination";
 import NumberFormat from "react-number-format";
 
 const Regime = ({
   onChangeDecimals,
   onChangeRegime,
   showModal,
-  setMobileDisplayTab,
-  mobileDisplayTab,
   focusMethod,
   sciIs,
   lmnpReel,
@@ -167,14 +164,6 @@ const Regime = ({
           </div>
         </div>
       </div>
-      {width < 700 ? (
-        <MobilePagination
-          setMobileDisplayTab={setMobileDisplayTab}
-          mobileDisplayTab={mobileDisplayTab}
-        />
-      ) : (
-        ""
-      )}
     </section>
   );
 };

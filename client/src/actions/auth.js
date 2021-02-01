@@ -28,6 +28,8 @@ import {
   PROJECT_LIST,
   REMOVE_USER_PARAMS,
   RECOVER_PASSWORD,
+  LOADING,
+  LOADED,
 } from "./types";
 
 // load the user each time the main app is updated to check authentication
@@ -139,6 +141,11 @@ export const login = (loginData, formData, detectSave, detectModel) => async (
     // sends back the user
     const res = await api.post("/signin", loginData);
 
+    // open spinner page
+    dispatch({
+      type: LOADING,
+    });
+
     // decode le token
     const decodedToken = jwt(res.data.token);
 
@@ -148,24 +155,32 @@ export const login = (loginData, formData, detectSave, detectModel) => async (
       payload: res.data,
     });
 
-    // load user
-    dispatch(loadUser());
-
-    // 2 scénarios post-login réussi
-    if (detectModel) {
-      // if fiscalité -> post input
-      dispatch(getModelData(formData, decodedToken.user.id));
-      dispatch(modelModalToggle(true));
-    }
-    if (detectSave) {
-      // si save -> save modal
-      dispatch(saveModalToggle(true));
-    }
-
     dispatch({
       type: AUTH_TOGGLE,
       payload: false,
     });
+
+    // load user
+    dispatch(loadUser());
+
+    setTimeout(function () {
+      // ferme la landing page
+      dispatch(landingToggle(false));
+      // close spinner page
+      dispatch({
+        type: LOADED,
+      });
+      // 2 scénarios post-login réussi
+      if (detectModel) {
+        // if fiscalité -> post input
+        dispatch(getModelData(formData, decodedToken.user.id));
+        dispatch(modelModalToggle(true));
+      }
+      if (detectSave) {
+        // si save -> save modal
+        dispatch(saveModalToggle(true));
+      }
+    }, 1500);
   } catch (err) {
     if (err.response.data.msg) {
       dispatch(setAlert(err.response.data.msg, err.response.data.color));
