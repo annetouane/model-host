@@ -28,7 +28,7 @@
   -webkit-appearance: none;
   background-color: #f2f3f5;
   cursor: pointer;
-  /* border-radius: 10%; */
+  border-radius: 500px;
 }
 
 .slider::-webkit-slider-thumb {
