@@ -105,7 +105,7 @@ export const MainForm = ({
   // pagination project
   const [projectDisplayTab, setProjectDisplayTab] = useState(0);
 
-  // init form state
+  // // init form state
   // const [formData, setFormData] = useState({
   //   idProjet: "",
   //   user: "",
@@ -399,7 +399,7 @@ export const MainForm = ({
       }
     };
 
-    // window.addEventListener("beforeunload", alertUser);
+    window.addEventListener("beforeunload", alertUser);
 
     // set the windows dimensions on render
     // prevent function execution more than once per minute
@@ -414,7 +414,7 @@ export const MainForm = ({
     return (_) => {
       // remove event to avoid app freeze and allows f° exec max once per second
       window.removeEventListener("resize", debouncedHandleResize);
-      // window.removeEventListener("beforeunload", alertUser);
+      window.removeEventListener("beforeunload", alertUser);
     };
   });
 

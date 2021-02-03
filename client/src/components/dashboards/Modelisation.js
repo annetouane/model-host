@@ -314,7 +314,10 @@ export const Modelisation = ({
           {/* SCI IS *********************************************************************** */}
           {sciIs ? (
             <div className='model-group'>
-              <h3>SCI à l'IS</h3>
+              <h3>
+                SCI à l'IS (cash-flow après flat taxe / prélèvement forfaite
+                unique (30% des dividendes versés)
+              </h3>
               <div className='chart-container'>
                 <div className='chart-box'>
                   <ResponsiveContainer width='100%' height={150}>

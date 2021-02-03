@@ -2,87 +2,66 @@
   width: 100%;
 }
 
-.slider {
+/* .slider {
   outline: 0;
   border: 0;
-  border-radius: 500px;
   width: 100%;
   max-width: 100%;
-  transition: box-shadow 0.2s ease-in-out;
   cursor: pointer;
-}
+} */
 
-input[type="range"] {
-  -webkit-appearance: none;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  overflow: hidden;
-  height: 20px;
-  -webkit-appearance: none;
-  background-color: #f2f3f5;
-  cursor: pointer;
-  border-radius: 500px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  width: 20px;
-  -webkit-appearance: none;
-  height: 20px;
-  cursor: ew-resize;
-  background: #fff;
-  box-shadow: -500px 0 0 490px #007be8, inset 0 0 0 40px #fff;
-  border-radius: 50%;
-  border: solid 3px #007be8;
-  transition: box-shadow 0.2s ease-in-out;
-  position: relative;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-input[type="range"]:focus {
-  outline: none;
-}
-
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: rgb(212, 212, 212);
-}
-
-/* 
-
+/*Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .slider {
+  input[type="range"] {
     overflow: hidden;
+    width: 100%;
     height: 20px;
     -webkit-appearance: none;
-    background-color: #ddd;
-    border-radius: 500px;
+    background-color: #f2f3f5;
+    border-radius: 10px;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 20px;
+    -webkit-appearance: none;
+    color: #007be8;
+    border-radius: 10px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    -webkit-appearance: none;
+    height: 20px;
+    cursor: ew-resize;
+    border: 2px solid #007be8;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: -510px 0 0 500px #007be8;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+    background-color: #dbdbdb;
+  }
+
+  /* check */
+  input[type="range"]::-moz-range-track {
+    height: 20px;
+    -webkit-appearance: none;
+    color: #007be8;
+    border-radius: 10px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    -webkit-appearance: none;
+    height: 20px;
+    cursor: ew-resize;
+    border: 2px solid #007be8;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: -510px 0 0 500px #007be8;
   }
 }
-
-.slider::-webkit-slider-runnable-track {
-  overflow: hidden;
-  height: 20px;
-  -webkit-appearance: none;
-  background-color: #f2f3f5;
-  cursor: pointer;
-  border-radius: 500px;
-}
-
-.slider::-webkit-slider-thumb {
-  width: 20px;
-  -webkit-appearance: none;
-  height: 20px;
-  cursor: ew-resize;
-  background: #fff;
-  box-shadow: -500px 0 0 490px #007be8, inset 0 0 0 40px #fff;
-  border-radius: 50%;
-  border: solid 3px #007be8;
-  transition: box-shadow 0.2s ease-in-out;
-  position: relative;
-  cursor: pointer;
-  opacity: 0.8;
-} */
 
 .box-investisseur {
   padding: 10px 0;
